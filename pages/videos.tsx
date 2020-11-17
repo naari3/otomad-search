@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 
-import { VideoClient, Video } from "../lib/search";
+import { VideoClient, Video, QueryParams, VideoSortKeys } from "../lib/search";
 import VideoList from "../components/VideoList";
 
 export const allFields = [
@@ -39,20 +39,29 @@ export default function Videos({
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+const defaultQuery: QueryParams = {
+  _sort: "startTime",
+  q: "音MAD",
+  targets: "tagsExact",
+  _limit: 100,
+};
+
+const getSearchQuery = ({ sort }: { sort?: string }): QueryParams => {
+  if (!VideoSortKeys.map((a) => `${a}`).includes(sort.replace(/^[-+]/, ""))) {
+    sort = "-startTime";
+  }
+
+  return Object.assign(defaultQuery, {
+    _sort: sort,
+  });
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const client = new VideoClient({ context: "otomad-search" });
 
-  const videos = (
-    await client.search(
-      {
-        _sort: "-mylistCounter",
-        q: "音MAD",
-        targets: "tags",
-        _limit: 100,
-      },
-      allFields
-    )
-  ).data.data;
+  console.log(query);
+  const videos = (await client.search(getSearchQuery(query), allFields)).data
+    .data;
 
   return {
     props: {

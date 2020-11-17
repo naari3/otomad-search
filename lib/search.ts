@@ -30,19 +30,39 @@ export type Video = Content & {
   genre: string;
 };
 
+export const VideoFieldKeys = [
+  "contentId",
+  "title",
+  "description",
+  "userId",
+  "viewCounter",
+  "thumbnailUrl",
+  "startTime",
+  "commentCounter",
+  "categoryTags",
+  "channelId",
+  "tags",
+  "mylistCounter",
+  "lengthSeconds",
+  "threadId",
+  "lastCommentTime",
+  "lockTagsExact",
+  "genre",
+] as const;
+
+export const VideoSortKeys = [
+  "userId",
+  "viewCounter",
+  "startTime",
+  "commentCounter",
+  "channelId",
+  "mylistCounter",
+  "lengthSeconds",
+  "threadId",
+  "lastCommentTime",
+] as const;
 export type VideoFields = Omit<Video, "tagsExact">;
-type VideoSorts = Omit<
-  Video,
-  | "contentId"
-  | "title"
-  | "description"
-  | "thumbnailUrl"
-  | "categoryTags"
-  | "tags"
-  | "tagsExact"
-  | "lockTagsExact"
-  | "genre"
->;
+type VideoSorts = typeof VideoSortKeys[number];
 type VideoFilters = Omit<
   Video,
   "contentId" | "title" | "description" | "thumbnailUrl"
