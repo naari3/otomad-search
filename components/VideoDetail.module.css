@@ -1,0 +1,129 @@
+.videoDetail {
+  font-size: 13px;
+}
+
+.videoDetail::before {
+  content: " ";
+  display: table;
+}
+
+.videoDetail::after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+
+.videoWrap {
+  float: left;
+  width: 160px;
+  margin-right: 12px;
+  position: relative;
+}
+
+.itemThumbBox {
+  width: 160px;
+  height: 90px;
+  overflow: hidden;
+  position: relative;
+}
+
+.itemThumb {
+  width: 160px;
+  height: 90px;
+  overflow: hidden;
+  position: relative;
+  table-layout: fixed;
+}
+
+.itemThumbWrap {
+  width: 160px;
+  height: 90px;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  background: #000;
+}
+
+.itemThumb img {
+  margin-top: 0px;
+  width: 117px;
+  max-height: none;
+  max-width: none;
+}
+
+.videoLength {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  color: #fff;
+  font-size: 77%;
+  padding: 4px;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.itemTime {
+  font-size: 85%;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.separate {
+  margin-left: 4px;
+}
+
+.itemContent {
+  padding-top: 4px;
+  overflow: hidden;
+}
+
+.itemTitle {
+  font-size: 124%;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+.itemTitle a:visited {
+  color: #666;
+}
+
+.itemTitle a:link {
+  color: #069;
+}
+
+.itemDescription {
+  font-size: 93%;
+  color: #666;
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+
+.list {
+  padding-left: 0px;
+  list-style: none;
+}
+
+.list::before {
+  content: " ";
+  display: table;
+}
+
+.itemData {
+  margin-top: 8px;
+  font-size: 108%;
+}
+
+.itemData li {
+  float: left;
+}
+
+.itemData .count {
+  font-size: 85%;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.itemData .count .value {
+  padding: 0 8px 0 2px;
+  color: #333;
+}

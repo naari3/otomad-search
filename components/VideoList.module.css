@@ -1,0 +1,10 @@
+.videoList {
+  list-style: none;
+}
+
+.videoList .item {
+  width: 100%;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: #ccc dotted 1px;
+}
