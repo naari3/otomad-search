@@ -40,9 +40,10 @@ const SearchBar = ({ searchOptions: { _sort: defaultSort } }: Props) => {
         onChange={(e) => {
           setSort(e.target.value);
         }}
+        value={_sort}
       >
         {Object.entries(sortAxisOptions).map(([key, message]) => (
-          <option value={key} key={key} selected={key == _sort}>
+          <option value={key} key={key}>
             {message}
           </option>
         ))}
