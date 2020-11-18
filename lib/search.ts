@@ -162,7 +162,7 @@ export type QueryParams = {
   targets: string;
   // filters?: string, // どうやって型つければいいんだろう
   // filters[mylistCounter][gt] とか filters[mylistCounter][lt] とか filters[mylistCounter][任意の自然数?] とかのキーを自動生成する必要がある
-  filters?: { string: Filter };
+  filters?: { [k: string]: Filter };
   jsonFilter?: string;
   _sort: string;
   _offset?: number;
@@ -203,6 +203,7 @@ class BaseClient<C extends Content> {
       { fields: fields.join() },
       filters ? this.filtersToInner(filters) : {}
     );
+    console.log(params);
     return this.client.get<Response<Pick<C, T[number]>>>(
       `/api/v2/${this.service}/contents/search`,
       { params }
@@ -210,12 +211,12 @@ class BaseClient<C extends Content> {
   }
 
   private filtersToInner(filters: {
-    string: Filter;
+    [k: string]: Filter;
   }): { [k: string]: string | number } {
     return Object.fromEntries(
       Object.entries(filters).flatMap(([key, f]) =>
         Object.entries(f).map(([kind, value]) => [
-          `filter[${key}][${kind}]`,
+          `filters[${key}][${kind}]`,
           value,
         ])
       )
