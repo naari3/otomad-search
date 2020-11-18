@@ -145,12 +145,15 @@ type InnerQueryParams = {
   q: string;
   targets: string;
   fields: string;
-  // filters?: string, // TODO
   jsonFilter?: string;
   _sort: string;
   _offset?: number;
   _limit?: number;
   _context: string;
+};
+
+export type Filter = {
+  [key in "lt" | "lte" | "gt" | "gte" | number]?: string | number;
 };
 
 // わからん
@@ -159,6 +162,7 @@ export type QueryParams = {
   targets: string;
   // filters?: string, // どうやって型つければいいんだろう
   // filters[mylistCounter][gt] とか filters[mylistCounter][lt] とか filters[mylistCounter][任意の自然数?] とかのキーを自動生成する必要がある
+  filters?: { string: Filter };
   jsonFilter?: string;
   _sort: string;
   _offset?: number;
@@ -191,14 +195,30 @@ class BaseClient<C extends Content> {
     query: QueryParams,
     fields: T
   ): Promise<AxiosResponse<Response<Pick<C, T[number]>>>> {
+    // const filters = query.filters;
+    const { filters: filters, ...without_filters } = query;
     const params: InnerQueryParams = Object.assign(
       { _context: this.context },
-      query,
-      { fields: fields.join() }
+      without_filters,
+      { fields: fields.join() },
+      filters ? this.filtersToInner(filters) : {}
     );
     return this.client.get<Response<Pick<C, T[number]>>>(
       `/api/v2/${this.service}/contents/search`,
       { params }
+    );
+  }
+
+  private filtersToInner(filters: {
+    string: Filter;
+  }): { [k: string]: string | number } {
+    return Object.fromEntries(
+      Object.entries(filters).flatMap(([key, f]) =>
+        Object.entries(f).map(([kind, value]) => [
+          `filter[${key}][${kind}]`,
+          value,
+        ])
+      )
     );
   }
 }
