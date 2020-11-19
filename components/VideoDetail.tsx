@@ -35,7 +35,9 @@ const VideoDetail = ({ video }: Props) => (
     </div>
     <div className={styles.itemContent}>
       <p className={styles.itemTitle}>
-        <a href={`http://nico.ms/${video.contentId}`}>{video.title}</a>
+        <a href={`http://nico.ms/${video.contentId}`} target="_blank">
+          {video.title}
+        </a>
       </p>
       <div>
         <p className={styles.itemDescription}>{stripTag(video.description)}</p>
