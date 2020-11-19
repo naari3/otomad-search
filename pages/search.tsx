@@ -80,11 +80,11 @@ const calcOffset = (page?: number): number => {
 const getSearchQuery = ({
   _sort,
   mylistCounterGte,
-  mylistCounterLt,
+  mylistCounterLte,
   lengthMinutesGte,
-  lengthMinutesLt,
+  lengthMinutesLte,
   startTimeGte,
-  startTimeLt,
+  startTimeLte,
   page,
 }: SearchOptions): QueryParams => {
   if (
@@ -104,11 +104,11 @@ const getSearchQuery = ({
     }
     filters["mylistCounter"]["gte"] = mylistCounterGte;
   }
-  if (mylistCounterLt) {
+  if (mylistCounterLte !== null) {
     if (!filters["mylistCounter"]) {
       filters["mylistCounter"] = {};
     }
-    filters["mylistCounter"]["lt"] = mylistCounterLt;
+    filters["mylistCounter"]["lte"] = mylistCounterLte;
   }
 
   if (startTimeGte) {
@@ -117,11 +117,11 @@ const getSearchQuery = ({
     }
     filters["startTime"]["gte"] = startTimeGte;
   }
-  if (startTimeLt) {
+  if (startTimeLte) {
     if (!filters["startTime"]) {
       filters["startTime"] = {};
     }
-    filters["startTime"]["lt"] = startTimeLt;
+    filters["startTime"]["lte"] = startTimeLte;
   }
 
   if (lengthMinutesGte) {
@@ -130,11 +130,11 @@ const getSearchQuery = ({
     }
     filters["lengthSeconds"]["gte"] = lengthMinutesGte * 60;
   }
-  if (lengthMinutesLt) {
+  if (lengthMinutesLte) {
     if (!filters["lengthSeconds"]) {
       filters["lengthSeconds"] = {};
     }
-    filters["lengthSeconds"]["lt"] = lengthMinutesLt * 60;
+    filters["lengthSeconds"]["lte"] = lengthMinutesLte * 60;
   }
 
   return Object.assign(defaultQuery, {
@@ -144,42 +144,33 @@ const getSearchQuery = ({
   });
 };
 
+const parseQueryToString = (target: string | string[]): string | null => {
+  const result = Array.isArray(target) ? target[0] : target;
+  return result ? result : null;
+};
+
+const parseQueryToInt = (target: string | string[]): number | null => {
+  const result = parseInt(parseQueryToString(target));
+  return Number.isNaN(result) ? null : result;
+};
+
+const parseQueryToLimitedFloat = (target: string | string[]): number | null => {
+  const result = parseLimitedFloat(parseQueryToString(target));
+  return Number.isNaN(result) ? null : result;
+};
+
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const client = new VideoClient({ context: "otomad-search" });
+  console.log(query);
   const searchOptions: SearchOptions = {
-    _sort: (Array.isArray(query._sort) ? query._sort[0] : query._sort) || null,
-    mylistCounterGte:
-      parseInt(
-        Array.isArray(query.mylistCounterGte)
-          ? query.mylistCounterGte[0]
-          : query.mylistCounterGte
-      ) || null,
-    mylistCounterLt:
-      parseInt(
-        Array.isArray(query.mylistCounterLt)
-          ? query.mylistCounterLt[0]
-          : query.mylistCounterLt
-      ) || null,
-    lengthMinutesGte:
-      parseLimitedFloat(
-        Array.isArray(query.lengthMinutesGte)
-          ? query.lengthMinutesGte[0]
-          : query.lengthMinutesGte
-      ) || null,
-    lengthMinutesLt:
-      parseLimitedFloat(
-        Array.isArray(query.lengthMinutesLt)
-          ? query.lengthMinutesLt[0]
-          : query.lengthMinutesLt
-      ) || null,
-    startTimeGte: Array.isArray(query.startTimeGte)
-      ? query.startTimeGte[0]
-      : query.startTimeGte || null,
-    startTimeLt: Array.isArray(query.startTimeLt)
-      ? query.startTimeLt[0]
-      : query.startTimeLt || null,
-    page:
-      parseInt(Array.isArray(query.page) ? query.page[0] : query.page) || null,
+    _sort: parseQueryToString(query._sort) || null,
+    mylistCounterGte: parseQueryToInt(query.mylistCounterGte),
+    mylistCounterLte: parseQueryToInt(query.mylistCounterLte),
+    lengthMinutesGte: parseQueryToLimitedFloat(query.lengthMinutesGte),
+    lengthMinutesLte: parseQueryToLimitedFloat(query.lengthMinutesLte),
+    startTimeGte: parseQueryToString(query.startTimeGte),
+    startTimeLte: parseQueryToString(query.startTimeLte),
+    page: parseQueryToInt(query.page),
   };
 
   const searchQuery = getSearchQuery(searchOptions);

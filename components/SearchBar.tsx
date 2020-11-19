@@ -60,6 +60,7 @@ const SearchBar = () => {
             <input
               className={styles.inputNumber}
               type="number"
+              min="0"
               defaultValue={options.mylistCounterGte}
               onChange={(e) => {
                 dispatch({
@@ -74,15 +75,16 @@ const SearchBar = () => {
             <input
               className={styles.inputNumber}
               type="number"
-              defaultValue={options.mylistCounterLt}
+              min="0"
+              defaultValue={options.mylistCounterLte}
               onChange={(e) => {
                 dispatch({
                   type: "update",
-                  payload: { mylistCounterLt: parseInt(e.target.value) },
+                  payload: { mylistCounterLte: parseInt(e.target.value) },
                 });
               }}
             />
-            <span className={styles.filterWord}>未満</span>
+            <span className={styles.filterWord}>以下</span>
           </label>
           <span className={styles.filterName}>再生時間</span>
           <label>
@@ -90,6 +92,7 @@ const SearchBar = () => {
               className={styles.inputNumber}
               type="number"
               step="0.1"
+              min="0"
               defaultValue={options.lengthMinutesGte}
               onChange={(e) => {
                 dispatch({
@@ -107,18 +110,19 @@ const SearchBar = () => {
               className={styles.inputNumber}
               type="number"
               step="0.1"
-              defaultValue={options.lengthMinutesLt}
+              min="0"
+              defaultValue={options.lengthMinutesLte}
               onChange={(e) => {
                 const [big, small] = e.target.value.split(".");
                 dispatch({
                   type: "update",
                   payload: {
-                    lengthMinutesLt: parseLimitedFloat(e.target.value),
+                    lengthMinutesLte: parseLimitedFloat(e.target.value),
                   },
                 });
               }}
             />
-            <span className={styles.filterWord}>分未満</span>
+            <span className={styles.filterWord}>分以下</span>
           </label>
         </div>
         <div className={styles.filter}>
@@ -144,11 +148,11 @@ const SearchBar = () => {
               className={styles.inputDatetime}
               type="datetime-local"
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-              defaultValue={options.startTimeLt}
+              defaultValue={options.startTimeLte}
               onChange={(e) => {
                 dispatch({
                   type: "update",
-                  payload: { startTimeLt: e.target.value },
+                  payload: { startTimeLte: e.target.value },
                 });
               }}
             />

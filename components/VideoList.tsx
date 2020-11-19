@@ -10,7 +10,6 @@ type Props = {
 
 const VideoList = ({ videos }: Props) =>
   useMemo(() => {
-    console.log("render videos");
     return (
       <>
         <Pager />

@@ -1,11 +1,11 @@
 export type SearchOptions = {
   _sort?: string;
   mylistCounterGte?: number;
-  mylistCounterLt?: number;
+  mylistCounterLte?: number;
   startTimeGte?: string;
-  startTimeLt?: string;
+  startTimeLte?: string;
   lengthMinutesGte?: number;
-  lengthMinutesLt?: number;
+  lengthMinutesLte?: number;
   count?: number;
   page?: number;
 };
