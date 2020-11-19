@@ -3,9 +3,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { VideoSortKeys } from "../lib/search";
 
-type Props = {
+export type Props = {
   searchOptions: {
     _sort?: string;
+    mylistCounterGte?: number;
+    mylistCounterLt?: number;
+    startTimeGte?: string;
+    startTimeLt?: string;
   };
 };
 
@@ -30,8 +34,18 @@ const sortAxisOptions = {
   "-lastCommentTime": "コメントが新しい順",
 };
 
-const SearchBar = ({ searchOptions: { _sort: defaultSort } }: Props) => {
-  const [_sort, setSort] = useState(defaultSort || "-startTime");
+const SearchBar = ({ searchOptions: defaults }: Props) => {
+  const [_sort, setSort] = useState(defaults._sort || "-startTime");
+  const [mylistCounterGte, setMylistCounterGte] = useState<number | null>(
+    defaults.mylistCounterGte || null
+  );
+  const [mylistCounterLt, setMylistCounterLt] = useState<number | null>(
+    defaults.mylistCounterLt || null
+  );
+  const [startTimeGte, setStartTimeGte] = useState(
+    defaults.startTimeGte || null
+  );
+  const [startTimeLt, setStartTimeLt] = useState(defaults.startTimeLt || null);
 
   return (
     <>
@@ -40,7 +54,7 @@ const SearchBar = ({ searchOptions: { _sort: defaultSort } }: Props) => {
         onChange={(e) => {
           setSort(e.target.value);
         }}
-        value={_sort}
+        defaultValue={_sort}
       >
         {Object.entries(sortAxisOptions).map(([key, message]) => (
           <option value={key} key={key}>
@@ -48,11 +62,47 @@ const SearchBar = ({ searchOptions: { _sort: defaultSort } }: Props) => {
           </option>
         ))}
       </select>
+      <label>
+        マイリスト数:{" "}
+        <input
+          type="number"
+          onChange={(e) => setMylistCounterGte(parseInt(e.target.value))}
+        />{" "}
+        以上
+      </label>
+      <label>
+        マイリスト数:{" "}
+        <input
+          type="number"
+          onChange={(e) => setMylistCounterLt(parseInt(e.target.value))}
+        />{" "}
+        未満
+      </label>
+      <label>
+        次の日時以降に投稿された音MAD{" "}
+        <input
+          type="datetime-local"
+          pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+          onChange={(e) => setStartTimeGte(e.target.value)}
+        />
+      </label>
+      <label>
+        次の日時以前に投稿された音MAD{" "}
+        <input
+          type="datetime-local"
+          pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+          onChange={(e) => setStartTimeLt(e.target.value)}
+        />
+      </label>
       <Link
         href={{
           pathname: "/search",
           query: {
             _sort,
+            mylistCounterGte,
+            mylistCounterLt,
+            startTimeGte,
+            startTimeLt,
           },
         }}
       >

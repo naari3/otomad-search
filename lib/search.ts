@@ -203,7 +203,6 @@ class BaseClient<C extends Content> {
       { fields: fields.join() },
       filters ? this.filtersToInner(filters) : {}
     );
-    console.log(params);
     return this.client.get<Response<Pick<C, T[number]>>>(
       `/api/v2/${this.service}/contents/search`,
       { params }

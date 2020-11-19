@@ -1,10 +1,16 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 
-import { VideoClient, Video, QueryParams, VideoSortKeys } from "../lib/search";
+import {
+  VideoClient,
+  Video,
+  QueryParams,
+  VideoSortKeys,
+  Filter,
+} from "../lib/search";
 import VideoList from "../components/VideoList";
 
-import SearchBar from "../components/SearchBar";
+import SearchBar, { Props as SearchProps } from "../components/SearchBar";
 
 export const allFields = [
   "contentId",
@@ -31,8 +37,7 @@ export default function Search({
   searchOptions,
 }: {
   videos: Pick<Video, typeof allFields[number]>[];
-  searchOptions: QueryParams;
-}) {
+} & SearchProps) {
   return (
     <>
       <Head>
@@ -51,30 +56,87 @@ const defaultQuery: QueryParams = {
   _limit: 100,
 };
 
-const getSearchQuery = ({ _sort }: { _sort?: string }): QueryParams => {
+const getSearchQuery = ({
+  _sort,
+  mylistCounterGte,
+  mylistCounterLt,
+  startTimeGte,
+  startTimeLt,
+}: SearchProps["searchOptions"]): QueryParams => {
   if (
-    _sort === undefined ||
+    _sort === null ||
     !VideoSortKeys.map((a) => `${a}`).includes(_sort.replace(/^[-+]/, ""))
   ) {
     _sort = "-startTime";
   }
 
+  let filters = {};
+
+  if (mylistCounterGte) {
+    if (!filters["mylistCounter"]) {
+      filters["mylistCounter"] = {};
+    }
+    filters["mylistCounter"]["gte"] = mylistCounterGte;
+  }
+  if (mylistCounterLt) {
+    if (!filters["mylistCounter"]) {
+      filters["mylistCounter"] = {};
+    }
+    filters["mylistCounter"]["lt"] = mylistCounterLt;
+  }
+
+  if (startTimeGte) {
+    if (!filters["startTime"]) {
+      filters["startTime"] = {};
+    }
+    filters["startTime"]["gte"] = startTimeGte;
+  }
+  if (startTimeLt) {
+    if (!filters["startTime"]) {
+      filters["startTime"] = {};
+    }
+    filters["startTime"]["lt"] = startTimeLt;
+  }
+
   return Object.assign(defaultQuery, {
     _sort,
+    filters,
   });
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const client = new VideoClient({ context: "otomad-search" });
+  const searchOptions: SearchProps["searchOptions"] = {
+    _sort: (Array.isArray(query._sort) ? query._sort[0] : query._sort) || null,
+    mylistCounterGte:
+      parseInt(
+        Array.isArray(query.mylistCounterGte)
+          ? query.mylistCounterGte[0]
+          : query.mylistCounterGte
+      ) || null,
+    mylistCounterLt:
+      parseInt(
+        Array.isArray(query.mylistCounterLt)
+          ? query.mylistCounterLt[0]
+          : query.mylistCounterLt
+      ) || null,
+    startTimeGte: Array.isArray(query.startTimeGte)
+      ? query.startTimeGte[0]
+      : query.startTimeGte || null,
+    startTimeLt: Array.isArray(query.startTimeLt)
+      ? query.startTimeLt[0]
+      : query.startTimeLt || null,
+  };
 
-  console.log(query);
-  const searchQuery = getSearchQuery(query);
+  const searchQuery = getSearchQuery(searchOptions);
   const videos = (await client.search(searchQuery, allFields)).data.data;
 
+  console.log(query);
+  console.log(searchQuery);
   return {
     props: {
       videos,
-      searchOptions: searchQuery,
+      searchOptions,
     },
   };
 };
