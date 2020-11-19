@@ -1,22 +1,15 @@
 .inner {
-  min-height: 100vh;
+  min-height: 50vh;
   margin: 0 auto;
   width: 1024px;
 }
 
 .container {
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
 }
 
 .main {
   padding: 1rem 0;
-}
-
-.header {
-  width: 100%;
-  height: 100px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #dbdbdb;
 }
 
 .footer {

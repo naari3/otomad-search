@@ -11,7 +11,21 @@ const Home: FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>説明</div>
+      <section className={styles.description}>
+        <h2>説明</h2>
+        <p>音MADを検索するためのサービスです。</p>
+        <p>評価基準になりそうなものをフィルターとして設定できます。</p>
+        <p>
+          裏で{" "}
+          <a
+            href="https://site.nicovideo.jp/search-api-docs/search.html"
+            target="_blank"
+          >
+            niconico コンテンツ検索API
+          </a>{" "}
+          を呼び出しています。
+        </p>
+      </section>
     </Layout>
   );
 };

@@ -16,6 +16,9 @@ a {
   box-sizing: border-box;
 }
 
+header,
+h1,
+h2,
 p,
 div {
   margin: 0;
