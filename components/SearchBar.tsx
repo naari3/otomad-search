@@ -2,6 +2,7 @@ import * as React from "react";
 import Link from "next/link";
 import styles from "./SearchBar.module.css";
 import removeEmpty from "../lib/removeEmpty";
+import parseLimitedFloat from "../lib/parseLimitedFloat";
 
 import { useDispatch, useGlobalState } from "../contexts/SearchContext";
 
@@ -57,7 +58,7 @@ const SearchBar = () => {
           <span className={styles.filterName}>マイリスト数</span>
           <label>
             <input
-              className={styles.inputMylist}
+              className={styles.inputNumber}
               type="number"
               defaultValue={options.mylistCounterGte}
               onChange={(e) => {
@@ -71,7 +72,7 @@ const SearchBar = () => {
           </label>
           <label>
             <input
-              className={styles.inputMylist}
+              className={styles.inputNumber}
               type="number"
               defaultValue={options.mylistCounterLt}
               onChange={(e) => {
@@ -82,6 +83,42 @@ const SearchBar = () => {
               }}
             />
             <span className={styles.filterWord}>未満</span>
+          </label>
+          <span className={styles.filterName}>再生時間</span>
+          <label>
+            <input
+              className={styles.inputNumber}
+              type="number"
+              step="0.1"
+              defaultValue={options.lengthMinutesGte}
+              onChange={(e) => {
+                dispatch({
+                  type: "update",
+                  payload: {
+                    lengthMinutesGte: parseLimitedFloat(e.target.value),
+                  },
+                });
+              }}
+            />
+            <span className={styles.filterWord}>分以上</span>
+          </label>
+          <label>
+            <input
+              className={styles.inputNumber}
+              type="number"
+              step="0.1"
+              defaultValue={options.lengthMinutesLt}
+              onChange={(e) => {
+                const [big, small] = e.target.value.split(".");
+                dispatch({
+                  type: "update",
+                  payload: {
+                    lengthMinutesLt: parseLimitedFloat(e.target.value),
+                  },
+                });
+              }}
+            />
+            <span className={styles.filterWord}>分未満</span>
           </label>
         </div>
         <div className={styles.filter}>

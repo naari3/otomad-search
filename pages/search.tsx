@@ -9,6 +9,7 @@ import { VideoClient, Video, QueryParams, VideoSortKeys } from "../lib/search";
 import VideoList from "../components/VideoList";
 
 import Layout from "../components/Layout";
+import parseLimitedFloat from "../lib/parseLimitedFloat";
 
 export const allFields = [
   "contentId",
@@ -80,6 +81,8 @@ const getSearchQuery = ({
   _sort,
   mylistCounterGte,
   mylistCounterLt,
+  lengthMinutesGte,
+  lengthMinutesLt,
   startTimeGte,
   startTimeLt,
   page,
@@ -121,6 +124,19 @@ const getSearchQuery = ({
     filters["startTime"]["lt"] = startTimeLt;
   }
 
+  if (lengthMinutesGte) {
+    if (!filters["lengthSeconds"]) {
+      filters["lengthSeconds"] = {};
+    }
+    filters["lengthSeconds"]["gte"] = lengthMinutesGte * 60;
+  }
+  if (lengthMinutesLt) {
+    if (!filters["lengthSeconds"]) {
+      filters["lengthSeconds"] = {};
+    }
+    filters["lengthSeconds"]["lt"] = lengthMinutesLt * 60;
+  }
+
   return Object.assign(defaultQuery, {
     _sort,
     _offset,
@@ -143,6 +159,18 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         Array.isArray(query.mylistCounterLt)
           ? query.mylistCounterLt[0]
           : query.mylistCounterLt
+      ) || null,
+    lengthMinutesGte:
+      parseLimitedFloat(
+        Array.isArray(query.lengthMinutesGte)
+          ? query.lengthMinutesGte[0]
+          : query.lengthMinutesGte
+      ) || null,
+    lengthMinutesLt:
+      parseLimitedFloat(
+        Array.isArray(query.lengthMinutesLt)
+          ? query.lengthMinutesLt[0]
+          : query.lengthMinutesLt
       ) || null,
     startTimeGte: Array.isArray(query.startTimeGte)
       ? query.startTimeGte[0]

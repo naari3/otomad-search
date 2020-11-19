@@ -15,7 +15,7 @@
   border-radius: 4px;
 }
 
-.inputMylist {
+.inputNumber {
   width: 6em;
   padding: 2px 5px;
   border: #dbdbdb solid 1px;
@@ -39,6 +39,10 @@
 }
 .filterName::after {
   content: ":";
+}
+
+label + .filterName {
+  padding-left: 14px;
 }
 
 .filterWord {

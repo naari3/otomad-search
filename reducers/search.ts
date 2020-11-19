@@ -4,6 +4,8 @@ export type SearchOptions = {
   mylistCounterLt?: number;
   startTimeGte?: string;
   startTimeLt?: string;
+  lengthMinutesGte?: number;
+  lengthMinutesLt?: number;
   count?: number;
   page?: number;
 };
