@@ -1,0 +1,15 @@
+.searchBar {
+  /* border-bottom: 1px solid #dbdbdb; */
+}
+
+.inputMylist {
+  width: 6em;
+  padding: 0 5px;
+}
+
+.filterName {
+  padding: 0 10px;
+}
+.filterName::after {
+  content: ":";
+}

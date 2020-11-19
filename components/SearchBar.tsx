@@ -1,17 +1,8 @@
 import * as React from "react";
-import { useState } from "react";
 import Link from "next/link";
-import { VideoSortKeys } from "../lib/search";
+import styles from "./SearchBar.module.css";
 
-export type Props = {
-  searchOptions: {
-    _sort?: string;
-    mylistCounterGte?: number;
-    mylistCounterLt?: number;
-    startTimeGte?: string;
-    startTimeLt?: string;
-  };
-};
+import { useDispatch, useGlobalState } from "../contexts/SearchContext";
 
 const sortAxisOptions = {
   //   "+userId": "",
@@ -34,27 +25,21 @@ const sortAxisOptions = {
   "-lastCommentTime": "コメントが新しい順",
 };
 
-const SearchBar = ({ searchOptions: defaults }: Props) => {
-  const [_sort, setSort] = useState(defaults._sort || "-startTime");
-  const [mylistCounterGte, setMylistCounterGte] = useState<number | null>(
-    defaults.mylistCounterGte || null
-  );
-  const [mylistCounterLt, setMylistCounterLt] = useState<number | null>(
-    defaults.mylistCounterLt || null
-  );
-  const [startTimeGte, setStartTimeGte] = useState(
-    defaults.startTimeGte || null
-  );
-  const [startTimeLt, setStartTimeLt] = useState(defaults.startTimeLt || null);
+const SearchBar = () => {
+  const options = useGlobalState();
+  const dispatch = useDispatch();
 
   return (
-    <>
+    <div className={styles.searchBar}>
       <select
         name="sort"
         onChange={(e) => {
-          setSort(e.target.value);
+          dispatch({
+            type: "update",
+            payload: { _sort: e.target.value },
+          });
         }}
-        defaultValue={_sort}
+        value={options._sort}
       >
         {Object.entries(sortAxisOptions).map(([key, message]) => (
           <option value={key} key={key}>
@@ -62,53 +47,77 @@ const SearchBar = ({ searchOptions: defaults }: Props) => {
           </option>
         ))}
       </select>
-      <label>
-        マイリスト数:{" "}
-        <input
-          type="number"
-          onChange={(e) => setMylistCounterGte(parseInt(e.target.value))}
-        />{" "}
-        以上
-      </label>
-      <label>
-        マイリスト数:{" "}
-        <input
-          type="number"
-          onChange={(e) => setMylistCounterLt(parseInt(e.target.value))}
-        />{" "}
-        未満
-      </label>
-      <label>
-        次の日時以降に投稿された音MAD{" "}
-        <input
-          type="datetime-local"
-          pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-          onChange={(e) => setStartTimeGte(e.target.value)}
-        />
-      </label>
-      <label>
-        次の日時以前に投稿された音MAD{" "}
-        <input
-          type="datetime-local"
-          pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-          onChange={(e) => setStartTimeLt(e.target.value)}
-        />
-      </label>
+      <div>
+        <span className={styles.filterName}>マイリスト数</span>
+        <label>
+          <input
+            className={styles.inputMylist}
+            type="number"
+            defaultValue={options.mylistCounterGte}
+            onChange={(e) => {
+              dispatch({
+                type: "update",
+                payload: { mylistCounterGte: parseInt(e.target.value) },
+              });
+            }}
+          />{" "}
+          以上
+        </label>{" "}
+        <label>
+          <input
+            className={styles.inputMylist}
+            type="number"
+            defaultValue={options.mylistCounterLt}
+            onChange={(e) => {
+              dispatch({
+                type: "update",
+                payload: { mylistCounterLt: parseInt(e.target.value) },
+              });
+            }}
+          />{" "}
+          未満
+        </label>
+      </div>
+      <div>
+        <span className={styles.filterName}>日付指定</span>
+        <label>
+          開始日{" "}
+          <input
+            type="datetime-local"
+            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+            defaultValue={options.startTimeGte}
+            onChange={(e) => {
+              dispatch({
+                type: "update",
+                payload: { startTimeGte: e.target.value },
+              });
+            }}
+          />
+        </label>
+        <label>
+          終了日{" "}
+          <input
+            type="datetime-local"
+            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+            defaultValue={options.startTimeLt}
+            onChange={(e) => {
+              dispatch({
+                type: "update",
+                payload: { startTimeLt: e.target.value },
+              });
+            }}
+          />
+        </label>
+      </div>
       <Link
         href={{
           pathname: "/search",
-          query: {
-            _sort,
-            mylistCounterGte,
-            mylistCounterLt,
-            startTimeGte,
-            startTimeLt,
-          },
+          query: options,
         }}
       >
         <a>検索</a>
       </Link>
-    </>
+    </div>
   );
 };
 

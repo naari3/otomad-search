@@ -1,8 +1,9 @@
 .videoList {
   list-style: none;
+  padding-left: 0px;
 }
 
-.videoList .item {
+.videoList .item:not(:last-child) {
   width: 100%;
   margin-bottom: 12px;
   padding-bottom: 8px;

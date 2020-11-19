@@ -1,16 +1,13 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
+import styles from "../styles/Search.module.css";
+import { SearchOptions, useDispatch } from "../contexts/SearchContext";
+import { useEffect } from "react";
 
-import {
-  VideoClient,
-  Video,
-  QueryParams,
-  VideoSortKeys,
-  Filter,
-} from "../lib/search";
+import { VideoClient, Video, QueryParams, VideoSortKeys } from "../lib/search";
 import VideoList from "../components/VideoList";
 
-import SearchBar, { Props as SearchProps } from "../components/SearchBar";
+import Layout from "../components/Layout";
 
 export const allFields = [
   "contentId",
@@ -37,15 +34,24 @@ export default function Search({
   searchOptions,
 }: {
   videos: Pick<Video, typeof allFields[number]>[];
-} & SearchProps) {
+  searchOptions: SearchOptions;
+}) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: "update",
+      payload: { ...searchOptions },
+    });
+  }, [searchOptions]);
+
   return (
-    <>
+    <Layout>
       <Head>
         <title>検索結果</title>
       </Head>
-      <SearchBar searchOptions={searchOptions} />
       <VideoList videos={videos} />
-    </>
+    </Layout>
   );
 }
 
@@ -62,7 +68,7 @@ const getSearchQuery = ({
   mylistCounterLt,
   startTimeGte,
   startTimeLt,
-}: SearchProps["searchOptions"]): QueryParams => {
+}: SearchOptions): QueryParams => {
   if (
     _sort === null ||
     !VideoSortKeys.map((a) => `${a}`).includes(_sort.replace(/^[-+]/, ""))
@@ -106,7 +112,7 @@ const getSearchQuery = ({
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const client = new VideoClient({ context: "otomad-search" });
-  const searchOptions: SearchProps["searchOptions"] = {
+  const searchOptions: SearchOptions = {
     _sort: (Array.isArray(query._sort) ? query._sort[0] : query._sort) || null,
     mylistCounterGte:
       parseInt(
