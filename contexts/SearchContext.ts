@@ -1,13 +1,10 @@
 import { createContext, Dispatch, useContext } from "react";
-import { initialState, IAction, State } from "../reducers/search";
-
-export type SearchOptions = {
-  _sort?: string;
-  mylistCounterGte?: number;
-  mylistCounterLt?: number;
-  startTimeGte?: string;
-  startTimeLt?: string;
-};
+import {
+  initialState,
+  IAction,
+  State,
+  SearchOptions,
+} from "../reducers/search";
 
 export type SearchContextType = {
   options: SearchOptions;

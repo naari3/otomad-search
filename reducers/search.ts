@@ -4,6 +4,8 @@ export type SearchOptions = {
   mylistCounterLt?: number;
   startTimeGte?: string;
   startTimeLt?: string;
+  count?: number;
+  page?: number;
 };
 
 export const initialState: SearchOptions = { _sort: "-startTime" };

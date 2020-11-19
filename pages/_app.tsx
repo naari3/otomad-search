@@ -4,11 +4,10 @@ import { useState, useReducer } from "react";
 import type { AppProps /*, AppContext */ } from "next/app";
 import {
   SearchContext,
-  SearchOptions,
   SearchStateContext,
   SearchDispatchContext,
 } from "../contexts/SearchContext";
-import { initialState, reducer } from "../reducers/search";
+import { initialState, reducer, SearchOptions } from "../reducers/search";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [options, setOptions] = useState<SearchOptions>({

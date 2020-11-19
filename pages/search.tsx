@@ -1,7 +1,8 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import styles from "../styles/Search.module.css";
-import { SearchOptions, useDispatch } from "../contexts/SearchContext";
+import { useDispatch } from "../contexts/SearchContext";
+import { SearchOptions } from "../reducers/search";
 import { useEffect } from "react";
 
 import { VideoClient, Video, QueryParams, VideoSortKeys } from "../lib/search";
@@ -55,11 +56,24 @@ export default function Search({
   );
 }
 
+const LIMIT = 100;
 const defaultQuery: QueryParams = {
   _sort: "startTime",
   q: "音MAD",
   targets: "tagsExact",
-  _limit: 100,
+  _limit: LIMIT,
+};
+
+const calcOffset = (page?: number): number => {
+  if (!page || page < 0) {
+    page = 1;
+  }
+  let offset = (page - 1) * LIMIT;
+  if (offset > 1600) {
+    return 1600;
+  }
+
+  return offset;
 };
 
 const getSearchQuery = ({
@@ -68,6 +82,7 @@ const getSearchQuery = ({
   mylistCounterLt,
   startTimeGte,
   startTimeLt,
+  page,
 }: SearchOptions): QueryParams => {
   if (
     _sort === null ||
@@ -75,6 +90,8 @@ const getSearchQuery = ({
   ) {
     _sort = "-startTime";
   }
+
+  const _offset = calcOffset(page);
 
   let filters = {};
 
@@ -106,6 +123,7 @@ const getSearchQuery = ({
 
   return Object.assign(defaultQuery, {
     _sort,
+    _offset,
     filters,
   });
 };
@@ -132,17 +150,27 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     startTimeLt: Array.isArray(query.startTimeLt)
       ? query.startTimeLt[0]
       : query.startTimeLt || null,
+    page:
+      parseInt(Array.isArray(query.page) ? query.page[0] : query.page) || null,
   };
 
   const searchQuery = getSearchQuery(searchOptions);
-  const videos = (await client.search(searchQuery, allFields)).data.data;
+  const response = (await client.search(searchQuery, allFields)).data;
+  const videos = response.data;
 
   console.log(query);
   console.log(searchQuery);
   return {
     props: {
       videos,
-      searchOptions,
+      searchOptions: {
+        count: response.meta.totalCount,
+        ...searchOptions,
+        page:
+          !!searchOptions.page || searchOptions.page < 0
+            ? searchOptions.page
+            : 1,
+      },
     },
   };
 };

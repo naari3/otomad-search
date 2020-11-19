@@ -1,0 +1,18 @@
+.pagerButton {
+  margin-left: 4px;
+  display: inline-block;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  background: #fff;
+  color: #666;
+  font-size: 93%;
+  padding: 0 8px;
+  height: 22px;
+  line-height: 22px;
+  color: #666;
+}
+
+.active {
+  background: #666;
+  color: #fff;
+}

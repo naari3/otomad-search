@@ -1,6 +1,7 @@
 import * as React from "react";
 import Link from "next/link";
 import styles from "./SearchBar.module.css";
+import removeEmpty from "../lib/removeEmpty";
 
 import { useDispatch, useGlobalState } from "../contexts/SearchContext";
 
@@ -23,14 +24,6 @@ const sortAxisOptions = {
   //   "-threadId": "",
   "+lastCommentTime": "コメントが古い順",
   "-lastCommentTime": "コメントが新しい順",
-};
-
-const removeEmpty = (target) => {
-  const obj = { ...target };
-  Object.keys(obj).forEach(
-    (key) => (obj[key] == null || Number.isNaN(obj[key])) && delete obj[key]
-  );
-  return obj;
 };
 
 const SearchBar = () => {
