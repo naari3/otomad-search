@@ -4,7 +4,8 @@ const parseLimitedFloat = (target: any) => {
   if (!target) {
     return null;
   }
-  const [big, small] = target.split(".");
+  let [big, small] = target.split(".");
+  if (small === undefined) small = "0";
   return parseFloat([big, small[0]].join("."));
 };
 export default parseLimitedFloat;
