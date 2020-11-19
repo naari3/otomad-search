@@ -22,6 +22,7 @@ const VideoDetail = ({ video }: Props) => (
             <a
               href={`http://nico.ms/${video.contentId}`}
               className={styles.itemThumbWrap}
+              target="_blank"
             >
               <img src={video.thumbnailUrl} alt={video.title} />
             </a>
