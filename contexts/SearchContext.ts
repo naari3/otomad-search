@@ -6,20 +6,6 @@ import {
   SearchOptions,
 } from "../reducers/search";
 
-export type SearchContextType = {
-  options: SearchOptions;
-  setOptions: (options: SearchOptions) => void;
-};
-
-const initialSearchContext: SearchContextType = {
-  options: { _sort: "-startTime" },
-  setOptions: () => {},
-};
-
-export const SearchContext = createContext<SearchContextType>(
-  initialSearchContext
-);
-
 export const SearchStateContext = createContext(initialState);
 export const SearchDispatchContext = createContext(
   (() => true) as Dispatch<IAction>

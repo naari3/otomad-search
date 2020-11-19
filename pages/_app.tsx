@@ -3,7 +3,6 @@ import "normalize.css";
 import { useState, useReducer } from "react";
 import type { AppProps /*, AppContext */ } from "next/app";
 import {
-  SearchContext,
   SearchStateContext,
   SearchDispatchContext,
 } from "../contexts/SearchContext";
@@ -17,18 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SearchStateContext.Provider value={state}>
       <SearchDispatchContext.Provider value={dispatch}>
-        <SearchContext.Provider
-          value={{
-            options,
-            setOptions: (v: SearchOptions) => {
-              console.log(+new Date());
-              console.log(v);
-              setOptions(v);
-            },
-          }}
-        >
-          <Component {...pageProps} />
-        </SearchContext.Provider>
+        <Component {...pageProps} />
       </SearchDispatchContext.Provider>
     </SearchStateContext.Provider>
   );

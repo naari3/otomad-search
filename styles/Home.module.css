@@ -8,6 +8,9 @@
 .description h2::before {
   content: "# ";
 }
+.description h3::before {
+  content: "## ";
+}
 .description p {
   display: block;
   margin-block-start: 1em;

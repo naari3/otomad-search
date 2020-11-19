@@ -1,4 +1,4 @@
-import React, { FC } from "react"; // {FC} をimport対象に追加
+import React, { FC, useEffect } from "react"; // {FC} をimport対象に追加
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
@@ -7,12 +7,12 @@ const Home: FC = () => {
   return (
     <Layout>
       <Head>
-        <title>Create Next App</title>
+        <title>otomad-search</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <section className={styles.description}>
-        <h2>説明</h2>
+        <h2>概要</h2>
         <p>音MADを検索するためのサービスです。</p>
         <p>評価基準になりそうなものをフィルターとして設定できます。</p>
         <p>
@@ -25,6 +25,18 @@ const Home: FC = () => {
           </a>{" "}
           を呼び出しています。
         </p>
+        <h2>パラメータの説明</h2>
+        <p>
+          以上、未満の両方を選択できる項目は、いずれか片方のみの検索にも対応しています。
+        </p>
+        <h3>並び替え</h3>
+        <p>ソート順です。</p>
+        <h3>マイリスト数</h3>
+        <p>指定されたマイリスト数の範囲で検索します。</p>
+        <h3>再生時間</h3>
+        <p>指定された再生時間の範囲で検索します。</p>
+        <h3>日付指定</h3>
+        <p>指定された日付の範囲で検索します。</p>
       </section>
     </Layout>
   );

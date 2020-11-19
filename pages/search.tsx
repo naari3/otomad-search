@@ -186,8 +186,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const response = (await client.search(searchQuery, allFields)).data;
   const videos = response.data;
 
-  console.log(query);
-  console.log(searchQuery);
   return {
     props: {
       videos,
