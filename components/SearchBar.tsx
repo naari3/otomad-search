@@ -157,11 +157,16 @@ const SearchBar = () => {
         <Link
           href={{
             pathname: "/search",
-            query: removeEmpty(options),
+            query: { ...removeEmpty(options), page: 1 },
           }}
         >
           <button className={styles.searchButton}>検索</button>
-        </Link>
+        </Link>{" "}
+        {options.count === null || options.count === undefined ? (
+          ""
+        ) : (
+          <span>{options.count.toLocaleString()} 件</span>
+        )}
       </form>
     </div>
   );

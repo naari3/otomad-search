@@ -15,7 +15,7 @@ export const initialState: SearchOptions = { _sort: "-startTime" };
 export type State = SearchOptions;
 
 export interface IAction {
-  type: "update";
+  type: "update" | "init";
   payload: Partial<SearchOptions>;
 }
 
@@ -24,6 +24,10 @@ export const reducer = (state: State, action: IAction) => {
     case "update":
       return {
         ...state,
+        ...action.payload,
+      };
+    case "init":
+      return {
         ...action.payload,
       };
     default:
