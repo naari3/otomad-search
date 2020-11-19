@@ -25,98 +25,114 @@ const sortAxisOptions = {
   "-lastCommentTime": "コメントが新しい順",
 };
 
+const removeEmpty = (target) => {
+  const obj = { ...target };
+  Object.keys(obj).forEach(
+    (key) => (obj[key] == null || Number.isNaN(obj[key])) && delete obj[key]
+  );
+  return obj;
+};
+
 const SearchBar = () => {
   const options = useGlobalState();
   const dispatch = useDispatch();
 
   return (
     <div className={styles.searchBar}>
-      <select
-        name="sort"
-        onChange={(e) => {
-          dispatch({
-            type: "update",
-            payload: { _sort: e.target.value },
-          });
-        }}
-        value={options._sort}
-      >
-        {Object.entries(sortAxisOptions).map(([key, message]) => (
-          <option value={key} key={key}>
-            {message}
-          </option>
-        ))}
-      </select>
-      <div>
-        <span className={styles.filterName}>マイリスト数</span>
-        <label>
-          <input
-            className={styles.inputMylist}
-            type="number"
-            defaultValue={options.mylistCounterGte}
+      <form>
+        <div className={styles.filter}>
+          <span className={styles.filterName}>並び替え</span>
+          <select
+            className={styles.inputOrder}
+            name="sort"
             onChange={(e) => {
               dispatch({
                 type: "update",
-                payload: { mylistCounterGte: parseInt(e.target.value) },
+                payload: { _sort: e.target.value },
               });
             }}
-          />{" "}
-          以上
-        </label>{" "}
-        <label>
-          <input
-            className={styles.inputMylist}
-            type="number"
-            defaultValue={options.mylistCounterLt}
-            onChange={(e) => {
-              dispatch({
-                type: "update",
-                payload: { mylistCounterLt: parseInt(e.target.value) },
-              });
-            }}
-          />{" "}
-          未満
-        </label>
-      </div>
-      <div>
-        <span className={styles.filterName}>日付指定</span>
-        <label>
-          開始日{" "}
-          <input
-            type="datetime-local"
-            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-            defaultValue={options.startTimeGte}
-            onChange={(e) => {
-              dispatch({
-                type: "update",
-                payload: { startTimeGte: e.target.value },
-              });
-            }}
-          />
-        </label>
-        <label>
-          終了日{" "}
-          <input
-            type="datetime-local"
-            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-            defaultValue={options.startTimeLt}
-            onChange={(e) => {
-              dispatch({
-                type: "update",
-                payload: { startTimeLt: e.target.value },
-              });
-            }}
-          />
-        </label>
-      </div>
-      <Link
-        href={{
-          pathname: "/search",
-          query: options,
-        }}
-      >
-        <a>検索</a>
-      </Link>
+            value={options._sort || "-startTime"}
+          >
+            {Object.entries(sortAxisOptions).map(([key, message]) => (
+              <option value={key} key={key}>
+                {message}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className={styles.filter}>
+          <span className={styles.filterName}>マイリスト数</span>
+          <label>
+            <input
+              className={styles.inputMylist}
+              type="number"
+              defaultValue={options.mylistCounterGte}
+              onChange={(e) => {
+                dispatch({
+                  type: "update",
+                  payload: { mylistCounterGte: parseInt(e.target.value) },
+                });
+              }}
+            />
+            <span className={styles.filterWord}>以上</span>
+          </label>
+          <label>
+            <input
+              className={styles.inputMylist}
+              type="number"
+              defaultValue={options.mylistCounterLt}
+              onChange={(e) => {
+                dispatch({
+                  type: "update",
+                  payload: { mylistCounterLt: parseInt(e.target.value) },
+                });
+              }}
+            />
+            <span className={styles.filterWord}>未満</span>
+          </label>
+        </div>
+        <div className={styles.filter}>
+          <span className={styles.filterName}>日付指定</span>
+          <label>
+            <span className={styles.filterWord}>開始日</span>
+            <input
+              className={styles.inputDatetime}
+              type="datetime-local"
+              pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+              defaultValue={options.startTimeGte}
+              onChange={(e) => {
+                dispatch({
+                  type: "update",
+                  payload: { startTimeGte: e.target.value },
+                });
+              }}
+            />
+          </label>
+          <label>
+            <span className={styles.filterWord}>終了日</span>
+            <input
+              className={styles.inputDatetime}
+              type="datetime-local"
+              pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+              defaultValue={options.startTimeLt}
+              onChange={(e) => {
+                dispatch({
+                  type: "update",
+                  payload: { startTimeLt: e.target.value },
+                });
+              }}
+            />
+          </label>
+        </div>
+        <Link
+          href={{
+            pathname: "/search",
+            query: removeEmpty(options),
+          }}
+        >
+          <button className={styles.searchButton}>検索</button>
+        </Link>
+      </form>
     </div>
   );
 };
