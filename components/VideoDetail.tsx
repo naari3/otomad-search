@@ -4,6 +4,7 @@ import styles from "./VideoDetail.module.css";
 import formattedDate from "../lib/date";
 import secondsToMs from "../lib/secondsToMs";
 import stripTag from "../lib/stripTag";
+import Tag from "./Tag";
 
 type Props = {
   video: Pick<Video, keyof VideoFields>;
@@ -41,6 +42,13 @@ const VideoDetail = ({ video }: Props) => (
       </p>
       <div>
         <p className={styles.itemDescription}>{stripTag(video.description)}</p>
+        <ul className={`${styles.list} ${styles.tags}`}>
+          {video.tags.split(" ").map((tag) => (
+            <li className={styles.tag}>
+              <Tag name={tag} />
+            </li>
+          ))}
+        </ul>
       </div>
       <div className={styles.itemData}>
         <ul className={styles.list}>

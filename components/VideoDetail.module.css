@@ -104,6 +104,16 @@
   word-break: break-all;
 }
 
+.tags li {
+  float: left;
+}
+
+.tags::after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+
 .list {
   padding-left: 0px;
   list-style: none;
