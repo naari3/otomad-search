@@ -1,7 +1,8 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import styles from "../styles/Search.module.css";
-import { useDispatch } from "../contexts/SearchContext";
+import { useDispatch as useSearchDispatch } from "../contexts/SearchContext";
+import { useDispatch as useLoadingDispatch } from "../contexts/LoadingContext";
 import { SearchOptions } from "../reducers/search";
 import { useEffect } from "react";
 
@@ -38,14 +39,21 @@ export default function Search({
   videos: Pick<Video, typeof allFields[number]>[];
   searchOptions: SearchOptions;
 }) {
-  const dispatch = useDispatch();
+  const searchDispatch = useSearchDispatch();
+  const loadingDispatch = useLoadingDispatch();
 
   useEffect(() => {
-    dispatch({
+    searchDispatch({
       type: "update",
       payload: { ...searchOptions },
     });
   }, [searchOptions]);
+  useEffect(() => {
+    loadingDispatch({
+      type: "update",
+      payload: false,
+    });
+  }, [videos]);
 
   return (
     <Layout>

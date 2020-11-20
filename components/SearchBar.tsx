@@ -4,7 +4,14 @@ import styles from "./SearchBar.module.css";
 import removeEmpty from "../lib/removeEmpty";
 import parseLimitedFloat from "../lib/parseLimitedFloat";
 
-import { useDispatch, useGlobalState } from "../contexts/SearchContext";
+import {
+  useDispatch as useSearchDispatch,
+  useGlobalState as useSearchGlobalState,
+} from "../contexts/SearchContext";
+import {
+  useDispatch as useLoadingDispatch,
+  useGlobalState as useLoadingGlobalState,
+} from "../contexts/LoadingContext";
 
 const sortAxisOptions = {
   //   "+userId": "",
@@ -28,8 +35,10 @@ const sortAxisOptions = {
 };
 
 const SearchBar = () => {
-  const options = useGlobalState();
-  const dispatch = useDispatch();
+  const options = useSearchGlobalState();
+  const searchDispatch = useSearchDispatch();
+  const loading = useLoadingGlobalState();
+  const loadingDispatch = useLoadingDispatch();
 
   return (
     <div className={styles.searchBar}>
@@ -40,7 +49,7 @@ const SearchBar = () => {
             className={styles.inputOrder}
             name="sort"
             onChange={(e) => {
-              dispatch({
+              searchDispatch({
                 type: "update",
                 payload: { _sort: e.target.value },
               });
@@ -63,7 +72,7 @@ const SearchBar = () => {
               min="0"
               defaultValue={options.mylistCounterGte}
               onChange={(e) => {
-                dispatch({
+                searchDispatch({
                   type: "update",
                   payload: { mylistCounterGte: parseInt(e.target.value) },
                 });
@@ -78,7 +87,7 @@ const SearchBar = () => {
               min="0"
               defaultValue={options.mylistCounterLte}
               onChange={(e) => {
-                dispatch({
+                searchDispatch({
                   type: "update",
                   payload: { mylistCounterLte: parseInt(e.target.value) },
                 });
@@ -95,7 +104,7 @@ const SearchBar = () => {
               min="0"
               defaultValue={options.lengthMinutesGte}
               onChange={(e) => {
-                dispatch({
+                searchDispatch({
                   type: "update",
                   payload: {
                     lengthMinutesGte: parseLimitedFloat(e.target.value),
@@ -114,7 +123,7 @@ const SearchBar = () => {
               defaultValue={options.lengthMinutesLte}
               onChange={(e) => {
                 const [big, small] = e.target.value.split(".");
-                dispatch({
+                searchDispatch({
                   type: "update",
                   payload: {
                     lengthMinutesLte: parseLimitedFloat(e.target.value),
@@ -135,7 +144,7 @@ const SearchBar = () => {
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
               defaultValue={options.startTimeGte}
               onChange={(e) => {
-                dispatch({
+                searchDispatch({
                   type: "update",
                   payload: { startTimeGte: e.target.value },
                 });
@@ -150,7 +159,7 @@ const SearchBar = () => {
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
               defaultValue={options.startTimeLte}
               onChange={(e) => {
-                dispatch({
+                searchDispatch({
                   type: "update",
                   payload: { startTimeLte: e.target.value },
                 });
@@ -164,7 +173,18 @@ const SearchBar = () => {
             query: { ...removeEmpty(options), page: 1 },
           }}
         >
-          <button className={styles.searchButton}>検索</button>
+          <button
+            className={styles.searchButton}
+            disabled={loading}
+            onClick={() => {
+              loadingDispatch({
+                type: "update",
+                payload: true,
+              });
+            }}
+          >
+            検索
+          </button>
         </Link>{" "}
         {options.count === null || options.count === undefined ? (
           ""
