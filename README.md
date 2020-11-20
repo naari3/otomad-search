@@ -1,3 +1,41 @@
+# otomad-search
+
+[https://otomad-search.vercel.app/](https://otomad-search.vercel.app/)
+
+## 概要
+
+音 MAD を検索するためのサービスです。
+
+評価基準になりそうなものをフィルターとして設定できます。
+
+裏で [niconico コンテンツ検索 API](https://site.nicovideo.jp/search-api-docs/search.html) を呼び出しています。
+
+またその仕様上、17 ページ(1700 件目)以降を確認することは出来ません。
+
+## パラメータの説明
+
+以上、以下の両方を選択できる項目は、いずれか片方のみの検索にも対応しています。
+
+### 並び替え
+
+ソート順を選択出来ます。
+
+人気順ソートは出来ません。
+
+### マイリスト数
+
+指定されたマイリスト数の範囲で検索します。
+
+### 再生時間
+
+指定された再生時間の範囲で検索します。
+
+### 日付指定
+
+指定された日付の範囲で検索します。
+
+# Development
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
