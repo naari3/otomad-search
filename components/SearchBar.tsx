@@ -35,32 +35,36 @@ const SearchBar = () => {
     <div className={styles.searchBar}>
       <form>
         <div className={styles.filter}>
-          <label>
-            音MAD{" "}
-            <input
-              type="text"
-              value={options.q}
-              onChange={(e) => {
-                dispatch({
-                  type: "update",
-                  payload: { q: e.target.value },
-                });
-              }}
-            />
-          </label>
-          <Link
-            href={{
-              pathname: "/search",
-              query: { ...removeEmpty(options), page: 1 },
-            }}
-          >
-            <button className={styles.searchButton}>検索</button>
-          </Link>{" "}
-          {options.count === null || options.count === undefined ? (
-            ""
-          ) : (
-            <span>{options.count.toLocaleString()} 件</span>
-          )}
+          <div>
+            <div className={styles.otomadFixWrap}>
+              <label className={styles.otomadLabel}>音MAD </label>
+              <input
+                type="text"
+                value={options.q}
+                className={styles.inputQueryBar}
+                autoComplete={"off"}
+                onChange={(e) => {
+                  dispatch({
+                    type: "update",
+                    payload: { q: e.target.value },
+                  });
+                }}
+              />
+              <Link
+                href={{
+                  pathname: "/search",
+                  query: { ...removeEmpty(options), page: 1 },
+                }}
+              >
+                <button className={styles.searchButton}>検索</button>
+              </Link>
+            </div>
+            {options.count === null || options.count === undefined ? (
+              ""
+            ) : (
+              <span>{options.count.toLocaleString()} 件</span>
+            )}
+          </div>
         </div>
         <div className={styles.filter}>
           <span className={styles.filterName}>並び替え</span>
