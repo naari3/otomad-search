@@ -1,4 +1,5 @@
 export type SearchOptions = {
+  q?: string;
   _sort?: string;
   mylistCounterGte?: number;
   mylistCounterLte?: number;

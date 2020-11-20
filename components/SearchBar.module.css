@@ -8,6 +8,41 @@
   display: block;
 }
 
+.otomadFixWrap {
+  border: #bbbbbb solid 1px;
+  border-radius: 2px;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.otomadLabel {
+  margin: 1px 0 1px 1px;
+  padding: 2px 0 2px 5px;
+}
+
+.inputQueryBar {
+  padding: 2px 5px 2px 0;
+  border: #bbbbbb solid 0px;
+  border-right-width: 0;
+  border-radius: 2px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.inputQueryBar:focus {
+  outline: none;
+}
+
+.searchButton {
+  padding: 2px 5px;
+  border: 0;
+  border-left: #bbbbbb solid 1px;
+  /* border-radius: 2px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0; */
+  /* margin-right: 10px; */
+}
+
 .inputOrder {
   width: 14em;
   padding: 0 5px;
@@ -47,8 +82,4 @@ label + .filterName {
 
 .filterWord {
   padding: 0 5px;
-}
-
-.searchButton {
-  margin-right: 10px;
 }
