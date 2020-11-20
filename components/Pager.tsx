@@ -1,14 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FC } from "react";
 import styles from "./Pager.module.css";
 import Link from "next/link";
-import { useDispatch, useGlobalState } from "../contexts/SearchContext";
+import { useGlobalState as useSearchGlobalState } from "../contexts/SearchContext";
+import {
+  useDispatch as useLoadingDispatch,
+  useGlobalState as useLoadingGlobalState,
+} from "../contexts/LoadingContext";
 import removeEmpty from "../lib/removeEmpty";
+import { UrlObject } from "url";
+
+type Url = string | UrlObject;
+
+type PagerButtonProps = {
+  href: Url;
+};
+
+const PagerButton: FC<PagerButtonProps> = ({ href, children }) => {
+  const loadingDispatch = useLoadingDispatch();
+  const loading = useLoadingGlobalState();
+
+  return loading ? (
+    <span className={`${styles.pagerButton} ${styles.disabled}`}>
+      {children}
+    </span>
+  ) : (
+    <Link href={href}>
+      <a
+        className={styles.pagerButton}
+        onClick={() => {
+          loadingDispatch({
+            type: "update",
+            payload: true,
+          });
+        }}
+      >
+        {children}
+      </a>
+    </Link>
+  );
+};
 
 const Pager = () => {
-  const options = useGlobalState();
-  const dispatch = useDispatch();
-
-  const [maxPages, setMaxPages] = useState(1);
+  const options = useSearchGlobalState();
+  const loading = useLoadingGlobalState();
+  const [, setMaxPages] = useState(1);
   const [hasPrevPrevPage, setHasPrevPrevPage] = useState(false);
   const [hasPrevPage, setHasPrevPage] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
@@ -35,44 +70,40 @@ const Pager = () => {
   return (
     <div className={styles.pager}>
       {hasPrevPage ? (
-        <Link
+        <PagerButton
           href={{
             pathname: "/search",
             query: removeEmpty({ ...options, page: options.page - 1 }),
           }}
         >
-          <a className={`${styles.pagerButton} ${styles.prevButton}`}>←</a>
-        </Link>
+          ←
+        </PagerButton>
       ) : (
         ""
       )}
 
       {hasPrevPrevPage ? (
-        <Link
+        <PagerButton
           href={{
             pathname: "/search",
             query: removeEmpty({ ...options, page: options.page - 2 }),
           }}
         >
-          <a className={`${styles.pagerButton} ${styles.switchingButton}`}>
-            {options.page - 2}
-          </a>
-        </Link>
+          {options.page - 2}
+        </PagerButton>
       ) : (
         ""
       )}
 
       {hasPrevPage ? (
-        <Link
+        <PagerButton
           href={{
             pathname: "/search",
             query: removeEmpty({ ...options, page: options.page - 1 }),
           }}
         >
-          <a className={`${styles.pagerButton} ${styles.switchingButton}`}>
-            {options.page - 1}
-          </a>
-        </Link>
+          {options.page - 1}
+        </PagerButton>
       ) : (
         ""
       )}
@@ -84,43 +115,39 @@ const Pager = () => {
       </span>
 
       {hasNextPage ? (
-        <Link
+        <PagerButton
           href={{
             pathname: "/search",
             query: removeEmpty({ ...options, page: options.page + 1 }),
           }}
         >
-          <a className={`${styles.pagerButton} ${styles.switchingButton}`}>
-            {options.page + 1}
-          </a>
-        </Link>
+          {options.page + 1}
+        </PagerButton>
       ) : (
         ""
       )}
       {hasNextNextPage ? (
-        <Link
+        <PagerButton
           href={{
             pathname: "/search",
             query: removeEmpty({ ...options, page: options.page + 2 }),
           }}
         >
-          <a className={`${styles.pagerButton} ${styles.switchingButton}`}>
-            {options.page + 2}
-          </a>
-        </Link>
+          {options.page + 2}
+        </PagerButton>
       ) : (
         ""
       )}
 
       {hasNextPage ? (
-        <Link
+        <PagerButton
           href={{
             pathname: "/search",
             query: removeEmpty({ ...options, page: options.page + 1 }),
           }}
         >
-          <a className={`${styles.pagerButton} ${styles.nextButton}`}>→</a>
-        </Link>
+          →
+        </PagerButton>
       ) : (
         ""
       )}

@@ -6,17 +6,36 @@ import {
   SearchStateContext,
   SearchDispatchContext,
 } from "../contexts/SearchContext";
-import { initialState, reducer, SearchOptions } from "../reducers/search";
+import {
+  initialState as searchInitialState,
+  reducer as searchReducer,
+} from "../reducers/search";
+import {
+  LoadingDispatchContext,
+  LoadingStateContext,
+} from "../contexts/LoadingContext";
+import {
+  initialState as loadingInitialState,
+  reducer as loadingReducer,
+} from "../reducers/loading";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [options, setOptions] = useState<SearchOptions>({
-    _sort: "-startTime",
-  });
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [searchState, searchDispatch] = useReducer(
+    searchReducer,
+    searchInitialState
+  );
+  const [loadingState, loadingDispatch] = useReducer(
+    loadingReducer,
+    loadingInitialState
+  );
   return (
-    <SearchStateContext.Provider value={state}>
-      <SearchDispatchContext.Provider value={dispatch}>
-        <Component {...pageProps} />
+    <SearchStateContext.Provider value={searchState}>
+      <SearchDispatchContext.Provider value={searchDispatch}>
+        <LoadingStateContext.Provider value={loadingState}>
+          <LoadingDispatchContext.Provider value={loadingDispatch}>
+            <Component {...pageProps} />
+          </LoadingDispatchContext.Provider>
+        </LoadingStateContext.Provider>
       </SearchDispatchContext.Provider>
     </SearchStateContext.Provider>
   );
