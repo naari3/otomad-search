@@ -78,6 +78,7 @@ const calcOffset = (page?: number): number => {
 };
 
 const getSearchQuery = ({
+  q,
   _sort,
   mylistCounterGte,
   mylistCounterLte,
@@ -137,11 +138,13 @@ const getSearchQuery = ({
     filters["lengthSeconds"]["lte"] = lengthMinutesLte * 60;
   }
 
-  return Object.assign(defaultQuery, {
+  return {
+    ...defaultQuery,
     _sort,
     _offset,
     filters,
-  });
+    q: `${defaultQuery.q} ${q}`.trim(),
+  };
 };
 
 const parseQueryToString = (target: string | string[]): string | null => {
@@ -163,7 +166,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const client = new VideoClient({ context: "otomad-search" });
   console.log(query);
   const searchOptions: SearchOptions = {
-    _sort: parseQueryToString(query._sort) || null,
+    q: parseQueryToString(query.q) || "",
+    _sort: parseQueryToString(query._sort),
     mylistCounterGte: parseQueryToInt(query.mylistCounterGte),
     mylistCounterLte: parseQueryToInt(query.mylistCounterLte),
     lengthMinutesGte: parseQueryToLimitedFloat(query.lengthMinutesGte),
