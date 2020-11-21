@@ -44,13 +44,6 @@
   background: #000;
 }
 
-.thumb {
-  max-width: 160px;
-  max-height: 90px;
-  width: auto;
-  height: auto;
-}
-
 .videoLength {
   position: absolute;
   bottom: 5px;

@@ -5,29 +5,13 @@ import formattedDate from "../lib/date";
 import secondsToMs from "../lib/secondsToMs";
 import stripTag from "../lib/stripTag";
 import Tag from "./TagOnScreen";
+import Thumbnail from "./Thumbnail";
 
 type Props = {
   video: Pick<Video, keyof VideoFields>;
 };
 
-const ThumbnailImg = ({
-  thumbnailUrl,
-  title,
-}: {
-  thumbnailUrl: string;
-  title: string;
-}) => {
-  return (
-    <img
-      className={styles.thumb}
-      src={`${thumbnailUrl}.M`}
-      onError={(e) => {
-        e.currentTarget.src = thumbnailUrl;
-      }}
-      alt={title}
-    />
-  );
-};
+const urlPrefix = "https://www.nicovideo.jp/watch/";
 
 const VideoDetail = React.memo(({ video }: Props) => {
   return (
@@ -41,11 +25,11 @@ const VideoDetail = React.memo(({ video }: Props) => {
           <div className={styles.itemThumb}>
             <div>
               <a
-                href={`http://nico.ms/${video.contentId}`}
+                href={`${urlPrefix}${video.contentId}`}
                 className={styles.itemThumbWrap}
                 target="_blank"
               >
-                <ThumbnailImg
+                <Thumbnail
                   thumbnailUrl={video.thumbnailUrl}
                   title={video.title}
                 />
@@ -59,10 +43,7 @@ const VideoDetail = React.memo(({ video }: Props) => {
       </div>
       <div className={styles.itemContent}>
         <p className={styles.itemTitle}>
-          <a
-            href={`https://www.nicovideo.jp/watch/${video.contentId}`}
-            target="_blank"
-          >
+          <a href={`${urlPrefix}${video.contentId}`} target="_blank">
             {video.title}
           </a>
         </p>
