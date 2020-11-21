@@ -1,0 +1,48 @@
+.viewingSwitcher {
+  margin-left: 4px;
+  display: inline-block;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  background: #fff;
+  color: #666;
+  font-size: 93%;
+  /* padding: 0 4px; */
+  height: 22px;
+  line-height: 22px;
+  color: #666;
+}
+
+.viewingList {
+  list-style: none;
+  padding-left: 0px;
+  margin-top: 0;
+}
+
+.viewingList::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+.viewingList li {
+  float: left;
+  display: block;
+  /* margin: 0 5px; */
+}
+
+.viewingList li.selected {
+  opacity: 0.5;
+}
+
+.viewingList li:not(:last-child) {
+  border-right: 1px solid #dbdbdb;
+}
+
+.viewingList li a {
+  cursor: pointer;
+  padding: 0 6px;
+}
+
+.viewingList li.selected a {
+  cursor: default;
+}
