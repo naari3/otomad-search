@@ -46,11 +46,17 @@ const VideoDetail = React.memo(({ video }: Props) => {
             {stripTag(video.description)}
           </p>
           <ul className={`${styles.list} ${styles.tags}`}>
-            {video.tags.split(" ").map((tag) => (
-              <li className={styles.tag}>
-                <Tag name={tag} />
-              </li>
-            ))}
+            {video.tags
+              .split(" ")
+              .filter(
+                (tag) =>
+                  !["音MAD", "音mad", "音ＭＡＤ", "音ｍａｄ"].includes(tag)
+              )
+              .map((tag) => (
+                <li className={styles.tag}>
+                  <Tag name={tag} />
+                </li>
+              ))}
           </ul>
         </div>
         <div className={styles.itemData}>

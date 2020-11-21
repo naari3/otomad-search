@@ -4,7 +4,7 @@ import Tag, { NoLinkTag } from "./Tag";
 
 const TagOnScreen = ({ name }: { name: string }) => {
   return (
-    <TrackVisibility throttleInterval={0} offset={500} partialVisibility={true}>
+    <TrackVisibility throttleInterval={0} offset={250} partialVisibility={true}>
       {({ isVisible }) =>
         isVisible ? <Tag name={name} /> : <NoLinkTag name={name}></NoLinkTag>
       }
