@@ -1,6 +1,8 @@
 import "../styles/globals.css";
 import "normalize.css";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
+import { useRouter } from "next/router";
+import * as gtag from "../lib/gtag";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import {
@@ -41,6 +43,23 @@ function MyApp({ Component, pageProps }: AppProps) {
     viewingReducer,
     viewingInitialState
   );
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!gtag.existsGaId) {
+      return;
+    }
+
+    const handleRouteChange = (path) => {
+      gtag.pageview(path);
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <>
       <Head>
