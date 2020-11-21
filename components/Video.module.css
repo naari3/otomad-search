@@ -14,10 +14,13 @@
 }
 
 .videoWrap {
-  float: left;
   width: 160px;
   margin-right: 12px;
   position: relative;
+}
+
+.videoWrap.float {
+  float: left;
 }
 
 .itemThumbBox {
