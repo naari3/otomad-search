@@ -1,7 +1,8 @@
 import "../styles/globals.css";
 import "normalize.css";
-import { useState, useReducer } from "react";
-import type { AppProps /*, AppContext */ } from "next/app";
+import { useReducer } from "react";
+import type { AppProps } from "next/app";
+import Head from "next/head";
 import {
   SearchStateContext,
   SearchDispatchContext,
@@ -41,19 +42,24 @@ function MyApp({ Component, pageProps }: AppProps) {
     viewingInitialState
   );
   return (
-    <SearchStateContext.Provider value={searchState}>
-      <SearchDispatchContext.Provider value={searchDispatch}>
-        <LoadingStateContext.Provider value={loadingState}>
-          <LoadingDispatchContext.Provider value={loadingDispatch}>
-            <ViewingStateContext.Provider value={viewingState}>
-              <ViewingDispatchContext.Provider value={viewingDispatch}>
-                <Component {...pageProps} />
-              </ViewingDispatchContext.Provider>
-            </ViewingStateContext.Provider>
-          </LoadingDispatchContext.Provider>
-        </LoadingStateContext.Provider>
-      </SearchDispatchContext.Provider>
-    </SearchStateContext.Provider>
+    <>
+      <Head>
+        <meta name="viewport" content="viewport-fit-cover" />
+      </Head>
+      <SearchStateContext.Provider value={searchState}>
+        <SearchDispatchContext.Provider value={searchDispatch}>
+          <LoadingStateContext.Provider value={loadingState}>
+            <LoadingDispatchContext.Provider value={loadingDispatch}>
+              <ViewingStateContext.Provider value={viewingState}>
+                <ViewingDispatchContext.Provider value={viewingDispatch}>
+                  <Component {...pageProps} />
+                </ViewingDispatchContext.Provider>
+              </ViewingStateContext.Provider>
+            </LoadingDispatchContext.Provider>
+          </LoadingStateContext.Provider>
+        </SearchDispatchContext.Provider>
+      </SearchStateContext.Provider>
+    </>
   );
 }
 
