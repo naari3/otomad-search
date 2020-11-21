@@ -1,11 +1,17 @@
-.videoList {
-  list-style: none;
-  padding-left: 0px;
+.toolbar {
+  margin-bottom: 12px;
 }
 
-.videoList .item:not(:last-child) {
-  width: 100%;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: #ccc dotted 1px;
+.toolbar::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+.toolbar :first-child {
+  float: left;
+}
+
+.toolbar :last-child {
+  float: right;
 }

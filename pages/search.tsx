@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
-import styles from "../styles/Search.module.css";
 import { useDispatch as useSearchDispatch } from "../contexts/SearchContext";
 import { useDispatch as useLoadingDispatch } from "../contexts/LoadingContext";
 import { SearchOptions } from "../reducers/search";

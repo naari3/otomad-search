@@ -12,9 +12,9 @@ type Props = {
 
 const urlPrefix = "https://www.nicovideo.jp/watch/";
 
-const VideoWrap = React.memo(({ video }: Props) => {
+const VideoWrap = React.memo(({ video, float }: Props) => {
   return (
-    <div className={`${styles.videoWrap} ${styles.float}`}>
+    <div className={`${styles.videoWrap} ${float ? styles.float : ""}`}>
       <p className={styles.itemTime}>
         <span>{formattedDate(video.startTime)}</span>
         <span className={styles.separate}>投稿</span>
