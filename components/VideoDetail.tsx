@@ -37,7 +37,10 @@ const VideoDetail = React.memo(({ video }: Props) => {
       </div>
       <div className={styles.itemContent}>
         <p className={styles.itemTitle}>
-          <a href={`http://nico.ms/${video.contentId}`} target="_blank">
+          <a
+            href={`https://www.nicovideo.jp/watch/${video.contentId}`}
+            target="_blank"
+          >
             {video.title}
           </a>
         </p>
