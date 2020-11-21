@@ -5,6 +5,7 @@ import TrackVisibility from "react-on-screen";
 const NO_THUMBNAIL_URL =
   "https://nicovideo.cdn.nimg.jp/web/img/common/no_thumbnail_M.jpg";
 
+// TODO: https://github.com/naari3/otomad-search/issues/15
 const Thumbnail = ({
   thumbnailUrl,
   title,

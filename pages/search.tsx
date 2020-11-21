@@ -77,6 +77,8 @@ export default function Search({
   );
 }
 
+// これより以下すべてserverPropsを生成するためのコード
+// 分けても良いかもしれん
 const LIMIT = 100;
 const defaultQuery: QueryParams = {
   _sort: "startTime",
