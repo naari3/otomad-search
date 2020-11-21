@@ -20,3 +20,11 @@
   margin: 0 auto;
   width: 1024px;
 }
+
+.logo {
+  position: relative;
+  top: 0.15em;
+  height: 1.2em;
+  width: auto;
+  margin-right: 0.2em;
+}

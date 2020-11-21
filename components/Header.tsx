@@ -2,6 +2,7 @@ import * as React from "react";
 import SearchBar from "./SearchBar";
 import styles from "./Header.module.css";
 import Link from "next/link";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useDispatch } from "../contexts/SearchContext";
 import { initialState } from "../reducers/search";
@@ -12,6 +13,9 @@ const Header = () => {
 
   return (
     <>
+      <Head>
+        <link rel="icon" href="/otomad-search.svg" />
+      </Head>
       <header className={styles.header}>
         <h1 className={styles.inner}>
           <Link href="/">
@@ -25,6 +29,11 @@ const Header = () => {
                 })
               }
             >
+              <img
+                src="/otomad-search.svg"
+                alt="otomad-search"
+                className={styles.logo}
+              />
               otomad-search
             </a>
           </Link>
