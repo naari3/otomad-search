@@ -1,17 +1,14 @@
-import React, { useEffect, useState, FC } from "react";
+import React from "react";
 import styles from "./Tag.module.css";
 import Link from "next/link";
 import { useGlobalState as useSearchGlobalState } from "../contexts/SearchContext";
-import {
-  useDispatch as useLoadingDispatch,
-  useGlobalState as useLoadingGlobalState,
-} from "../contexts/LoadingContext";
+import { useGlobalState as useLoadingGlobalState } from "../contexts/LoadingContext";
 import removeEmpty from "../lib/removeEmpty";
 
-const Tag = ({ name }: { name: string }) => {
-  const options = useSearchGlobalState();
+const Tag = React.memo(({ name }: { name: string }) => {
   const loading = useLoadingGlobalState();
-  const loadingDispatch = useLoadingDispatch();
+  const options = useSearchGlobalState();
+  console.log("rendered!");
 
   return (
     <Link
@@ -21,22 +18,17 @@ const Tag = ({ name }: { name: string }) => {
       }}
     >
       {loading ? (
-        <span className={`${styles.tag} ${styles.disabled}`}>{name}</span>
+        <NoLinkTag name={name}></NoLinkTag>
       ) : (
-        <a
-          className={styles.tag}
-          onClick={() => {
-            loadingDispatch({
-              type: "update",
-              payload: true,
-            });
-          }}
-        >
-          {name}
-        </a>
+        <a className={styles.tag}>{name}</a>
       )}
     </Link>
   );
-};
+});
+
+const NoLinkTag = React.memo(({ name }: { name: string }) => {
+  return <span className={`${styles.tag} ${styles.disabled}`}>{name}</span>;
+});
 
 export default Tag;
+export { NoLinkTag };
