@@ -8,7 +8,6 @@ const Home: FC = () => {
     <Layout>
       <Head>
         <title>otomad-search</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <section className={styles.description}>
