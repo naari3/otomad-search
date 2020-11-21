@@ -1,5 +1,6 @@
 import * as React from "react";
 import NextDocument, { Html, Head, Main, NextScript } from "next/document";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 class Document extends NextDocument {
   render() {
@@ -11,6 +12,7 @@ class Document extends NextDocument {
             href="/otomad-search.svg"
             key="shortcutIcon"
           />
+          <GoogleAnalytics />
         </Head>
 
         <body>

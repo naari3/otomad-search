@@ -3,6 +3,7 @@ import Link from "next/link";
 import styles from "./SearchBar.module.css";
 import removeEmpty from "../lib/removeEmpty";
 import parseLimitedFloat from "../lib/parseLimitedFloat";
+import * as gtag from "../lib/gtag";
 
 import {
   useDispatch as useSearchDispatch,
@@ -69,6 +70,11 @@ const SearchBar = () => {
                   className={styles.searchButton}
                   disabled={loading}
                   onClick={() => {
+                    gtag.event({
+                      action: "search",
+                      category: "Otomads",
+                      label: "happy",
+                    });
                     loadingDispatch({
                       type: "update",
                       payload: true,
