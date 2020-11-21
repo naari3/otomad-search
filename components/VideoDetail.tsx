@@ -10,6 +10,25 @@ type Props = {
   video: Pick<Video, keyof VideoFields>;
 };
 
+const ThumbnailImg = ({
+  thumbnailUrl,
+  title,
+}: {
+  thumbnailUrl: string;
+  title: string;
+}) => {
+  return (
+    <img
+      className={styles.thumb}
+      src={`${thumbnailUrl}.M`}
+      onError={(e) => {
+        e.currentTarget.src = thumbnailUrl;
+      }}
+      alt={title}
+    />
+  );
+};
+
 const VideoDetail = React.memo(({ video }: Props) => {
   return (
     <div className={styles.videoDetail}>
@@ -26,7 +45,10 @@ const VideoDetail = React.memo(({ video }: Props) => {
                 className={styles.itemThumbWrap}
                 target="_blank"
               >
-                <img src={video.thumbnailUrl} alt={video.title} />
+                <ThumbnailImg
+                  thumbnailUrl={video.thumbnailUrl}
+                  title={video.title}
+                />
               </a>
             </div>
             <span className={styles.videoLength}>
