@@ -34,7 +34,7 @@ const VideoDetail = React.memo(({ video }: Props) => {
                   !["音MAD", "音mad", "音ＭＡＤ", "音ｍａｄ"].includes(tag)
               )
               .map((tag) => (
-                <li className={styles.tag}>
+                <li className={styles.tag} key={tag}>
                   <Tag name={tag} />
                 </li>
               ))}
