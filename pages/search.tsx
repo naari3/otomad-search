@@ -2,6 +2,8 @@ import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { useDispatch as useSearchDispatch } from "../contexts/SearchContext";
 import { useDispatch as useLoadingDispatch } from "../contexts/LoadingContext";
+import { useDispatch as useViewingDispatch } from "../contexts/ViewingContext";
+import { State as ViewingState } from "../reducers/viewing";
 import { SearchOptions } from "../reducers/search";
 import { useEffect } from "react";
 
@@ -10,6 +12,8 @@ import VideoList from "../components/VideoList";
 
 import Layout from "../components/Layout";
 import parseLimitedFloat from "../lib/parseLimitedFloat";
+
+import { parseCookies } from "nookies";
 
 export const allFields = [
   "contentId",
@@ -34,12 +38,15 @@ export const allFields = [
 export default function Search({
   videos,
   searchOptions,
+  viewing,
 }: {
   videos: Pick<Video, typeof allFields[number]>[];
   searchOptions: SearchOptions;
+  viewing: ViewingState;
 }) {
   const searchDispatch = useSearchDispatch();
   const loadingDispatch = useLoadingDispatch();
+  const viewingDispatch = useViewingDispatch();
 
   useEffect(() => {
     searchDispatch({
@@ -53,6 +60,12 @@ export default function Search({
       payload: false,
     });
   }, [videos]);
+  useEffect(() => {
+    viewingDispatch({
+      type: "update",
+      payload: viewing,
+    });
+  }, [viewing]);
 
   return (
     <Layout>
@@ -169,7 +182,11 @@ const parseQueryToLimitedFloat = (target: string | string[]): number | null => {
   return Number.isNaN(result) ? null : result;
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const cookies = parseCookies(ctx);
+  let viewing = cookies.viewing;
+  if (viewing !== "detail" && viewing !== "icon") viewing = "detail";
+  const { query } = ctx;
   const client = new VideoClient({ context: "otomad-search" });
   console.log(query);
   const searchOptions: SearchOptions = {
@@ -199,6 +216,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
             ? searchOptions.page
             : 1,
       },
+      viewing,
     },
   };
 };
