@@ -8,7 +8,6 @@ import removeEmpty from "../lib/removeEmpty";
 const Tag = React.memo(({ name }: { name: string }) => {
   const loading = useLoadingGlobalState();
   const options = useSearchGlobalState();
-  console.log("rendered!");
 
   return (
     <Link
