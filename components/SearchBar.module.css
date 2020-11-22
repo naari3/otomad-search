@@ -36,10 +36,6 @@
   padding: 2px 5px;
   border: 0;
   border-left: #bbbbbb solid 1px;
-  /* border-radius: 2px;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0; */
-  /* margin-right: 10px; */
 }
 
 .inputOrder {
@@ -79,6 +75,21 @@ label + .filterName {
   padding-left: 14px;
 }
 
+@media screen and (max-width: 480px) {
+  .filterName {
+    display: block;
+  }
+  label + .filterName {
+    padding-left: 0;
+  }
+}
+
 .filterWord {
   padding: 0 5px;
+}
+
+@media screen and (max-width: 480px) {
+  .filterDate {
+    display: block;
+  }
 }

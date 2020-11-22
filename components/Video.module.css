@@ -10,8 +10,22 @@
   border-bottom: #ccc dotted 1px;
 }
 
+@media screen and (max-width: 480px) {
+  .videoList.videoDetailList .item:not(:last-child) {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: #ddd solid 1px;
+  }
+}
+
 .videoDetail {
   font-size: 13px;
+}
+
+@media screen and (max-width: 480px) {
+  .videoDetail {
+    padding: 12px;
+  }
 }
 
 .videoDetail::before {
@@ -26,9 +40,9 @@
 }
 
 .videoWrap {
-  width: 160px;
   margin-right: 12px;
   position: relative;
+  box-sizing: border-box;
 }
 
 .videoWrap.float {
@@ -37,9 +51,14 @@
 
 .itemThumbBox {
   width: 160px;
-  height: 90px;
   overflow: hidden;
   position: relative;
+}
+
+@media screen and (max-width: 480px) {
+  .itemThumbBox {
+    width: 130px;
+  }
 }
 
 .itemThumb {
@@ -50,9 +69,15 @@
   table-layout: fixed;
 }
 
+@media screen and (max-width: 480px) {
+  .itemThumb {
+    width: 130px;
+    height: auto;
+    border-radius: 4px;
+  }
+}
+
 .itemThumbWrap {
-  width: 160px;
-  height: 90px;
   display: table-cell;
   text-align: center;
   vertical-align: middle;
@@ -105,11 +130,29 @@
   color: #069;
 }
 
+@media screen and (max-width: 480px) {
+  .itemTitle {
+    font-size: 13px;
+  }
+}
+
 .itemDescription {
   font-size: 93%;
   color: #666;
   margin-bottom: 4px;
   word-break: break-all;
+}
+
+@media screen and (max-width: 480px) {
+  .itemDescription {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .tags {
+    display: none;
+  }
 }
 
 .tags li {
@@ -157,12 +200,24 @@
   width: 160px;
 }
 
+@media screen and (max-width: 480px) {
+  .videoIcon {
+    width: 130px;
+  }
+}
+
 .videoIcon .videoWrap .itemTime {
   font-size: 11.05px;
 }
 
 .videoIcon .itemContent {
   width: 160px;
+}
+
+@media screen and (max-width: 480px) {
+  .videoIcon .itemContent {
+    width: 130px;
+  }
 }
 
 .videoIcon .itemData {
@@ -191,13 +246,33 @@
 
 .videoList.videoIconList {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  box-sizing: border-box;
+  content: " ";
+  display: table;
 }
 
 .videoList.videoIconList .item {
-  width: calc(100% / 6);
   margin-bottom: 20px;
-  margin-right: 0;
+  margin-right: 10px;
+  float: left;
+}
+
+@media screen and (max-width: 480px) {
+  .videoList.videoIconList .item {
+    margin-bottom: 20px;
+    margin: 0 calc(100% / 8);
+    margin-right: 0;
+  }
+}
+
+.videoList.videoIconList .item:nth-child(6n + 1) {
+  clear: left;
+}
+
+@media screen and (max-width: 480px) {
+  .videoList.videoIconList .item:nth-child(6n + 1) {
+    clear: none;
+  }
+  .videoList.videoIconList .item:nth-child(2n + 1) {
+    clear: left;
+  }
 }

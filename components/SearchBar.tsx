@@ -185,7 +185,7 @@ const SearchBar = () => {
         </div>
         <div className={styles.filter}>
           <span className={styles.filterName}>日付指定</span>
-          <label>
+          <label className={styles.filterDate}>
             <span className={styles.filterWord}>開始日</span>
             <input
               className={styles.inputDatetime}
@@ -200,7 +200,7 @@ const SearchBar = () => {
               }}
             />
           </label>
-          <label>
+          <label className={styles.filterDate}>
             <span className={styles.filterWord}>終了日</span>
             <input
               className={styles.inputDatetime}
