@@ -1,0 +1,33 @@
+.tags {
+  padding-left: 0px;
+  list-style: none;
+}
+
+.tags::before {
+  content: " ";
+  display: table;
+}
+
+@media screen and (max-width: 480px) {
+  .tags {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+.tags li {
+  float: left;
+}
+
+@media screen and (max-width: 480px) {
+  .tags li {
+    float: none;
+    display: inline-block;
+  }
+}
+
+.tags::after {
+  clear: both;
+  content: " ";
+  display: table;
+}

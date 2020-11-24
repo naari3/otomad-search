@@ -18,3 +18,9 @@
   opacity: 0.6;
   cursor: default;
 }
+
+@media screen and (max-width: 480px) {
+  .tag {
+    margin-bottom: 0;
+  }
+}
