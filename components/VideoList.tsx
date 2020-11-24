@@ -35,7 +35,10 @@ const VideoList = React.memo(({ videos }: Props) => {
           </li>
         ))}
       </ul>
-      <Pager />
+      <div className={videoListStyles.toolbar}>
+        <Pager />
+        <ViewingSwitcher />
+      </div>
     </>
   );
 });

@@ -16,7 +16,7 @@ const Header = () => {
       <Head>
         <link rel="icon" href="/otomad-search.svg" />
       </Head>
-      <header className={styles.header}>
+      <header className={`${styles.header} ${styles.titleBar}`}>
         <h1 className={styles.inner}>
           <Link href="/">
             <a
@@ -41,10 +41,9 @@ const Header = () => {
       </header>
       <header
         className={`${styles.headerSearchBar} ${
-          router.pathname === "/search" ? styles.sticky : ""
+          router.pathname === "/search" ? styles.searchBar : ""
         }`}
       >
-        {/* <h1>otomad-search</h1> */}
         <div className={styles.inner}>
           <SearchBar />
         </div>

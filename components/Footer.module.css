@@ -5,9 +5,22 @@
   padding: 16px 0;
 }
 
+@media screen and (max-width: 480px) {
+  .footer {
+    padding: 16px 12px;
+  }
+}
+
 .copyright {
   margin: 0 auto;
   width: 1024px;
+}
+
+@media screen and (max-width: 480px) {
+  .copyright {
+    margin: 0 auto;
+    width: 100%;
+  }
 }
 
 .copyright a:any-link {

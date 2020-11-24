@@ -12,6 +12,12 @@
   color: #666;
 }
 
+@media screen and (max-width: 480px) {
+  .viewingSwitcher {
+    display: none;
+  }
+}
+
 .viewingList {
   list-style: none;
   padding-left: 0px;

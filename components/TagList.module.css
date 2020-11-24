@@ -1,0 +1,71 @@
+.tags {
+  padding-left: 0px;
+  list-style: none;
+}
+
+.tags::before {
+  content: " ";
+  display: table;
+}
+
+.tags::after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+
+@media screen and (max-width: 480px) {
+  .tagsWrapper {
+    overflow-x: auto;
+    background: linear-gradient(
+          to left,
+          rgba(255, 255, 255, 0),
+          rgba(0, 0, 0, 0.2)
+        )
+        0 0/20px 100%,
+      linear-gradient(to right, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.2))
+        right/20px 100%;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+  }
+  .tags {
+    overflow-x: auto;
+    white-space: nowrap;
+    background: linear-gradient(to left, hsla(0, 0%, 100%, 0), white 15px) 0 0 /
+        50px 100%,
+      linear-gradient(to right, hsla(0, 0%, 100%, 0), white 15px) right / 50px
+        100%;
+    background-repeat: no-repeat;
+    background-attachment: local;
+  }
+
+  .tags::before {
+    content: none;
+    display: inline-block;
+  }
+  .tags::after {
+    content: none;
+    display: inline-block;
+  }
+}
+
+.tags li {
+  float: left;
+}
+
+.tags li {
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+.tags li:last-child {
+  margin-right: 0;
+}
+
+@media screen and (max-width: 480px) {
+  .tags li {
+    float: none;
+    display: inline-block;
+    margin-bottom: 0;
+  }
+}
