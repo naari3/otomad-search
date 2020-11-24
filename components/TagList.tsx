@@ -17,11 +17,7 @@ const TagList = React.memo(({ tags }: Props) => {
   useEffect(() => {
     if (ref.current) {
       const event = new Event("scroll");
-      const scrFunc = () => window.dispatchEvent(event);
-      ref.current.addEventListener("scroll", scrFunc);
-      return () => {
-        ref.current.removeEventListener("scroll", scrFunc);
-      };
+      ref.current.addEventListener("scroll", () => window.dispatchEvent(event));
     }
   }, []);
 

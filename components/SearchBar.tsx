@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import styles from "./SearchBar.module.css";
 import removeEmpty from "../lib/removeEmpty";
@@ -40,6 +40,20 @@ const SearchBar = () => {
   const searchDispatch = useSearchDispatch();
   const loading = useLoadingGlobalState();
   const loadingDispatch = useLoadingDispatch();
+  const [takesALongTime, setTakesALongTime] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log(loading);
+    let takeId;
+    if (loading)
+      takeId = setTimeout(() => {
+        setTakesALongTime(loading);
+      }, 3500);
+    else takeId = setTakesALongTime(false);
+    return () => {
+      clearTimeout(takeId);
+    };
+  }, [loading]);
 
   return (
     <div className={styles.searchBar}>
@@ -89,6 +103,15 @@ const SearchBar = () => {
               ""
             ) : (
               <span>{options.count.toLocaleString()} 件</span>
+            )}
+            {takesALongTime ? (
+              <div>
+                <span>
+                  初回や時間の空いたあとの検索は時間がかかる場合があります。
+                </span>
+              </div>
+            ) : (
+              ""
             )}
           </div>
         </div>
