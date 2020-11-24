@@ -22,13 +22,15 @@ const TagList = React.memo(({ tags }: Props) => {
   }, []);
 
   return (
-    <ul className={styles.tags} ref={ref}>
-      {filteredTags(tags).map((tag) => (
-        <li className={styles.tag} key={tag}>
-          <Tag name={tag} />
-        </li>
-      ))}
-    </ul>
+    <div className={styles.tagsWrapper}>
+      <ul className={styles.tags} ref={ref}>
+        {filteredTags(tags).map((tag) => (
+          <li className={styles.tag} key={tag}>
+            <Tag name={tag} />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 });
 

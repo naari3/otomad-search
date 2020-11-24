@@ -1,11 +1,7 @@
 .tag {
-  float: left;
-  margin-right: 4px;
-  margin-bottom: 4px;
-  display: block;
+  display: inline-block;
   border: 1px solid #dbdbdb;
   border-radius: 4px;
-  background: #fff;
   color: #666;
   font-size: 93%;
   padding: 0 8px;
@@ -17,10 +13,4 @@
 .disabled {
   opacity: 0.6;
   cursor: default;
-}
-
-@media screen and (max-width: 480px) {
-  .tag {
-    margin-bottom: 0;
-  }
 }
