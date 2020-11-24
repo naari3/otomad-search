@@ -84,8 +84,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                         {
                           url: "https://otomad-search.vercel.app/opengraph.png",
                           alt: "otomad-search",
-                          height: 1200,
-                          width: 630,
+                          width: 1200,
+                          height: 630,
                         },
                       ],
                     }}
