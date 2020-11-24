@@ -9,38 +9,19 @@ import { useEffect } from "react";
 
 import { VideoClient, Video, QueryParams, VideoSortKeys } from "../lib/search";
 import VideoList from "../components/VideoList";
+import { usedFields } from "../components/VideoDetail";
 
 import Layout from "../components/Layout";
 import parseLimitedFloat from "../lib/parseLimitedFloat";
 
 import { parseCookies } from "nookies";
 
-export const allFields = [
-  "contentId",
-  "title",
-  "description",
-  "userId",
-  "viewCounter",
-  "thumbnailUrl",
-  "startTime",
-  "commentCounter",
-  "categoryTags",
-  "channelId",
-  "tags",
-  "mylistCounter",
-  "lengthSeconds",
-  "threadId",
-  "lastCommentTime",
-  "lockTagsExact",
-  "genre",
-] as const;
-
 export default function Search({
   videos,
   searchOptions,
   viewing,
 }: {
-  videos: Pick<Video, typeof allFields[number]>[];
+  videos: Pick<Video, typeof usedFields[number]>[];
   searchOptions: SearchOptions;
   viewing: ViewingState;
 }) {
@@ -204,7 +185,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   };
 
   const searchQuery = getSearchQuery(searchOptions);
-  const response = (await client.search(searchQuery, allFields)).data;
+  const response = (await client.search(searchQuery, usedFields)).data;
   const videos = response.data;
 
   return {

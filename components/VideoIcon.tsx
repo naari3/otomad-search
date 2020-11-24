@@ -3,10 +3,9 @@ import { Video, VideoFields } from "../lib/search";
 import styles from "./Video.module.css";
 import VideoWrap from "./VideoWrap";
 import VideoData from "./VideoData";
+import { VideoProps } from "./VideoDetail";
 
-type Props = {
-  video: Pick<Video, keyof VideoFields>;
-};
+type Props = VideoProps;
 
 const urlPrefix = "https://www.nicovideo.jp/watch/";
 

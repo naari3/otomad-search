@@ -6,13 +6,26 @@ import VideoWrap from "./VideoWrap";
 import VideoData from "./VideoData";
 import TagList from "./TagList";
 
-type Props = {
-  video: Pick<Video, keyof VideoFields>;
+export const usedFields = [
+  "contentId",
+  "title",
+  "description",
+  "viewCounter",
+  "thumbnailUrl",
+  "startTime",
+  "commentCounter",
+  "tags",
+  "mylistCounter",
+  "lengthSeconds",
+] as const;
+
+export type VideoProps = {
+  video: Pick<Video, typeof usedFields[number]>;
 };
 
 const urlPrefix = "https://www.nicovideo.jp/watch/";
 
-const VideoDetail = React.memo(({ video }: Props) => {
+const VideoDetail = React.memo(({ video }: VideoProps) => {
   return (
     <div className={styles.videoDetail}>
       <VideoWrap video={video} float />

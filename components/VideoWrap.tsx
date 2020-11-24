@@ -4,11 +4,11 @@ import styles from "./Video.module.css";
 import formattedDate from "../lib/date";
 import secondsToMs from "../lib/secondsToMs";
 import Thumbnail from "./Thumbnail";
+import { VideoProps } from "./VideoDetail";
 
 type Props = {
-  video: Pick<Video, keyof VideoFields>;
   float?: boolean;
-};
+} & VideoProps;
 
 const urlPrefix = "https://www.nicovideo.jp/watch/";
 

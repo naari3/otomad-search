@@ -7,9 +7,10 @@ import styles from "./Video.module.css";
 import videoListStyles from "./VideoList.module.css";
 import Pager from "../components/Pager";
 import { useGlobalState as useViewingGlobalState } from "../contexts/ViewingContext";
+import { VideoProps } from "./VideoDetail";
 
 type Props = {
-  videos: Pick<Video, keyof VideoFields>[];
+  videos: VideoProps["video"][];
 };
 
 const VideoList = React.memo(({ videos }: Props) => {
