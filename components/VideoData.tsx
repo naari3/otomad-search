@@ -1,10 +1,8 @@
 import React from "react";
-import { Video, VideoFields } from "../lib/search";
 import styles from "./Video.module.css";
+import { VideoProps } from "./VideoDetail";
 
-type Props = {
-  video: Pick<Video, keyof VideoFields>;
-};
+type Props = VideoProps;
 
 const VideoData = React.memo(({ video }: Props) => {
   return (
