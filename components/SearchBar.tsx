@@ -43,7 +43,6 @@ const SearchBar = () => {
   const [takesALongTime, setTakesALongTime] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(loading);
     let takeId;
     if (loading)
       takeId = setTimeout(() => {
