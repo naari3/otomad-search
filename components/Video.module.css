@@ -149,22 +149,6 @@
   }
 }
 
-@media screen and (max-width: 480px) {
-  .tags {
-    display: none;
-  }
-}
-
-.tags li {
-  float: left;
-}
-
-.tags::after {
-  clear: both;
-  content: " ";
-  display: table;
-}
-
 .list {
   padding-left: 0px;
   list-style: none;

@@ -4,7 +4,7 @@ import styles from "./Video.module.css";
 import stripTag from "../lib/stripTag";
 import VideoWrap from "./VideoWrap";
 import VideoData from "./VideoData";
-import Tag from "./TagOnScreen";
+import TagList from "./TagList";
 
 type Props = {
   video: Pick<Video, keyof VideoFields>;
@@ -26,19 +26,9 @@ const VideoDetail = React.memo(({ video }: Props) => {
           <p className={styles.itemDescription}>
             {stripTag(video.description)}
           </p>
-          <ul className={`${styles.list} ${styles.tags}`}>
-            {video.tags
-              .split(" ")
-              .filter(
-                (tag) =>
-                  !["音MAD", "音mad", "音ＭＡＤ", "音ｍａｄ"].includes(tag)
-              )
-              .map((tag) => (
-                <li className={styles.tag} key={tag}>
-                  <Tag name={tag} />
-                </li>
-              ))}
-          </ul>
+          <div className={styles.list}>
+            <TagList tags={video.tags.split(" ")} />
+          </div>
         </div>
         <VideoData video={video} />
       </div>
