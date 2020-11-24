@@ -48,7 +48,7 @@ const SearchBar = () => {
     if (loading)
       takeId = setTimeout(() => {
         setTakesALongTime(loading);
-      }, 3500);
+      }, 2500);
     else takeId = setTakesALongTime(false);
     return () => {
       clearTimeout(takeId);
