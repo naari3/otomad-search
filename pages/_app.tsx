@@ -29,6 +29,7 @@ import {
   initialState as viewingInitialState,
   reducer as viewingReducer,
 } from "../reducers/viewing";
+import { DefaultSeo } from "next-seo";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [searchState, searchDispatch] = useReducer(
@@ -71,6 +72,27 @@ function MyApp({ Component, pageProps }: AppProps) {
             <LoadingDispatchContext.Provider value={loadingDispatch}>
               <ViewingStateContext.Provider value={viewingState}>
                 <ViewingDispatchContext.Provider value={viewingDispatch}>
+                  <DefaultSeo
+                    description="音MADを検索するためのサービス"
+                    canonical="https://otomad-search.vercel.app/"
+                    title="otomad-search"
+                    openGraph={{
+                      type: "website",
+                      locale: "ja_JP",
+                      url: "https://otomad-search.vercel.app/",
+                      images: [
+                        {
+                          url: "https://otomad-search.vercel.app/opengrap.png",
+                          alt: "otomad-search",
+                          height: 1200,
+                          width: 630,
+                        },
+                      ],
+                    }}
+                    twitter={{
+                      cardType: "summary",
+                    }}
+                  />
                   <Component {...pageProps} />
                 </ViewingDispatchContext.Provider>
               </ViewingStateContext.Provider>
