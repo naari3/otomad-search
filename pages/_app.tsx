@@ -80,6 +80,14 @@ function MyApp({ Component, pageProps }: AppProps) {
                       type: "website",
                       locale: "ja_JP",
                       url: "https://otomad-search.vercel.app/",
+                      images: [
+                        {
+                          url: "https://otomad-search.vercel.app/opengrap.png",
+                          alt: "otomad-search",
+                          height: 1200,
+                          width: 630,
+                        },
+                      ],
                     }}
                     twitter={{
                       cardType: "summary",
