@@ -72,7 +72,7 @@
 @media screen and (max-width: 480px) {
   .itemThumb {
     width: 130px;
-    height: auto;
+    height: 73.125px;
     border-radius: 4px;
   }
 }
@@ -82,6 +82,15 @@
   text-align: center;
   vertical-align: middle;
   background: #000;
+  width: 160px;
+  height: 90px;
+}
+
+@media screen and (max-width: 480px) {
+  .itemThumbWrap {
+    width: 130px;
+    height: auto;
+  }
 }
 
 .videoLength {
