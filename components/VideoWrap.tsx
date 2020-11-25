@@ -27,10 +27,14 @@ const VideoWrap = React.memo(({ video, float }: Props) => {
               className={styles.itemThumbWrap}
               target="_blank"
             >
-              <Thumbnail
-                thumbnailUrl={video.thumbnailUrl}
-                title={video.title}
-              />
+              <div className={styles.thumbnailOuter}>
+                <div className={styles.thumbnailInner}>
+                  <Thumbnail
+                    thumbnailUrl={video.thumbnailUrl}
+                    title={video.title}
+                  />
+                </div>
+              </div>
             </a>
           </div>
           <span className={styles.videoLength}>
