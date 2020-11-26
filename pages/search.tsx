@@ -165,6 +165,32 @@ const parseQueryToLimitedFloat = (target: string | string[]): number | null => {
   return Number.isNaN(result) ? null : result;
 };
 
+const shouldExecCall = (options: SearchOptions): boolean => {
+  if (
+    Number.isFinite(options.mylistCounterGte) &&
+    Number.isFinite(options.mylistCounterLte) &&
+    options.mylistCounterGte > options.mylistCounterLte
+  ) {
+    return false;
+  } else if (
+    Number.isFinite(options.lengthMinutesGte) &&
+    Number.isFinite(options.lengthMinutesLte) &&
+    options.lengthMinutesGte > options.lengthMinutesLte
+  ) {
+    return false;
+  }
+  const startTimeGte = Date.parse(options.startTimeGte);
+  const startTimeLte = Date.parse(options.startTimeLte);
+  if (
+    !Number.isNaN(startTimeGte) &&
+    !Number.isNaN(startTimeLte) &&
+    startTimeGte > startTimeLte
+  ) {
+    return false;
+  }
+  return true;
+};
+
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const cookies = parseCookies(ctx);
   let viewing = cookies.viewing;
@@ -184,13 +210,20 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     page: parseQueryToInt(query.page),
   };
 
-  const searchQuery = getSearchQuery(searchOptions);
-  const response = (await client.search(searchQuery, usedFields)).data;
-  const videos = response.data;
+  const response = await (async () => {
+    if (shouldExecCall(searchOptions)) {
+      const searchQuery = getSearchQuery(searchOptions);
+      const response = (await client.search(searchQuery, usedFields)).data;
+      return response;
+    } else {
+      console.log("Should not call with this parameters");
+      return { meta: { totalCount: 0 }, data: [] };
+    }
+  })();
 
   return {
     props: {
-      videos,
+      videos: response.data,
       searchOptions: {
         count: response.meta.totalCount,
         ...searchOptions,
