@@ -30,8 +30,11 @@ import {
   reducer as viewingReducer,
 } from "../reducers/viewing";
 import { DefaultSeo } from "next-seo";
+import { init } from "../lib/sentry";
 
-function MyApp({ Component, pageProps }: AppProps) {
+init();
+
+function MyApp({ Component, pageProps, err }: AppProps & { err: any }) {
   const [searchState, searchDispatch] = useReducer(
     searchReducer,
     searchInitialState
@@ -93,7 +96,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                       cardType: "summary",
                     }}
                   />
-                  <Component {...pageProps} />
+                  <Component {...pageProps} err={err} />
                 </ViewingDispatchContext.Provider>
               </ViewingStateContext.Provider>
             </LoadingDispatchContext.Provider>
