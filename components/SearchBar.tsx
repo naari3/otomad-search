@@ -204,6 +204,37 @@ const SearchBar = () => {
             />
             <span className={styles.filterWord}>分以下</span>
           </label>
+          <span className={styles.filterName}>再生数</span>
+          <label>
+            <input
+              className={`${styles.inputNumber} ${styles.big}`}
+              type="number"
+              min="0"
+              defaultValue={options.viewCounterGte}
+              onChange={(e) => {
+                searchDispatch({
+                  type: "update",
+                  payload: { viewCounterGte: parseInt(e.target.value) },
+                });
+              }}
+            />
+            <span className={styles.filterWord}>以上</span>
+          </label>
+          <label>
+            <input
+              className={`${styles.inputNumber} ${styles.big}`}
+              type="number"
+              min="0"
+              defaultValue={options.viewCounterLte}
+              onChange={(e) => {
+                searchDispatch({
+                  type: "update",
+                  payload: { viewCounterLte: parseInt(e.target.value) },
+                });
+              }}
+            />
+            <span className={styles.filterWord}>以下</span>
+          </label>
         </div>
         <div className={styles.filter}>
           <span className={styles.filterName}>日付指定</span>

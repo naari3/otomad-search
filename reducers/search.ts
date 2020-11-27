@@ -7,6 +7,8 @@ export type SearchOptions = {
   startTimeLte?: string;
   lengthMinutesGte?: number;
   lengthMinutesLte?: number;
+  viewCounterGte?: number;
+  viewCounterLte?: number;
   count?: number;
   page?: number;
 };
