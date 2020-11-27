@@ -52,6 +52,10 @@
   border-radius: 2px;
 }
 
+.big {
+  width: 8em;
+}
+
 .inputDatetime {
   width: 15em;
   padding: 0 5px;

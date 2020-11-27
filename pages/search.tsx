@@ -85,6 +85,8 @@ const getSearchQuery = ({
   _sort,
   mylistCounterGte,
   mylistCounterLte,
+  viewCounterGte,
+  viewCounterLte,
   lengthMinutesGte,
   lengthMinutesLte,
   startTimeGte,
@@ -113,6 +115,19 @@ const getSearchQuery = ({
       filters["mylistCounter"] = {};
     }
     filters["mylistCounter"]["lte"] = mylistCounterLte;
+  }
+
+  if (viewCounterGte) {
+    if (!filters["viewCounter"]) {
+      filters["viewCounter"] = {};
+    }
+    filters["viewCounter"]["gte"] = viewCounterGte;
+  }
+  if (viewCounterLte !== null) {
+    if (!filters["viewCounter"]) {
+      filters["viewCounter"] = {};
+    }
+    filters["viewCounter"]["lte"] = viewCounterLte;
   }
 
   if (startTimeGte) {
@@ -203,6 +218,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     _sort: parseQueryToString(query._sort),
     mylistCounterGte: parseQueryToInt(query.mylistCounterGte),
     mylistCounterLte: parseQueryToInt(query.mylistCounterLte),
+    viewCounterGte: parseQueryToInt(query.viewCounterGte),
+    viewCounterLte: parseQueryToInt(query.viewCounterLte),
     lengthMinutesGte: parseQueryToLimitedFloat(query.lengthMinutesGte),
     lengthMinutesLte: parseQueryToLimitedFloat(query.lengthMinutesLte),
     startTimeGte: parseQueryToString(query.startTimeGte),
