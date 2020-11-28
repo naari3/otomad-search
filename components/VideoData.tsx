@@ -5,11 +5,13 @@ import { VideoProps } from "./VideoDetail";
 import { useGlobalState as useSearchGlobalState } from "../contexts/SearchContext";
 import { useGlobalState as useLoadingGlobalState } from "../contexts/LoadingContext";
 import removeEmpty from "../lib/removeEmpty";
+import TrackVisibility from "react-on-screen";
 
 type Props = VideoProps;
 
 const VideoData = React.memo(({ video }: Props) => {
   const options = useSearchGlobalState();
+  const loading = useLoadingGlobalState();
 
   return (
     <div className={styles.itemData}>
@@ -33,14 +35,30 @@ const VideoData = React.memo(({ video }: Props) => {
           </span>
         </li>
         <li className={`${styles.count} ${styles.user}`}>
-          <Link
-            href={{
-              pathname: "/search",
-              query: removeEmpty({ ...options, page: 1, userId: video.userId }),
-            }}
+          <TrackVisibility
+            throttleInterval={0}
+            offset={250}
+            partialVisibility={true}
           >
-            <a className={styles.value}>{video.userId}</a>
-          </Link>
+            {({ isVisible }) => {
+              return isVisible && !loading ? (
+                <Link
+                  href={{
+                    pathname: "/search",
+                    query: removeEmpty({
+                      ...options,
+                      page: 1,
+                      userId: video.userId,
+                    }),
+                  }}
+                >
+                  <a className={styles.value}>{video.userId}</a>
+                </Link>
+              ) : (
+                <span className={styles.value}>{video.userId}</span>
+              );
+            }}
+          </TrackVisibility>
         </li>
       </ul>
     </div>
