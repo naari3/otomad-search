@@ -145,12 +145,12 @@ const SearchBar = () => {
               className={`${styles.inputNumber} ${styles.big}`}
               type="number"
               min="0"
-              defaultValue={options.lengthMinutesGte}
+              value={options.userId || ""}
               onChange={(e) => {
                 searchDispatch({
                   type: "update",
                   payload: {
-                    lengthMinutesGte: parseInt(e.target.value),
+                    userId: parseInt(e.target.value),
                   },
                 });
               }}
