@@ -9,22 +9,19 @@ const Tag = React.memo(({ name }: { name: string }) => {
   const loading = useLoadingGlobalState();
   const options = useSearchGlobalState();
 
-  return (
+  return loading ? (
+    <NoLinkTag name={name}></NoLinkTag>
+  ) : (
     <Link
       href={{
         pathname: "/search",
         query: removeEmpty({ ...options, page: 1, q: name }),
       }}
     >
-      {loading ? (
-        <NoLinkTag name={name}></NoLinkTag>
-      ) : (
-        <a className={styles.tag}>{name}</a>
-      )}
+      <a className={styles.tag}>{name}</a>
     </Link>
   );
 });
-
 const NoLinkTag = React.memo(({ name }: { name: string }) => {
   return <span className={`${styles.tag} ${styles.disabled}`}>{name}</span>;
 });

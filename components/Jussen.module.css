@@ -1,0 +1,12 @@
+.jussenButton {
+  margin-left: 4px;
+  display: inline-block;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 93%;
+  padding: 0 8px;
+  height: 22px;
+  line-height: 22px;
+  cursor: pointer;
+}

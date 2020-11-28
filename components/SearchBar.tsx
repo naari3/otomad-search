@@ -13,6 +13,7 @@ import {
   useDispatch as useLoadingDispatch,
   useGlobalState as useLoadingGlobalState,
 } from "../contexts/LoadingContext";
+import JussenButton from "./JussenButton";
 
 const sortAxisOptions = {
   //   "+userId": "",
@@ -41,6 +42,11 @@ const SearchBar = () => {
   const loading = useLoadingGlobalState();
   const loadingDispatch = useLoadingDispatch();
   const [takesALongTime, setTakesALongTime] = useState<boolean>(false);
+
+  const isJussenPast = (() => {
+    const now = new Date();
+    return now.getMonth() > 12 && now.getDay() > 23;
+  })();
 
   useEffect(() => {
     let takeId;
@@ -244,7 +250,7 @@ const SearchBar = () => {
               className={styles.inputDatetime}
               type="datetime-local"
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-              defaultValue={options.startTimeGte}
+              value={options.startTimeGte || ""}
               onChange={(e) => {
                 if (Number.isNaN(Date.parse(e.target.value))) {
                   searchDispatch({
@@ -266,7 +272,7 @@ const SearchBar = () => {
               className={styles.inputDatetime}
               type="datetime-local"
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-              defaultValue={options.startTimeLte}
+              value={options.startTimeLte || ""}
               onChange={(e) => {
                 if (Number.isNaN(Date.parse(e.target.value))) {
                   searchDispatch({
@@ -282,6 +288,12 @@ const SearchBar = () => {
               }}
             />
           </label>
+          <JussenButton targetYear={new Date().getFullYear()} />
+          {isJussenPast ? (
+            <JussenButton targetYear={new Date().getFullYear() + 1} />
+          ) : (
+            ""
+          )}
         </div>
       </form>
     </div>
