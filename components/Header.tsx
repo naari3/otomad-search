@@ -39,6 +39,19 @@ const Header = () => {
           </Link>
         </h1>
       </header>
+      <header>
+        <div className={styles.inner}>
+          <div className={styles.jussen}>
+            <a
+              className={styles.jussenLink}
+              href="http://oto10.s602.xrea.com/10sen/"
+              target="_blank"
+            >
+              音MAD10選の提出先はこちら！
+            </a>
+          </div>
+        </div>
+      </header>
       <header
         className={`${styles.headerSearchBar} ${
           router.pathname === "/search" ? styles.searchBar : ""

@@ -23,7 +23,7 @@ import parseLimitedFloat from "../lib/parseLimitedFloat";
 
 import { parseCookies } from "nookies";
 
-import { formatISO } from "date-fns";
+import { format } from "date-fns";
 import * as Sentry from "@sentry/node";
 import { AxiosError } from "axios";
 
@@ -241,7 +241,7 @@ const roundDate = (datestr: string): string => {
     return null;
   }
 
-  return formatISO(date);
+  return format(date, "yyyy-MM-dd'T'HH:mm");
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
