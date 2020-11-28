@@ -246,10 +246,17 @@ const SearchBar = () => {
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
               defaultValue={options.startTimeGte}
               onChange={(e) => {
-                searchDispatch({
-                  type: "update",
-                  payload: { startTimeGte: e.target.value },
-                });
+                if (Number.isNaN(Date.parse(e.target.value))) {
+                  searchDispatch({
+                    type: "update",
+                    payload: { startTimeGte: null },
+                  });
+                } else {
+                  searchDispatch({
+                    type: "update",
+                    payload: { startTimeGte: e.target.value },
+                  });
+                }
               }}
             />
           </label>
@@ -261,10 +268,17 @@ const SearchBar = () => {
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
               defaultValue={options.startTimeLte}
               onChange={(e) => {
-                searchDispatch({
-                  type: "update",
-                  payload: { startTimeLte: e.target.value },
-                });
+                if (Number.isNaN(Date.parse(e.target.value))) {
+                  searchDispatch({
+                    type: "update",
+                    payload: { startTimeLte: null },
+                  });
+                } else {
+                  searchDispatch({
+                    type: "update",
+                    payload: { startTimeLte: e.target.value },
+                  });
+                }
               }}
             />
           </label>
