@@ -16,6 +16,8 @@ import parseLimitedFloat from "../lib/parseLimitedFloat";
 
 import { parseCookies } from "nookies";
 
+import { formatISO } from "date-fns";
+
 export default function Search({
   videos,
   searchOptions,
@@ -206,6 +208,22 @@ const shouldExecCall = (options: SearchOptions): boolean => {
   return true;
 };
 
+const roundDate = (datestr: string): string => {
+  const unixTime = Date.parse(datestr);
+  if (Number.isNaN(unixTime)) return "";
+  const date = new Date(unixTime);
+
+  if (date.getFullYear() < 2007) {
+    return "";
+  }
+
+  if (date.getFullYear() > new Date().getFullYear()) {
+    return "";
+  }
+
+  return formatISO(date);
+};
+
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const cookies = parseCookies(ctx);
   let viewing = cookies.viewing;
@@ -222,8 +240,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     viewCounterLte: parseQueryToInt(query.viewCounterLte),
     lengthMinutesGte: parseQueryToLimitedFloat(query.lengthMinutesGte),
     lengthMinutesLte: parseQueryToLimitedFloat(query.lengthMinutesLte),
-    startTimeGte: parseQueryToString(query.startTimeGte),
-    startTimeLte: parseQueryToString(query.startTimeLte),
+    startTimeGte: roundDate(parseQueryToString(query.startTimeGte)),
+    startTimeLte: roundDate(parseQueryToString(query.startTimeLte)),
     page: parseQueryToInt(query.page),
   };
 
