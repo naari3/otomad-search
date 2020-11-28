@@ -79,11 +79,18 @@ label + .filterName {
   padding-left: 14px;
 }
 
+select + .filterName {
+  padding-left: 14px;
+}
+
 @media screen and (max-width: 480px) {
   .filterName {
     display: block;
   }
   label + .filterName {
+    padding-left: 0;
+  }
+  select + .filterName {
     padding-left: 0;
   }
 }

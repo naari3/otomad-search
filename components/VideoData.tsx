@@ -26,6 +26,9 @@ const VideoData = React.memo(({ video }: Props) => {
             {video.mylistCounter.toLocaleString()}
           </span>
         </li>
+        <li className={`${styles.count} ${styles.user}`}>
+          <span className={styles.value}>{video.userId}</span>
+        </li>
       </ul>
     </div>
   );

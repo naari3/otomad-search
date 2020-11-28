@@ -17,6 +17,7 @@ export const usedFields = [
   "tags",
   "mylistCounter",
   "lengthSeconds",
+  "userId",
 ] as const;
 
 export type VideoProps = {
