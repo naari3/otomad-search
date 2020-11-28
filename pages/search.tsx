@@ -108,6 +108,7 @@ const getSearchQuery = ({
   lengthMinutesLte,
   startTimeGte,
   startTimeLte,
+  userId,
   page,
 }: SearchOptions): QueryParams => {
   if (
@@ -172,6 +173,8 @@ const getSearchQuery = ({
     }
     filters["lengthSeconds"]["lte"] = lengthMinutesLte * 60;
   }
+
+  if (userId) filters["userId"] = { 0: userId };
 
   return {
     ...defaultQuery,
@@ -264,6 +267,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     lengthMinutesLte: roundNumber(
       parseQueryToLimitedFloat(query.lengthMinutesLte)
     ),
+    userId: roundNumber(parseQueryToInt(query.userId)),
     startTimeGte: roundDate(parseQueryToString(query.startTimeGte)),
     startTimeLte: roundDate(parseQueryToString(query.startTimeLte)),
     page: roundNumber(parseQueryToInt(query.page)),

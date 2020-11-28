@@ -139,6 +139,23 @@ const SearchBar = () => {
               </option>
             ))}
           </select>
+          <span className={styles.filterName}>ユーザーIDで絞り込む</span>
+          <label>
+            <input
+              className={`${styles.inputNumber} ${styles.big}`}
+              type="number"
+              min="0"
+              value={options.userId || ""}
+              onChange={(e) => {
+                searchDispatch({
+                  type: "update",
+                  payload: {
+                    userId: parseInt(e.target.value),
+                  },
+                });
+              }}
+            />
+          </label>
         </div>
         <div className={styles.filter}>
           <span className={styles.filterName}>マイリスト数</span>

@@ -177,6 +177,11 @@
   float: left;
 }
 
+.itemData li.user {
+  float: right;
+  padding: 0;
+}
+
 .itemData .count {
   font-size: 85%;
   color: #999;
@@ -186,6 +191,12 @@
 .itemData .count .value {
   padding: 0 8px 0 0;
   color: #333;
+}
+
+.itemData .count.user .value {
+  font-size: 50%;
+  padding: 0;
+  color: #bbb;
 }
 
 .videoIcon {
