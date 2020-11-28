@@ -210,15 +210,15 @@ const shouldExecCall = (options: SearchOptions): boolean => {
 
 const roundDate = (datestr: string): string => {
   const unixTime = Date.parse(datestr);
-  if (Number.isNaN(unixTime)) return "";
+  if (Number.isNaN(unixTime)) return null;
   const date = new Date(unixTime);
 
   if (date.getFullYear() < 2007) {
-    return "";
+    return null;
   }
 
   if (date.getFullYear() > new Date().getFullYear()) {
-    return "";
+    return null;
   }
 
   return formatISO(date);
