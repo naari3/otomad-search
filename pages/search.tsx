@@ -6,8 +6,15 @@ import { useDispatch as useViewingDispatch } from "../contexts/ViewingContext";
 import { State as ViewingState } from "../reducers/viewing";
 import { SearchOptions } from "../reducers/search";
 import { useEffect } from "react";
+import NextErrorComponent from "next/error";
 
-import { VideoClient, Video, QueryParams, VideoSortKeys } from "../lib/search";
+import {
+  VideoClient,
+  Video,
+  QueryParams,
+  VideoSortKeys,
+  Response,
+} from "../lib/search";
 import VideoList from "../components/VideoList";
 import { usedFields } from "../components/VideoDetail";
 
@@ -17,15 +24,19 @@ import parseLimitedFloat from "../lib/parseLimitedFloat";
 import { parseCookies } from "nookies";
 
 import { formatISO } from "date-fns";
+import * as Sentry from "@sentry/node";
+import { AxiosError } from "axios";
 
 export default function Search({
   videos,
   searchOptions,
   viewing,
+  errorCode,
 }: {
   videos: Pick<Video, typeof usedFields[number]>[];
   searchOptions: SearchOptions;
   viewing: ViewingState;
+  errorCode?: number;
 }) {
   const searchDispatch = useSearchDispatch();
   const loadingDispatch = useLoadingDispatch();
@@ -49,6 +60,10 @@ export default function Search({
       payload: viewing,
     });
   }, [viewing]);
+
+  if (errorCode) {
+    return <NextErrorComponent statusCode={errorCode} />;
+  }
 
   return (
     <Layout>
@@ -254,16 +269,38 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     page: roundNumber(parseQueryToInt(query.page)),
   };
 
-  const response = await (async () => {
+  const response = await (async (): Promise<
+    Response<Pick<Video, typeof usedFields[number]>>
+  > => {
     if (shouldExecCall(searchOptions)) {
       const searchQuery = getSearchQuery(searchOptions);
-      const response = (await client.search(searchQuery, usedFields)).data;
+      const response = (
+        await client.search(searchQuery, usedFields).catch((e: AxiosError) => {
+          Sentry.captureException(e);
+
+          return {
+            data: {
+              meta: { status: e.response.status, totalCount: 0, id: "" },
+              data: [],
+            },
+          };
+        })
+      ).data;
       return response;
     } else {
       console.log("Should not call with this parameters");
-      return { meta: { totalCount: 0 }, data: [] };
+      return { meta: { status: 200, totalCount: 0, id: "" }, data: [] };
     }
   })();
+
+  if (response.meta.status !== 200) {
+    ctx.res.statusCode = response.meta.status;
+    return {
+      props: {
+        errorCode: response.meta.status,
+      },
+    };
+  }
 
   return {
     props: {
