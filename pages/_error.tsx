@@ -1,4 +1,4 @@
-import NextErrorComponent, { ErrorProps } from "next/error";
+import NextErrorComponent from "next/error";
 import * as Sentry from "@sentry/node";
 
 const MyError = ({ statusCode, hasGetInitialPropsRun, err }) => {
