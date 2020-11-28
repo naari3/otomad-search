@@ -208,6 +208,11 @@ const shouldExecCall = (options: SearchOptions): boolean => {
   return true;
 };
 
+const roundNumber = (num: number): number => {
+  if (num > 2147483647) return null;
+  return num;
+};
+
 const roundDate = (datestr: string): string => {
   const unixTime = Date.parse(datestr);
   if (Number.isNaN(unixTime)) return null;
@@ -234,15 +239,19 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const searchOptions: SearchOptions = {
     q: parseQueryToString(query.q) || "",
     _sort: parseQueryToString(query._sort),
-    mylistCounterGte: parseQueryToInt(query.mylistCounterGte),
-    mylistCounterLte: parseQueryToInt(query.mylistCounterLte),
-    viewCounterGte: parseQueryToInt(query.viewCounterGte),
-    viewCounterLte: parseQueryToInt(query.viewCounterLte),
-    lengthMinutesGte: parseQueryToLimitedFloat(query.lengthMinutesGte),
-    lengthMinutesLte: parseQueryToLimitedFloat(query.lengthMinutesLte),
+    mylistCounterGte: roundNumber(parseQueryToInt(query.mylistCounterGte)),
+    mylistCounterLte: roundNumber(parseQueryToInt(query.mylistCounterLte)),
+    viewCounterGte: roundNumber(parseQueryToInt(query.viewCounterGte)),
+    viewCounterLte: roundNumber(parseQueryToInt(query.viewCounterLte)),
+    lengthMinutesGte: roundNumber(
+      parseQueryToLimitedFloat(query.lengthMinutesGte)
+    ),
+    lengthMinutesLte: roundNumber(
+      parseQueryToLimitedFloat(query.lengthMinutesLte)
+    ),
     startTimeGte: roundDate(parseQueryToString(query.startTimeGte)),
     startTimeLte: roundDate(parseQueryToString(query.startTimeLte)),
-    page: parseQueryToInt(query.page),
+    page: roundNumber(parseQueryToInt(query.page)),
   };
 
   const response = await (async () => {
