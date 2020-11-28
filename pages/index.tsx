@@ -40,6 +40,21 @@ const Home: FC = () => {
         <p>指定された再生時間の範囲で検索します。</p>
         <h3>日付指定</h3>
         <p>指定された日付の範囲で検索します。</p>
+        <h2>クレジット</h2>
+        <ul>
+          <li>
+            <a href="https://twitter.com/_naari_" target="_blank">
+              @_naari_
+            </a>
+            : 企画と開発
+          </li>
+          <li>
+            <a href="https://twitter.com/readybug_" target="_blank">
+              @readybug_
+            </a>
+            : アイコン
+          </li>
+        </ul>
       </section>
     </Layout>
   );
