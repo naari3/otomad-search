@@ -43,16 +43,20 @@ const Home: FC = () => {
         <h2>クレジット</h2>
         <ul>
           <li>
-            <a href="https://twitter.com/_naari_" target="_blank">
-              @_naari_
-            </a>
-            : 企画と開発
+            <p>
+              <a href="https://twitter.com/_naari_" target="_blank">
+                @_naari_
+              </a>
+              : 企画と開発
+            </p>
           </li>
           <li>
-            <a href="https://twitter.com/readybug_" target="_blank">
-              @readybug_
-            </a>
-            : アイコン
+            <p>
+              <a href="https://twitter.com/readybug_" target="_blank">
+                @readybug_
+              </a>
+              : アイコン
+            </p>
           </li>
         </ul>
       </section>
