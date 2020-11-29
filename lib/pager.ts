@@ -1,7 +1,7 @@
-const maxOffset = 1600;
+export const MAX_OFFSET = 1600;
 
 export const maxPageNumber = (per: number): number => {
-  return Math.ceil(maxOffset / per) + 1;
+  return Math.ceil(MAX_OFFSET / per) + 1;
 };
 
 export const calcPageNumber = (per: number, count: number) => {
