@@ -15,7 +15,7 @@ export type SearchOptions = {
   per?: number;
 };
 
-export const initialState: SearchOptions = { _sort: "-startTime" };
+export const initialState: SearchOptions = { _sort: "-startTime", per: 100 };
 
 export type State = SearchOptions;
 

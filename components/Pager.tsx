@@ -63,8 +63,12 @@ const Pager = () => {
     setMaxPages(pageNumber);
     setHasPrevPrevPage(options.page > 2);
     setHasPrevPage(options.page > 1);
-    setHasNextPage(pageNumber > options.page && 17 > options.page);
-    setHasNextNextPage(pageNumber > options.page + 1 && 17 > options.page + 1);
+    setHasNextPage(
+      pageNumber > options.page && 1600 / options.per >= options.page
+    );
+    setHasNextNextPage(
+      pageNumber > options.page + 1 && 1600 / options.per >= options.page + 1
+    );
   }, [options]);
 
   return (

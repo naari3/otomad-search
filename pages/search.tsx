@@ -273,7 +273,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     startTimeGte: roundDate(parseQueryToString(query.startTimeGte)),
     startTimeLte: roundDate(parseQueryToString(query.startTimeLte)),
     page: roundNumber(parseQueryToInt(query.page)),
-    per: Math.min(100, roundNumber(parseQueryToInt(query.per))),
+    per: Math.min(100, roundNumber(parseQueryToInt(query.per)) || 50),
   };
 
   const response = await (async (): Promise<
