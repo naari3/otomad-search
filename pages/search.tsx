@@ -27,6 +27,8 @@ import { format } from "date-fns";
 import * as Sentry from "@sentry/node";
 import { AxiosError } from "axios";
 
+import { actualMaxPageNumber } from "../lib/pager";
+
 export default function Search({
   videos,
   searchOptions,
@@ -314,6 +316,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         errorCode: response.meta.status,
       },
     };
+  }
+
+  const actualMaxPageNum = actualMaxPageNumber(
+    searchOptions.per,
+    response.meta.totalCount
+  );
+
+  if (actualMaxPageNum < searchOptions.page) {
+    searchOptions.page = actualMaxPageNum + 1;
   }
 
   return {
