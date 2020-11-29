@@ -8,11 +8,11 @@
   display: block;
 }
 
-.toolbar :first-child {
+.toolbar .left {
   float: left;
 }
 
-.toolbar :last-child {
+.toolbar .right {
   float: right;
 }
 

@@ -1,0 +1,48 @@
+.perSwitcher {
+  margin-left: 4px;
+  display: inline-block;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  background: #fff;
+  color: #666;
+  font-size: 93%;
+  /* padding: 0 4px; */
+  height: 22px;
+  line-height: 22px;
+  color: #666;
+}
+
+.perList {
+  list-style: none;
+  padding-left: 0px;
+  margin-top: 0;
+}
+
+.perList::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+.perList li {
+  float: left;
+  display: block;
+  /* margin: 0 5px; */
+}
+
+.perList li.selected {
+  opacity: 0.5;
+}
+
+.perList li:not(:last-child) {
+  border-right: 1px solid #dbdbdb;
+}
+
+.perList li span {
+  cursor: pointer;
+  padding: 0 6px;
+}
+
+.perList li.selected a {
+  cursor: default;
+}

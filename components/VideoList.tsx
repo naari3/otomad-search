@@ -8,6 +8,7 @@ import videoListStyles from "./VideoList.module.css";
 import Pager from "../components/Pager";
 import { useGlobalState as useViewingGlobalState } from "../contexts/ViewingContext";
 import { VideoProps } from "./VideoDetail";
+import PerSwitcher from "./PerSwitcher";
 
 type Props = {
   videos: VideoProps["video"][];
@@ -18,8 +19,13 @@ const VideoList = React.memo(({ videos }: Props) => {
   return (
     <>
       <div className={videoListStyles.toolbar}>
-        <Pager />
-        <ViewingSwitcher />
+        <div className={videoListStyles.left}>
+          <Pager />
+        </div>
+        <div className={videoListStyles.right}>
+          <ViewingSwitcher />
+          <PerSwitcher />
+        </div>
       </div>
       <ul
         className={`${styles.videoList} ${
@@ -37,8 +43,13 @@ const VideoList = React.memo(({ videos }: Props) => {
         ))}
       </ul>
       <div className={videoListStyles.toolbar}>
-        <Pager />
-        <ViewingSwitcher />
+        <div className={videoListStyles.left}>
+          <Pager />
+        </div>
+        <div className={videoListStyles.right}>
+          <ViewingSwitcher />
+          <PerSwitcher />
+        </div>
       </div>
     </>
   );
