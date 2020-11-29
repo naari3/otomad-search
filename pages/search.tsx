@@ -252,7 +252,9 @@ const roundDate = (datestr: string): string => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const cookies = parseCookies(ctx);
   let viewing = cookies.viewing;
+  let per = parseQueryToInt(cookies.per);
   if (viewing !== "detail" && viewing !== "icon") viewing = "detail";
+  if (!per) per = 50;
   const { query } = ctx;
   const client = new VideoClient({ context: "otomad-search" });
   console.log(query);
@@ -273,8 +275,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     startTimeGte: roundDate(parseQueryToString(query.startTimeGte)),
     startTimeLte: roundDate(parseQueryToString(query.startTimeLte)),
     page: roundNumber(parseQueryToInt(query.page)),
-    per: Math.min(100, roundNumber(parseQueryToInt(query.per)) || 50),
+    per: Math.min(100, roundNumber(parseQueryToInt(query.per)) || per),
   };
+  console.log({
+    cookie: per,
+    query: query.per,
+    final: Math.min(100, roundNumber(parseQueryToInt(query.per)) || per),
+  });
 
   const response = await (async (): Promise<
     Response<Pick<Video, typeof usedFields[number]>>
