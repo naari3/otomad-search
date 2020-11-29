@@ -9,6 +9,7 @@ import {
 import removeEmpty from "../lib/removeEmpty";
 import { UrlObject } from "url";
 import { actualMaxPageNumber } from "../lib/pager";
+import * as gtag from "../lib/gtag";
 
 type Url = string | UrlObject;
 
@@ -29,6 +30,11 @@ const PagerButton: FC<PagerButtonProps> = ({ href, children }) => {
       <a
         className={styles.pagerButton}
         onClick={() => {
+          gtag.event({
+            action: "pager",
+            category: "Otomads",
+            label: "happy",
+          });
           loadingDispatch({
             type: "update",
             payload: true,

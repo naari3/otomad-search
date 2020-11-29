@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useGlobalState as useSearchGlobalState } from "../contexts/SearchContext";
 import { useGlobalState as useLoadingGlobalState } from "../contexts/LoadingContext";
 import removeEmpty from "../lib/removeEmpty";
+import * as gtag from "../lib/gtag";
 
 const Tag = React.memo(({ name }: { name: string }) => {
   const loading = useLoadingGlobalState();
@@ -18,7 +19,19 @@ const Tag = React.memo(({ name }: { name: string }) => {
         query: removeEmpty({ ...options, page: 1, q: name }),
       }}
     >
-      <a className={styles.tag}>{name}</a>
+      <a
+        className={styles.tag}
+        onClick={() => {
+          gtag.event({
+            action: "clickTag",
+            category: "Otomads",
+            label: "happy",
+            value: name,
+          });
+        }}
+      >
+        {name}
+      </a>
     </Link>
   );
 });
