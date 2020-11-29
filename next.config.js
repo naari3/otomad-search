@@ -21,6 +21,8 @@ const COMMIT_SHA =
 process.env.SENTRY_DSN = SENTRY_DSN;
 const basePath = "";
 
+const { locales, defaultLocale } = require('./i18n.json')
+
 module.exports = {
   env: {
     // Make the COMMIT_SHA available to the client so that Sentry events can be
@@ -94,5 +96,10 @@ module.exports = {
       tls: "empty",
     };
     return config;
+  },
+
+  i18n: {
+    locales,
+    defaultLocale,
   },
 };

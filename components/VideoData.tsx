@@ -7,9 +7,12 @@ import { useGlobalState as useLoadingGlobalState } from "../contexts/LoadingCont
 import removeEmpty from "../lib/removeEmpty";
 import TrackVisibility from "react-on-screen";
 
+import useTranslation from 'next-translate/useTranslation';
+
 type Props = VideoProps;
 
 const VideoData = React.memo(({ video }: Props) => {
+  const { t } = useTranslation("VideoData");
   const options = useSearchGlobalState();
   const loading = useLoadingGlobalState();
 
@@ -17,19 +20,19 @@ const VideoData = React.memo(({ video }: Props) => {
     <div className={styles.itemData}>
       <ul className={styles.list}>
         <li className={styles.count}>
-          再生{" "}
+          {t('views')}{" "}
           <span className={styles.value}>
             {video.viewCounter.toLocaleString()}
           </span>
         </li>
         <li className={styles.count}>
-          コメ{" "}
+        {t('comments')}{" "}
           <span className={styles.value}>
             {video.commentCounter.toLocaleString()}
           </span>
         </li>
         <li className={styles.count}>
-          マイ{" "}
+        {t('mylists')}{" "}
           <span className={styles.value}>
             {video.mylistCounter.toLocaleString()}
           </span>
