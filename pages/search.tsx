@@ -85,11 +85,11 @@ const defaultQuery: QueryParams = {
   _limit: LIMIT,
 };
 
-const calcOffset = (page?: number): number => {
+const calcOffset = (page?: number, per: number = 100): number => {
   if (!page || page < 0) {
     page = 1;
   }
-  let offset = (page - 1) * LIMIT;
+  let offset = (page - 1) * per;
   if (offset > 1600) {
     return 1600;
   }
@@ -110,6 +110,7 @@ const getSearchQuery = ({
   startTimeLte,
   userId,
   page,
+  per,
 }: SearchOptions): QueryParams => {
   if (
     _sort === null ||
@@ -118,7 +119,7 @@ const getSearchQuery = ({
     _sort = "-startTime";
   }
 
-  const _offset = calcOffset(page);
+  const _offset = calcOffset(page, per);
 
   let filters = {};
 
@@ -180,6 +181,7 @@ const getSearchQuery = ({
     ...defaultQuery,
     _sort,
     _offset,
+    _limit: per,
     filters,
     q: `${defaultQuery.q} ${q}`.trim(),
   };
@@ -271,6 +273,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     startTimeGte: roundDate(parseQueryToString(query.startTimeGte)),
     startTimeLte: roundDate(parseQueryToString(query.startTimeLte)),
     page: roundNumber(parseQueryToInt(query.page)),
+    per: Math.min(100, roundNumber(parseQueryToInt(query.per))),
   };
 
   const response = await (async (): Promise<

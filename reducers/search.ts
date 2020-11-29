@@ -12,6 +12,7 @@ export type SearchOptions = {
   userId?: number;
   count?: number;
   page?: number;
+  per?: number;
 };
 
 export const initialState: SearchOptions = { _sort: "-startTime" };
