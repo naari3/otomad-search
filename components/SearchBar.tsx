@@ -69,7 +69,7 @@ const SearchBar = () => {
               <label className={styles.otomadLabel}>音MAD </label>
               <input
                 type="text"
-                value={options.q}
+                value={options.q || ""}
                 className={styles.inputQueryBar}
                 autoComplete={"off"}
                 onChange={(e) => {
@@ -164,7 +164,7 @@ const SearchBar = () => {
               className={styles.inputNumber}
               type="number"
               min="0"
-              defaultValue={options.mylistCounterGte}
+              value={options.mylistCounterGte || ""}
               onChange={(e) => {
                 searchDispatch({
                   type: "update",
@@ -179,7 +179,7 @@ const SearchBar = () => {
               className={styles.inputNumber}
               type="number"
               min="0"
-              defaultValue={options.mylistCounterLte}
+              value={options.mylistCounterLte || ""}
               onChange={(e) => {
                 searchDispatch({
                   type: "update",
@@ -196,7 +196,7 @@ const SearchBar = () => {
               type="number"
               step="0.1"
               min="0"
-              defaultValue={options.lengthMinutesGte}
+              value={options.lengthMinutesGte || ""}
               onChange={(e) => {
                 searchDispatch({
                   type: "update",
@@ -214,7 +214,7 @@ const SearchBar = () => {
               type="number"
               step="0.1"
               min="0"
-              defaultValue={options.lengthMinutesLte}
+              value={options.lengthMinutesLte || ""}
               onChange={(e) => {
                 const [big, small] = e.target.value.split(".");
                 searchDispatch({
@@ -233,7 +233,7 @@ const SearchBar = () => {
               className={`${styles.inputNumber} ${styles.big}`}
               type="number"
               min="0"
-              defaultValue={options.viewCounterGte}
+              value={options.viewCounterGte || ""}
               onChange={(e) => {
                 searchDispatch({
                   type: "update",
@@ -248,7 +248,7 @@ const SearchBar = () => {
               className={`${styles.inputNumber} ${styles.big}`}
               type="number"
               min="0"
-              defaultValue={options.viewCounterLte}
+              value={options.viewCounterLte || ""}
               onChange={(e) => {
                 searchDispatch({
                   type: "update",
