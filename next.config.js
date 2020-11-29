@@ -29,6 +29,10 @@ module.exports = {
     NEXT_PUBLIC_COMMIT_SHA: COMMIT_SHA,
   },
 
+  experimental: {
+    productionBrowserSourceMaps: true,
+  },
+
   webpack: (config, options) => {
     // In `pages/_app.js`, Sentry is imported from @sentry/browser. While
     // @sentry/node will run in a Node.js environment. @sentry/node will use
