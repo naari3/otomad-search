@@ -1,10 +1,11 @@
 import React, { FC } from "react";
 import styles from "./Jussen.module.css";
 import { useDispatch as useSearchDispatch } from "../contexts/SearchContext";
+import useTranslation from "next-translate/useTranslation";
 
 const JussenButton: FC<{ targetYear: number }> = ({ targetYear }) => {
   const searchDispatch = useSearchDispatch();
-
+  const { t } = useTranslation("JussenButton");
   const ev: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void = (
     e
   ) => {
@@ -24,7 +25,7 @@ const JussenButton: FC<{ targetYear: number }> = ({ targetYear }) => {
 
   return (
     <button onClick={ev} className={styles.jussenButton}>
-      {targetYear}年10選対象に絞る
+      {t("10sen-filter-button", { year: targetYear })}
     </button>
   );
 };
