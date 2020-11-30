@@ -16,6 +16,7 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "react/prop-types": "off",
   },
   globals: {
     React: "writable",
@@ -24,9 +25,6 @@ module.exports = {
   overrides: [
     {
       files: ["**/*.tsx", "**/*.ts", "**/*.js", "**/*.json"],
-      rules: {
-        "react/prop-types": "off",
-      },
     },
   ],
 };
