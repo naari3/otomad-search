@@ -6,6 +6,8 @@ import secondsToMs from "../lib/secondsToMs";
 import Thumbnail from "./Thumbnail";
 import { VideoProps } from "./VideoDetail";
 
+import useTranslation from 'next-translate/useTranslation';
+
 type Props = {
   float?: boolean;
 } & VideoProps;
@@ -13,11 +15,12 @@ type Props = {
 const urlPrefix = "https://www.nicovideo.jp/watch/";
 
 const VideoWrap = React.memo(({ video, float }: Props) => {
+  const { t } = useTranslation("VideoWrap");
   return (
     <div className={`${styles.videoWrap} ${float ? styles.float : ""}`}>
       <p className={styles.itemTime}>
         <span>{formattedDate(video.startTime)}</span>
-        <span className={styles.separate}>投稿</span>
+        <span className={styles.separate}>{t('posted')}</span>
       </p>
       <div className={styles.itemThumbBox}>
         <div className={styles.itemThumb}>

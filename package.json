@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next-translate && next dev",
+    "build": "next-translate && next build",
     "start": "next start"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "jsdom": "^16.4.0",
     "next": "10.0.1",
     "next-seo": "^4.17.0",
+    "next-translate": "^0.20.2",
     "nookies": "^2.5.0",
     "normalize.css": "^8.0.1",
     "react": "17.0.1",

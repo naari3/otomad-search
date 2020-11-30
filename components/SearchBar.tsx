@@ -15,28 +15,25 @@ import {
 } from "../contexts/LoadingContext";
 import JussenButton from "./JussenButton";
 
-const sortAxisOptions = {
-  //   "+userId": "",
-  //   "-userId": "",
-  "+viewCounter": "再生数が少ない順",
-  "-viewCounter": "再生数が多い順",
-  "+startTime": "投稿日時が古い順",
-  "-startTime": "投稿日時が新しい順",
-  "+commentCounter": "コメント数が少ない順",
-  "-commentCounter": "コメント数が多い順",
-  //   "+channelId": "",
-  //   "-channelId": "",
-  "+mylistCounter": "マイリスト数が少ない順",
-  "-mylistCounter": "マイリスト数が多い順",
-  "+lengthSeconds": "再生時間が短い順",
-  "-lengthSeconds": "再生時間が長い順",
-  //   "+threadId": "",
-  //   "-threadId": "",
-  "+lastCommentTime": "コメントが古い順",
-  "-lastCommentTime": "コメントが新しい順",
-};
+import useTranslation from 'next-translate/useTranslation';
+
+const sortAxisOptions = [
+  "+viewCounter",
+  "-viewCounter",
+  "+startTime",
+  "-startTime",
+  "+commentCounter",
+  "-commentCounter",
+  "+mylistCounter",
+  "-mylistCounter",
+  "+lengthSeconds",
+  "-lengthSeconds",
+  "+lastCommentTime",
+  "-lastCommentTime"
+];
 
 const SearchBar = () => {
+  const { t } = useTranslation("SearchBar");
   const options = useSearchGlobalState();
   const searchDispatch = useSearchDispatch();
   const loading = useLoadingGlobalState();
@@ -100,19 +97,19 @@ const SearchBar = () => {
                     });
                   }}
                 >
-                  検索
+                  {t('search')}
                 </button>
               </Link>
             </div>
             {options.count === null || options.count === undefined ? (
               ""
             ) : (
-              <span>{options.count.toLocaleString()} 件</span>
+              <span>{options.count.toLocaleString()} {t('results')}</span>
             )}
             {takesALongTime ? (
               <div>
                 <span>
-                  初回や時間の空いたあとの検索は時間がかかる場合があります。
+                  {t('search-firsttime')}
                 </span>
               </div>
             ) : (
@@ -121,7 +118,7 @@ const SearchBar = () => {
           </div>
         </div>
         <div className={styles.filter}>
-          <span className={styles.filterName}>並び替え</span>
+          <span className={styles.filterName}>{t('sort')}</span>
           <select
             className={styles.inputOrder}
             name="sort"
@@ -133,13 +130,13 @@ const SearchBar = () => {
             }}
             value={options._sort || "-startTime"}
           >
-            {Object.entries(sortAxisOptions).map(([key, message]) => (
-              <option value={key} key={key}>
-                {message}
+            {Object.entries(sortAxisOptions).map(([key]) => (
+              <option value={sortAxisOptions[key]} key={sortAxisOptions[key]}>
+                {t(sortAxisOptions[key])}
               </option>
             ))}
           </select>
-          <span className={styles.filterName}>ユーザーIDで絞り込む</span>
+          <span className={styles.filterName}>{t('user-id-filter')}</span>
           <label>
             <input
               className={`${styles.inputNumber} ${styles.big}`}
@@ -158,7 +155,7 @@ const SearchBar = () => {
           </label>
         </div>
         <div className={styles.filter}>
-          <span className={styles.filterName}>マイリスト数</span>
+          <span className={styles.filterName}>{t('my-list-count')}</span>
           <label>
             <input
               className={styles.inputNumber}
@@ -172,7 +169,7 @@ const SearchBar = () => {
                 });
               }}
             />
-            <span className={styles.filterWord}>以上</span>
+            <span className={styles.filterWord}>{t('common:min')}</span>
           </label>
           <label>
             <input
@@ -187,9 +184,9 @@ const SearchBar = () => {
                 });
               }}
             />
-            <span className={styles.filterWord}>以下</span>
+            <span className={styles.filterWord}>{t('common:max')}</span>
           </label>
-          <span className={styles.filterName}>再生時間</span>
+          <span className={styles.filterName}>{t('duration')}</span>
           <label>
             <input
               className={styles.inputNumber}
@@ -206,7 +203,7 @@ const SearchBar = () => {
                 });
               }}
             />
-            <span className={styles.filterWord}>分以上</span>
+            <span className={styles.filterWord}>{t('common:min')}</span>
           </label>
           <label>
             <input
@@ -225,9 +222,9 @@ const SearchBar = () => {
                 });
               }}
             />
-            <span className={styles.filterWord}>分以下</span>
+            <span className={styles.filterWord}>{t('common:max')}</span>
           </label>
-          <span className={styles.filterName}>再生数</span>
+          <span className={styles.filterName}>{t('views')}</span>
           <label>
             <input
               className={`${styles.inputNumber} ${styles.big}`}
@@ -241,7 +238,7 @@ const SearchBar = () => {
                 });
               }}
             />
-            <span className={styles.filterWord}>以上</span>
+            <span className={styles.filterWord}>{t('common:min')}</span>
           </label>
           <label>
             <input
@@ -256,13 +253,13 @@ const SearchBar = () => {
                 });
               }}
             />
-            <span className={styles.filterWord}>以下</span>
+            <span className={styles.filterWord}>{t('common:max')}</span>
           </label>
         </div>
         <div className={styles.filter}>
-          <span className={styles.filterName}>日付指定</span>
+          <span className={styles.filterName}>{t('date-filter')}</span>
           <label className={styles.filterDate}>
-            <span className={styles.filterWord}>開始日</span>
+            <span className={styles.filterWord}>{t('start-date')}</span>
             <input
               className={styles.inputDatetime}
               type="datetime-local"
@@ -284,7 +281,7 @@ const SearchBar = () => {
             />
           </label>
           <label className={styles.filterDate}>
-            <span className={styles.filterWord}>終了日</span>
+            <span className={styles.filterWord}>{t('end-date')}</span>
             <input
               className={styles.inputDatetime}
               type="datetime-local"

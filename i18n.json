@@ -1,0 +1,9 @@
+{
+  "locales": ["en", "ja"],
+  "defaultLocale": "ja",
+  "pages": {
+    "*": ["common"],
+    "/": ["index", "SearchBar"],
+    "/search": ["SearchBar", "PerSwitcher", "VideoData", "VideoWrap"]
+  }
+}

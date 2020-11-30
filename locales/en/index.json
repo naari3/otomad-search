@@ -1,0 +1,7 @@
+{
+  "index-overview": "<0>Overview</0><1>This is a service to search for 音MADs.</1><1>It allows you to set filters for the search results.</1><1>It calls the <2>niconico Content Search API</2> behind the scenes.</1><1>You are unable to view results after page 17 (1700th result) because of the API specifications.</1>",
+  "index-parameters": "<0>Parameter Description</0><1>Parameters that can have both the minimum and maximum set can also have only one of them set.</1><2>Sort</2><1>You can select the sort order.</1><1>Sorting by popularity is not possible.</1><2>Number of My Lists.</2><1>Search in the range of the specified number of My Lists</1><2>Duration</2><1>Search within the specified video duration.</1><2>Date Range</2><1>Search in the range of the dates specified.</1>",
+  "credits": "Credits",
+  "credits-development": "Development, maintenance",
+  "credits-icon": "Logo design"
+}
