@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import useTranslation from "next-translate/useTranslation";
 import Trans from "next-translate/Trans";
 import { GetStaticProps } from "next";
+import ChangeLanguage from "../components/ChangeLanguage";
 
 const Home: FC = () => {
   const { t } = useTranslation("index");
@@ -14,6 +15,10 @@ const Home: FC = () => {
       <Head>
         <title>otomad-search</title>
       </Head>
+
+      <section>
+        <ChangeLanguage />
+      </section>
 
       <section className={styles.description}>
         <Trans

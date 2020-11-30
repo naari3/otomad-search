@@ -1,0 +1,6 @@
+.lang {
+  font-size: 75%;
+}
+.lang:hover {
+  text-decoration: underline;
+}
