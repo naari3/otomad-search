@@ -23,7 +23,7 @@ module.exports = {
   ignorePatterns: gitignore,
   overrides: [
     {
-      files: ["**/*.tsx"],
+      files: ["**/*.tsx", "**/*.ts", "**/*.js", "**/*.json"],
       rules: {
         "react/prop-types": "off",
       },

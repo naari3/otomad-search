@@ -6,8 +6,8 @@
     "dev": "next-translate && next dev",
     "build": "next-translate && next build",
     "start": "next start",
-    "lint": "eslint . --ext .ts,.tsx,.js",
-    "fix": "eslint . --ext .ts,.tsx,.js --fix"
+    "lint": "eslint .",
+    "fix": "eslint . --fix"
   },
   "dependencies": {
     "@sentry/browser": "^5.27.6",
