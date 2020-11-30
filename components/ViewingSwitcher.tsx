@@ -30,7 +30,7 @@ const ViewingSwitcher = React.memo(() => {
         >
           <a
             className={viewing === "detail" ? styles.selected : ""}
-            onClick={(e) => {
+            onClick={() => {
               viewingDispatch({
                 type: "update",
                 payload: "detail",
@@ -46,7 +46,7 @@ const ViewingSwitcher = React.memo(() => {
           }`}
         >
           <a
-            onClick={(e) => {
+            onClick={() => {
               viewingDispatch({
                 type: "update",
                 payload: "icon",
@@ -60,5 +60,6 @@ const ViewingSwitcher = React.memo(() => {
     </div>
   );
 });
+ViewingSwitcher.displayName = "ViewingSwitcher";
 
 export default ViewingSwitcher;

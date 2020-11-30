@@ -1,7 +1,7 @@
-import Document, { Head, Main, NextScript } from "next/document";
+import { FC } from "react";
 import { existsGaId, GA_ID } from "../lib/gtag";
 
-const GoogleAnalytics = () => {
+const GoogleAnalytics: FC = () => {
   return (
     existsGaId && (
       <>

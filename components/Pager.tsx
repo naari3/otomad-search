@@ -47,7 +47,7 @@ const PagerButton: FC<PagerButtonProps> = ({ href, children }) => {
   );
 };
 
-const Pager = () => {
+const Pager: FC = () => {
   const options = useSearchGlobalState();
   const [hasPrevPrevPage, setHasPrevPrevPage] = useState(false);
   const [hasPrevPage, setHasPrevPage] = useState(false);

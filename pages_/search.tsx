@@ -39,7 +39,7 @@ export default function Search({
   searchOptions: SearchOptions;
   viewing: ViewingState;
   errorCode?: number;
-}) {
+}): JSX.Element {
   const searchDispatch = useSearchDispatch();
   const loadingDispatch = useLoadingDispatch();
   const viewingDispatch = useViewingDispatch();
@@ -87,11 +87,11 @@ const defaultQuery: QueryParams = {
   _limit: LIMIT,
 };
 
-const calcOffset = (page?: number, per: number = 100): number => {
+const calcOffset = (page?: number, per = 100): number => {
   if (!page || page < 0) {
     page = 1;
   }
-  let offset = (page - 1) * per;
+  const offset = (page - 1) * per;
 
   return offset;
 };
@@ -120,7 +120,7 @@ const getSearchQuery = ({
 
   const _offset = calcOffset(page, per);
 
-  let filters = {};
+  const filters = {};
 
   if (mylistCounterGte) {
     if (!filters["mylistCounter"]) {

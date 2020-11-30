@@ -33,5 +33,6 @@ const TagList = React.memo(({ tags }: Props) => {
     </div>
   );
 });
+TagList.displayName = "TagList";
 
 export default TagList;

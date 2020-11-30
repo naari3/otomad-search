@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./SearchBar.module.css";
 import removeEmpty from "../lib/removeEmpty";
@@ -15,7 +15,7 @@ import {
 } from "../contexts/LoadingContext";
 import JussenButton from "./JussenButton";
 
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from "next-translate/useTranslation";
 
 const sortAxisOptions = [
   "+viewCounter",
@@ -29,10 +29,10 @@ const sortAxisOptions = [
   "+lengthSeconds",
   "-lengthSeconds",
   "+lastCommentTime",
-  "-lastCommentTime"
+  "-lastCommentTime",
 ];
 
-const SearchBar = () => {
+const SearchBar: FC = () => {
   const { t } = useTranslation("SearchBar");
   const options = useSearchGlobalState();
   const searchDispatch = useSearchDispatch();
@@ -97,20 +97,20 @@ const SearchBar = () => {
                     });
                   }}
                 >
-                  {t('search')}
+                  {t("search")}
                 </button>
               </Link>
             </div>
             {options.count === null || options.count === undefined ? (
               ""
             ) : (
-              <span>{options.count.toLocaleString()} {t('results')}</span>
+              <span>
+                {options.count.toLocaleString()} {t("results")}
+              </span>
             )}
             {takesALongTime ? (
               <div>
-                <span>
-                  {t('search-firsttime')}
-                </span>
+                <span>{t("search-firsttime")}</span>
               </div>
             ) : (
               ""
@@ -118,7 +118,7 @@ const SearchBar = () => {
           </div>
         </div>
         <div className={styles.filter}>
-          <span className={styles.filterName}>{t('sort')}</span>
+          <span className={styles.filterName}>{t("sort")}</span>
           <select
             className={styles.inputOrder}
             name="sort"
@@ -136,7 +136,7 @@ const SearchBar = () => {
               </option>
             ))}
           </select>
-          <span className={styles.filterName}>{t('user-id-filter')}</span>
+          <span className={styles.filterName}>{t("user-id-filter")}</span>
           <label>
             <input
               className={`${styles.inputNumber} ${styles.big}`}
@@ -155,7 +155,7 @@ const SearchBar = () => {
           </label>
         </div>
         <div className={styles.filter}>
-          <span className={styles.filterName}>{t('my-list-count')}</span>
+          <span className={styles.filterName}>{t("my-list-count")}</span>
           <label>
             <input
               className={styles.inputNumber}
@@ -169,7 +169,7 @@ const SearchBar = () => {
                 });
               }}
             />
-            <span className={styles.filterWord}>{t('common:min')}</span>
+            <span className={styles.filterWord}>{t("common:min")}</span>
           </label>
           <label>
             <input
@@ -184,9 +184,9 @@ const SearchBar = () => {
                 });
               }}
             />
-            <span className={styles.filterWord}>{t('common:max')}</span>
+            <span className={styles.filterWord}>{t("common:max")}</span>
           </label>
-          <span className={styles.filterName}>{t('duration')}</span>
+          <span className={styles.filterName}>{t("duration")}</span>
           <label>
             <input
               className={styles.inputNumber}
@@ -203,7 +203,7 @@ const SearchBar = () => {
                 });
               }}
             />
-            <span className={styles.filterWord}>{t('common:min')}</span>
+            <span className={styles.filterWord}>{t("common:min")}</span>
           </label>
           <label>
             <input
@@ -213,7 +213,6 @@ const SearchBar = () => {
               min="0"
               value={options.lengthMinutesLte || ""}
               onChange={(e) => {
-                const [big, small] = e.target.value.split(".");
                 searchDispatch({
                   type: "update",
                   payload: {
@@ -222,9 +221,9 @@ const SearchBar = () => {
                 });
               }}
             />
-            <span className={styles.filterWord}>{t('common:max')}</span>
+            <span className={styles.filterWord}>{t("common:max")}</span>
           </label>
-          <span className={styles.filterName}>{t('views')}</span>
+          <span className={styles.filterName}>{t("views")}</span>
           <label>
             <input
               className={`${styles.inputNumber} ${styles.big}`}
@@ -238,7 +237,7 @@ const SearchBar = () => {
                 });
               }}
             />
-            <span className={styles.filterWord}>{t('common:min')}</span>
+            <span className={styles.filterWord}>{t("common:min")}</span>
           </label>
           <label>
             <input
@@ -253,13 +252,13 @@ const SearchBar = () => {
                 });
               }}
             />
-            <span className={styles.filterWord}>{t('common:max')}</span>
+            <span className={styles.filterWord}>{t("common:max")}</span>
           </label>
         </div>
         <div className={styles.filter}>
-          <span className={styles.filterName}>{t('date-filter')}</span>
+          <span className={styles.filterName}>{t("date-filter")}</span>
           <label className={styles.filterDate}>
-            <span className={styles.filterWord}>{t('start-date')}</span>
+            <span className={styles.filterWord}>{t("start-date")}</span>
             <input
               className={styles.inputDatetime}
               type="datetime-local"
@@ -281,7 +280,7 @@ const SearchBar = () => {
             />
           </label>
           <label className={styles.filterDate}>
-            <span className={styles.filterWord}>{t('end-date')}</span>
+            <span className={styles.filterWord}>{t("end-date")}</span>
             <input
               className={styles.inputDatetime}
               type="datetime-local"

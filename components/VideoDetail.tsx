@@ -1,5 +1,5 @@
 import React from "react";
-import { Video, VideoFields } from "../lib/search";
+import { Video } from "../lib/search";
 import styles from "./Video.module.css";
 import stripTag from "../lib/stripTag";
 import VideoWrap from "./VideoWrap";
@@ -32,7 +32,11 @@ const VideoDetail = React.memo(({ video }: VideoProps) => {
       <VideoWrap video={video} float />
       <div className={styles.itemContent}>
         <p className={styles.itemTitle}>
-          <a href={`${urlPrefix}${video.contentId}`} target="_blank">
+          <a
+            href={`${urlPrefix}${video.contentId}`}
+            target="_blank"
+            rel="noreferrer"
+          >
             {video.title}
           </a>
         </p>
@@ -49,5 +53,6 @@ const VideoDetail = React.memo(({ video }: VideoProps) => {
     </div>
   );
 });
+VideoDetail.displayName = "VideoDetail";
 
 export default VideoDetail;

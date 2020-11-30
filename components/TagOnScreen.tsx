@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import TrackVisibility from "react-on-screen";
 import Tag, { NoLinkTag } from "./Tag";
 
@@ -7,7 +7,7 @@ import Tag, { NoLinkTag } from "./Tag";
 // これを毎回すべて更新するとレンダリングが多すぎてとても遅くなる。
 // react-on-screen を使用することで現在画面上に現れているタグのリンクのみ更新することで
 // 高速化を図っている。
-const TagOnScreen = ({ name }: { name: string }) => {
+const TagOnScreen: FC<{ name: string }> = ({ name }) => {
   return (
     <TrackVisibility throttleInterval={0} offset={250} partialVisibility={true}>
       {({ isVisible }) =>

@@ -7,7 +7,7 @@ import { useGlobalState as useLoadingGlobalState } from "../contexts/LoadingCont
 import removeEmpty from "../lib/removeEmpty";
 import TrackVisibility from "react-on-screen";
 
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from "next-translate/useTranslation";
 
 type Props = VideoProps;
 
@@ -20,19 +20,19 @@ const VideoData = React.memo(({ video }: Props) => {
     <div className={styles.itemData}>
       <ul className={styles.list}>
         <li className={styles.count}>
-          {t('views')}{" "}
+          {t("views")}{" "}
           <span className={styles.value}>
             {video.viewCounter.toLocaleString()}
           </span>
         </li>
         <li className={styles.count}>
-        {t('comments')}{" "}
+          {t("comments")}{" "}
           <span className={styles.value}>
             {video.commentCounter.toLocaleString()}
           </span>
         </li>
         <li className={styles.count}>
-        {t('mylists')}{" "}
+          {t("mylists")}{" "}
           <span className={styles.value}>
             {video.mylistCounter.toLocaleString()}
           </span>
@@ -67,5 +67,6 @@ const VideoData = React.memo(({ video }: Props) => {
     </div>
   );
 });
+VideoData.displayName = "VideoData";
 
 export default VideoData;

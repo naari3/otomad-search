@@ -1,4 +1,3 @@
-import { differenceInBusinessDays } from "date-fns";
 // import { JSDOM } from "jsdom";
 
 // だいぶ弱い気がするけど、JSDOMを使わない方法として有力(一番上に出てきた)のでこれを使う

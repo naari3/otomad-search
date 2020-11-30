@@ -1,6 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const withSourceMaps = require("@zeit/next-source-maps")();
 
 // Use the SentryWebpack plugin to upload the source maps during build step
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
@@ -21,18 +23,15 @@ const COMMIT_SHA =
 process.env.SENTRY_DSN = SENTRY_DSN;
 const basePath = "";
 
-const { locales, defaultLocale } = require('./i18n.json')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { locales, defaultLocale } = require("./i18n.json");
 
-module.exports = {
+module.exports = withSourceMaps({
   env: {
     // Make the COMMIT_SHA available to the client so that Sentry events can be
     // marked for the release the belong to. It may be undefined if running
     // outside of Vercel
     NEXT_PUBLIC_COMMIT_SHA: COMMIT_SHA,
-  },
-
-  experimental: {
-    productionBrowserSourceMaps: true,
   },
 
   webpack: (config, options) => {
@@ -102,4 +101,4 @@ module.exports = {
     locales,
     defaultLocale,
   },
-};
+});

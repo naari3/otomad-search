@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { FC } from "react";
 import SearchBar from "./SearchBar";
 import styles from "./Header.module.css";
 import Link from "next/link";
@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "../contexts/SearchContext";
 import { initialState } from "../reducers/search";
 
-const Header = () => {
+const Header: FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -46,6 +46,7 @@ const Header = () => {
               className={styles.jussenLink}
               href="http://oto10.s602.xrea.com/10sen/"
               target="_blank"
+              rel="noreferrer"
             >
               音MAD10選の提出先はこちら！
             </a>

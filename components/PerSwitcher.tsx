@@ -6,7 +6,7 @@ import { useGlobalState as useLoadingGlobalState } from "../contexts/LoadingCont
 import removeEmpty from "../lib/removeEmpty";
 import { setCookie } from "nookies";
 
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from "next-translate/useTranslation";
 
 const PerButton: FC<{ per: number }> = ({ children, per }) => {
   const loading = useLoadingGlobalState();
@@ -48,14 +48,16 @@ const PerSwitcher = React.memo(() => {
     <div className={styles.perSwitcher}>
       <ul className={styles.perList}>
         <li className={`${options.per === 100 ? styles.selected : ""}`}>
-          <PerButton per={100}>{t('many')}</PerButton>
+          <PerButton per={100}>{t("many")}</PerButton>
         </li>
         <li className={`${options.per === 50 ? styles.selected : ""}`}>
-          <PerButton per={50}>{t('fewer')}</PerButton>
+          <PerButton per={50}>{t("fewer")}</PerButton>
         </li>
       </ul>
     </div>
   );
 });
+
+PerSwitcher.displayName = "PerSwitcher";
 
 export default PerSwitcher;

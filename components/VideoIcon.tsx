@@ -1,5 +1,4 @@
 import React from "react";
-import { Video, VideoFields } from "../lib/search";
 import styles from "./Video.module.css";
 import VideoWrap from "./VideoWrap";
 import VideoData from "./VideoData";
@@ -15,7 +14,11 @@ const VideoIcon = React.memo(({ video }: Props) => {
       <VideoWrap video={video} />
       <div className={styles.itemContent}>
         <p className={styles.itemTitle}>
-          <a href={`${urlPrefix}${video.contentId}`} target="_blank">
+          <a
+            href={`${urlPrefix}${video.contentId}`}
+            target="_blank"
+            rel="noreferrer"
+          >
             {video.title}
           </a>
         </p>
@@ -24,5 +27,6 @@ const VideoIcon = React.memo(({ video }: Props) => {
     </div>
   );
 });
+VideoIcon.displayName = "VideoIcon";
 
 export default VideoIcon;

@@ -6,10 +6,10 @@ export const ViewingDispatchContext = createContext(
   (() => true) as Dispatch<IAction>
 );
 
-export const useDispatch = () => {
+export const useDispatch = (): Dispatch<IAction> => {
   return useContext(ViewingDispatchContext);
 };
 
-export const useGlobalState = () => {
+export const useGlobalState = (): State => {
   return useContext(ViewingStateContext);
 };

@@ -1,4 +1,4 @@
-const removeEmpty = (target) => {
+const removeEmpty = (target: any): any => {
   const obj = { ...target };
   Object.keys(obj).forEach(
     (key) => (obj[key] == null || Number.isNaN(obj[key])) && delete obj[key]
