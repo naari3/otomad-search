@@ -24,7 +24,7 @@ export interface IAction {
   payload: Partial<SearchOptions>;
 }
 
-export const reducer = (state: State, action: IAction) => {
+export const reducer = (state: State, action: IAction): State => {
   switch (action.type) {
     case "update":
       return {

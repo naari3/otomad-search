@@ -35,9 +35,11 @@ const Tag = React.memo(({ name }: { name: string }) => {
     </Link>
   );
 });
+Tag.displayName = "Tag";
 const NoLinkTag = React.memo(({ name }: { name: string }) => {
   return <span className={`${styles.tag} ${styles.disabled}`}>{name}</span>;
 });
+NoLinkTag.displayName = "NoLinkTag";
 
 export default Tag;
 export { NoLinkTag };

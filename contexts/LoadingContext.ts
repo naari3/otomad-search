@@ -6,10 +6,10 @@ export const LoadingDispatchContext = createContext(
   (() => true) as Dispatch<IAction>
 );
 
-export const useDispatch = () => {
+export const useDispatch = (): Dispatch<IAction> => {
   return useContext(LoadingDispatchContext);
 };
 
-export const useGlobalState = () => {
+export const useGlobalState = (): State => {
   return useContext(LoadingStateContext);
 };

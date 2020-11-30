@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction, useEffect } from "react";
+import { useState, Dispatch, SetStateAction, useEffect, FC } from "react";
 import styles from "./Thumbnail.module.css";
 import TrackVisibility from "react-on-screen";
 
@@ -19,14 +19,10 @@ const Inner = ({
   return <></>;
 };
 
-// TODO: https://github.com/naari3/otomad-search/issues/15
-const Thumbnail = ({
-  thumbnailUrl,
-  title,
-}: {
+const Thumbnail: FC<{
   thumbnailUrl: string;
   title: string;
-}) => {
+}> = ({ thumbnailUrl, title }) => {
   const [viewable, setViewable] = useState(false);
 
   return (

@@ -1,5 +1,4 @@
 import React from "react";
-import { Video, VideoFields } from "../lib/search";
 import VideoDetail from "./VideoDetail";
 import VideoIcon from "./VideoIcon";
 import ViewingSwitcher from "./ViewingSwitcher";
@@ -54,5 +53,6 @@ const VideoList = React.memo(({ videos }: Props) => {
     </>
   );
 });
+VideoList.displayName = "VideoList";
 
 export default VideoList;

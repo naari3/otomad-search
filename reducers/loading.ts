@@ -7,7 +7,7 @@ export interface IAction {
   payload: State;
 }
 
-export const reducer = (state: State, action: IAction) => {
+export const reducer = (state: State, action: IAction): State => {
   switch (action.type) {
     case "update":
       return action.payload;
