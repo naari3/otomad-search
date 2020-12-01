@@ -6,8 +6,10 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useDispatch } from "../contexts/SearchContext";
 import { initialState } from "../reducers/search";
+import useTranslation from "next-translate/useTranslation";
 
 const Header: FC = () => {
+  const { t } = useTranslation("Header");
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -48,7 +50,7 @@ const Header: FC = () => {
               target="_blank"
               rel="noreferrer"
             >
-              音MAD10選の提出先はこちら！
+              {t("10sen-navi-link")}
             </a>
           </div>
         </div>
