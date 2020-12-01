@@ -8,8 +8,10 @@ import Trans from "next-translate/Trans";
 import { GetStaticProps } from "next";
 import ChangeLanguage from "../components/ChangeLanguage";
 
-const Home: FC = () => {
-  const { t } = useTranslation("index");
+import { getDescriptionData } from "../lib/description";
+
+const Home: FC<{ descriptionHtml: string }> = ({ descriptionHtml }) => {
+  const { t, lang } = useTranslation("index");
   return (
     <Layout>
       <Head>
@@ -21,50 +23,11 @@ const Home: FC = () => {
       </section>
 
       <section className={styles.description}>
-        <Trans
-          i18nKey="index:index-overview"
-          components={[
-            <h2 key="h2" />,
-            <p key="p" />,
-            <a
-              href="https://site.nicovideo.jp/search-api-docs/search.html"
-              target="_blank"
-              rel="noreferrer"
-              key="a"
-            />,
-          ]}
+        <div
+          dangerouslySetInnerHTML={{
+            __html: descriptionHtml,
+          }}
         />
-        <Trans
-          i18nKey="index:index-parameters"
-          components={[<h2 key="h2" />, <p key="p" />, <h3 key="h3" />]}
-        />
-        <h2>{t("credits")}</h2>
-        <ul>
-          <li>
-            <p>
-              <a
-                href="https://twitter.com/_naari_"
-                target="_blank"
-                rel="noreferrer"
-              >
-                @_naari_
-              </a>
-              : {t("credits-development")}
-            </p>
-          </li>
-          <li>
-            <p>
-              <a
-                href="https://twitter.com/readybug_"
-                target="_blank"
-                rel="noreferrer"
-              >
-                @readybug_
-              </a>
-              : {t("credits-icon")}
-            </p>
-          </li>
-        </ul>
       </section>
     </Layout>
   );
@@ -73,5 +36,13 @@ const Home: FC = () => {
 export default Home;
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  return { props: { getStaticPropsWorks: true, lang: locale } };
+  console.log(locale);
+  console.log(getDescriptionData(locale));
+  return {
+    props: {
+      getStaticPropsWorks: true,
+      lang: locale,
+      descriptionHtml: await getDescriptionData(locale),
+    },
+  };
 };
