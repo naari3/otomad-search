@@ -3,7 +3,7 @@
   "defaultLocale": "ja",
   "pages": {
     "*": ["common"],
-    "/": ["index", "SearchBar"],
+    "/": ["SearchBar"],
     "/search": ["SearchBar", "PerSwitcher", "VideoData", "VideoWrap"]
   }
 }
