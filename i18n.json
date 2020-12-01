@@ -3,7 +3,14 @@
   "defaultLocale": "ja",
   "pages": {
     "*": ["common"],
-    "/": ["SearchBar"],
-    "/search": ["SearchBar", "PerSwitcher", "VideoData", "VideoWrap"]
+    "/": ["SearchBar", "JussenButton", "Header"],
+    "/search": [
+      "SearchBar",
+      "PerSwitcher",
+      "VideoData",
+      "VideoWrap",
+      "JussenButton",
+      "Header"
+    ]
   }
 }
