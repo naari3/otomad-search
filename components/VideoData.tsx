@@ -37,32 +37,36 @@ const VideoData = React.memo(({ video }: Props) => {
             {video.mylistCounter.toLocaleString()}
           </span>
         </li>
-        <li className={`${styles.count} ${styles.user}`}>
-          <TrackVisibility
-            throttleInterval={0}
-            offset={250}
-            partialVisibility={true}
-          >
-            {({ isVisible }) => {
-              return isVisible && !loading ? (
-                <Link
-                  href={{
-                    pathname: "/search",
-                    query: removeEmpty({
-                      ...options,
-                      page: 1,
-                      userId: video.userId,
-                    }),
-                  }}
-                >
-                  <a className={styles.value}>{video.userId}</a>
-                </Link>
-              ) : (
-                <span className={styles.value}>{video.userId}</span>
-              );
-            }}
-          </TrackVisibility>
-        </li>
+        {video.userId ? (
+          <li className={`${styles.count} ${styles.user}`}>
+            <TrackVisibility
+              throttleInterval={0}
+              offset={250}
+              partialVisibility={true}
+            >
+              {({ isVisible }) => {
+                return isVisible && !loading ? (
+                  <Link
+                    href={{
+                      pathname: "/search",
+                      query: removeEmpty({
+                        ...options,
+                        page: 1,
+                        userId: video.userId,
+                      }),
+                    }}
+                  >
+                    <a className={styles.value}>{video.userId}</a>
+                  </Link>
+                ) : (
+                  <span className={styles.value}>{video.userId}</span>
+                );
+              }}
+            </TrackVisibility>
+          </li>
+        ) : (
+          ""
+        )}
       </ul>
     </div>
   );
