@@ -136,23 +136,29 @@ const SearchBar: FC = () => {
               </option>
             ))}
           </select>
-          <span className={styles.filterName}>{t("user-id-filter")}</span>
-          <label>
-            <input
-              className={`${styles.inputNumber} ${styles.big}`}
-              type="number"
-              min="0"
-              value={options.userId || ""}
-              onChange={(e) => {
-                searchDispatch({
-                  type: "update",
-                  payload: {
-                    userId: parseInt(e.target.value),
-                  },
-                });
-              }}
-            />
-          </label>
+          {options.isSs ? (
+            ""
+          ) : (
+            <>
+              <span className={styles.filterName}>{t("user-id-filter")}</span>
+              <label>
+                <input
+                  className={`${styles.inputNumber} ${styles.big}`}
+                  type="number"
+                  min="0"
+                  value={options.userId || ""}
+                  onChange={(e) => {
+                    searchDispatch({
+                      type: "update",
+                      payload: {
+                        userId: parseInt(e.target.value),
+                      },
+                    });
+                  }}
+                />
+              </label>
+            </>
+          )}
         </div>
         <div className={styles.filter}>
           <span className={styles.filterName}>{t("my-list-count")}</span>
