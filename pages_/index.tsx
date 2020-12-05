@@ -3,15 +3,12 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
 
-import useTranslation from "next-translate/useTranslation";
-import Trans from "next-translate/Trans";
 import { GetStaticProps } from "next";
 import ChangeLanguage from "../components/ChangeLanguage";
 
 import { getDescriptionData } from "../lib/description";
 
 const Home: FC<{ descriptionHtml: string }> = ({ descriptionHtml }) => {
-  const { t, lang } = useTranslation("index");
   return (
     <Layout>
       <Head>
