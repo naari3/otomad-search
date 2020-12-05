@@ -8,7 +8,7 @@ import {
 } from "../contexts/LoadingContext";
 import removeEmpty from "../lib/removeEmpty";
 import { UrlObject } from "url";
-import { actualMaxPageNumber } from "../lib/pager";
+import { actualMaxPageNumber, MAX_OFFSET, MAX_SS_OFFSET } from "../lib/pager";
 import * as gtag from "../lib/gtag";
 
 type Url = string | UrlObject;
@@ -55,7 +55,11 @@ const Pager: FC = () => {
   const [hasNextNextPage, setHasNextNextPage] = useState(false);
 
   useEffect(() => {
-    const actualMaxPageNum = actualMaxPageNumber(options.per, options.count);
+    const actualMaxPageNum = actualMaxPageNumber(
+      options.per,
+      options.count,
+      options.isSs ? MAX_SS_OFFSET : MAX_OFFSET
+    );
     setHasPrevPrevPage(options.page > 2);
     setHasPrevPage(options.page > 1);
     setHasNextPage(actualMaxPageNum > options.page);

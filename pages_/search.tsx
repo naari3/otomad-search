@@ -28,7 +28,7 @@ import { format } from "date-fns";
 import * as Sentry from "@sentry/node";
 import { AxiosError } from "axios";
 
-import { actualMaxPageNumber, MAX_OFFSET } from "../lib/pager";
+import { actualMaxPageNumber, MAX_OFFSET, MAX_SS_OFFSET } from "../lib/pager";
 
 export default function Search({
   videos,
@@ -292,7 +292,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   > => {
     if (shouldExecCall(searchOptions)) {
       const searchQuery = getSearchQuery(searchOptions);
-      if (searchQuery._offset > MAX_OFFSET) {
+      if (searchQuery._offset > (isSs ? MAX_SS_OFFSET : MAX_OFFSET)) {
         searchQuery._offset = 0;
         searchQuery._limit = 0;
       }
@@ -326,7 +326,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const actualMaxPageNum = actualMaxPageNumber(
     searchOptions.per,
-    response.meta.totalCount
+    response.meta.totalCount,
+    isSs ? MAX_SS_OFFSET : MAX_OFFSET
   );
 
   if (actualMaxPageNum < searchOptions.page) {
