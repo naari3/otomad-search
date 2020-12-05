@@ -13,6 +13,7 @@ export type SearchOptions = {
   count?: number;
   page?: number;
   per?: number;
+  isSs?: boolean;
 };
 
 export const initialState: SearchOptions = { _sort: "-startTime" };

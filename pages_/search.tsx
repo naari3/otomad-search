@@ -10,6 +10,7 @@ import NextErrorComponent from "next/error";
 
 import {
   VideoClient,
+  VideoSnapshotClient,
   Video,
   QueryParams,
   VideoSortKeys,
@@ -255,7 +256,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (viewing !== "detail" && viewing !== "icon") viewing = "detail";
   if (!per) per = 50;
   const { query } = ctx;
-  const client = new VideoClient({ context: "otomad-search" });
+  const isSs = !!query.isSs;
+  const client = new (isSs ? VideoSnapshotClient : VideoClient)({
+    context: "otomad-search",
+  });
   console.log(query);
   const searchOptions: SearchOptions = {
     q: parseQueryToString(query.q) || "",
@@ -275,6 +279,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     startTimeLte: roundDate(parseQueryToString(query.startTimeLte)),
     page: roundNumber(parseQueryToInt(query.page)),
     per: Math.min(100, roundNumber(parseQueryToInt(query.per)) || per),
+    isSs,
   };
   console.log({
     cookie: per,
