@@ -18,10 +18,6 @@ export type Content = {
   tagsExact: string;
 };
 
-type ContentFields = Omit<Content, "tagsExtract">;
-type ContentSorts = Omit<Content, "contentId" | "title" | "description">;
-type ContentFilters = Omit<Content, "contentId" | "title" | "description">;
-
 export type Video = Content & {
   mylistCounter: number;
   lengthSeconds: number;
@@ -114,24 +110,6 @@ type LiveFilters = Omit<
   | "communityIcon"
 >;
 
-type ContentTypes = {
-  Fields: ContentFields;
-  Sorts: ContentSorts;
-  Filters: ContentSorts;
-};
-
-type VideoTypes = {
-  Fields: VideoFields;
-  Sorts: VideoSorts;
-  Filters: VideoSorts;
-};
-
-type LiveTypes = {
-  Fields: LiveFields;
-  Sorts: LiveSorts;
-  Filters: LiveSorts;
-};
-
 // 返ってくるであろうレスポンス
 export type Response<C extends Partial<Content>> = {
   meta: {
@@ -174,7 +152,7 @@ export type QueryParams = {
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
 class BaseClient<C extends Content> {
-  service: "video" | "live";
+  service: "video" | "live" | "snapshot/video";
   context: string;
   client: AxiosInstance;
 
@@ -182,7 +160,7 @@ class BaseClient<C extends Content> {
     service,
     context,
   }: {
-    service: "video" | "live";
+    service: "video" | "live" | "snapshot/video";
     context: string;
   }) {
     this.service = service;
@@ -196,12 +174,16 @@ class BaseClient<C extends Content> {
     query: QueryParams,
     fields: T
   ): Promise<AxiosResponse<Response<Pick<C, T[number]>>>> {
-    // const filters = query.filters;
     const { filters: filters, ...without_filters } = query;
     const params: InnerQueryParams = Object.assign(
       { _context: this.context },
       without_filters,
-      { fields: fields.join() },
+      {
+        fields: (this.service !== "snapshot/video"
+          ? fields
+          : fields.filter((f) => f !== "userId")
+        ).join(),
+      },
       filters ? this.filtersToInner(filters) : {}
     );
     console.log(params);
@@ -234,6 +216,12 @@ export class VideoClient extends BaseClient<Video> {
 export class LiveClient extends BaseClient<Live> {
   constructor({ context }: { context: string }) {
     super({ service: "live", context });
+  }
+}
+
+export class VideoSnapshotClient extends BaseClient<Video> {
+  constructor({ context }: { context: string }) {
+    super({ service: "snapshot/video", context });
   }
 }
 
