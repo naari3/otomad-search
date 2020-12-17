@@ -2,6 +2,8 @@
   "search": "検索",
   "search-firsttime": "初回や時間の空いたあとの検索は時間がかかる場合があります。",
   "results": "件",
+  "enable-ss": "スナップショット検索APIを使用する",
+  "disable-ss": "コンテンツ検索APIを使用する",
   "sort": "並び替え",
   "user-id-filter": "ユーザーIDで絞り込む",
   "+viewCounter": "再生数が少ない順",

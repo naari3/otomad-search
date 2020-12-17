@@ -4,6 +4,7 @@ import styles from "./SearchBar.module.css";
 import removeEmpty from "../lib/removeEmpty";
 import parseLimitedFloat from "../lib/parseLimitedFloat";
 import * as gtag from "../lib/gtag";
+import IsSsLink from "./IsSsLink";
 
 import {
   useDispatch as useSearchDispatch,
@@ -108,6 +109,12 @@ const SearchBar: FC = () => {
                 {options.count.toLocaleString()} {t("results")}
               </span>
             )}
+            <span className={styles.ss}>
+              <IsSsLink
+                disableMessage={t("disable-ss")}
+                enableMessage={t("enable-ss")}
+              />
+            </span>
             {takesALongTime ? (
               <div>
                 <span>{t("search-firsttime")}</span>
