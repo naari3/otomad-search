@@ -2,6 +2,8 @@
   "search": "Search",
   "search-firsttime": "Searching for the first time may take some time.",
   "results": "Results",
+  "enable-ss": "Use Snapshot search API",
+  "disable-ss": "Use Contents search API",
   "sort": "Sort",
   "user-id-filter": "Filter by User ID",
   "+viewCounter": "Least Viewed",

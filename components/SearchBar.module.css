@@ -104,3 +104,17 @@ select + .filterName {
     display: block;
   }
 }
+
+.ss {
+  float: right;
+}
+
+.ss a {
+  font-size: 50%;
+  padding: 0;
+  color: #bbb;
+}
+
+.ss a:hover {
+  text-decoration: underline;
+}
