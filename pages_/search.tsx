@@ -344,6 +344,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           !!searchOptions.page || searchOptions.page < 0
             ? searchOptions.page
             : 1,
+        isSs: searchOptions.isSs ? true : null,
       },
       viewing,
     },
