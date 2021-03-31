@@ -4,7 +4,6 @@ import styles from "./SearchBar.module.css";
 import removeEmpty from "../lib/removeEmpty";
 import parseLimitedFloat from "../lib/parseLimitedFloat";
 import * as gtag from "../lib/gtag";
-import IsSsLink from "./IsSsLink";
 
 import {
   useDispatch as useSearchDispatch,
@@ -109,12 +108,6 @@ const SearchBar: FC = () => {
                 {options.count.toLocaleString()} {t("results")}
               </span>
             )}
-            <span className={styles.ss}>
-              <IsSsLink
-                disableMessage={t("disable-ss")}
-                enableMessage={t("enable-ss")}
-              />
-            </span>
             {takesALongTime ? (
               <div>
                 <span>{t("search-firsttime")}</span>
@@ -143,29 +136,28 @@ const SearchBar: FC = () => {
               </option>
             ))}
           </select>
-          {options.isSs ? (
+          {
             ""
-          ) : (
-            <>
-              <span className={styles.filterName}>{t("user-id-filter")}</span>
-              <label>
-                <input
-                  className={`${styles.inputNumber} ${styles.big}`}
-                  type="number"
-                  min="0"
-                  value={options.userId || ""}
-                  onChange={(e) => {
-                    searchDispatch({
-                      type: "update",
-                      payload: {
-                        userId: parseInt(e.target.value),
-                      },
-                    });
-                  }}
-                />
-              </label>
-            </>
-          )}
+            // <>
+            //   <span className={styles.filterName}>{t("user-id-filter")}</span>
+            //   <label>
+            //     <input
+            //       className={`${styles.inputNumber} ${styles.big}`}
+            //       type="number"
+            //       min="0"
+            //       value={options.userId || ""}
+            //       onChange={(e) => {
+            //         searchDispatch({
+            //           type: "update",
+            //           payload: {
+            //             userId: parseInt(e.target.value),
+            //           },
+            //         });
+            //       }}
+            //     />
+            //   </label>
+            // </>
+          }
         </div>
         <div className={styles.filter}>
           <span className={styles.filterName}>{t("my-list-count")}</span>

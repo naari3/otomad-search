@@ -58,7 +58,7 @@ const Pager: FC = () => {
     const actualMaxPageNum = actualMaxPageNumber(
       options.per,
       options.count,
-      options.isSs ? MAX_SS_OFFSET : MAX_OFFSET
+      MAX_SS_OFFSET
     );
     setHasPrevPrevPage(options.page > 2);
     setHasPrevPage(options.page > 1);
