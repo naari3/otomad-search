@@ -4,9 +4,13 @@
 
 評価基準になりそうなものをフィルターとして設定できます。
 
-裏で [niconico コンテンツ検索 API](https://site.nicovideo.jp/search-api-docs/search.html) を呼び出しています。
+~~裏で [niconico コンテンツ検索 API](https://site.nicovideo.jp/search-api-docs/search.html) を呼び出しています。~~
 
-またその仕様上、最大ページ数制限があります( `多` 表示なら 17 ページまで)。
+- [廃止されました](https://blog.nicovideo.jp/niconews/143630.html)
+
+裏で [niconico スナップショット検索 API](https://site.nicovideo.jp/search-api-docs/snapshot) を呼び出しています。
+
+またその仕様上、検索結果ページの更新がその日の朝に一度だけになります。即時反映されません。
 
 ## パラメータの説明
 
@@ -33,10 +37,6 @@
 ### 日付指定
 
 指定された日付の範囲で検索します。
-
-### ユーザーIDで絞り込む
-
-指定されたユーザーIDから投稿された動画を検索します。
 
 ## クレジット
 
