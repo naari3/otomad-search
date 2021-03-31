@@ -4,9 +4,13 @@ This is a service to search for 音MADs.
 
 It allows you to set filters for the search results.
 
-It calls the [niconico Content Search API](https://site.nicovideo.jp/search-api-docs/search.html) behind the scenes.
+~~It calls the [niconico Content Search API](https://site.nicovideo.jp/search-api-docs/search.html) behind the scenes.~~
 
-You are limited pages that can be viewed because of the API specifications (page view which is many has limit of 17 pages).
+- [Deprecated and removed](https://blog.nicovideo.jp/niconews/143630.html)
+
+It calls the [niconico Snapshot Search API](https://site.nicovideo.jp/search-api-docs/snapshot) behind the scenes.
+
+You are limited pages that can be viewed because of the API specifications (page view which is updated once a day).
 
 ## Parameter Description
 
@@ -33,10 +37,6 @@ Search in the range of the specified number of Views.
 ### Date Range
 
 Search in the range of the dates specified.
-
-### Filter by User ID
-
-Search in the video which posted by specified user.
 
 ## Credits
 
