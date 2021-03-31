@@ -256,8 +256,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (viewing !== "detail" && viewing !== "icon") viewing = "detail";
   if (!per) per = 50;
   const { query } = ctx;
-  const isSs = !!query.isSs;
-  const client = new (isSs ? VideoSnapshotClient : VideoClient)({
+  const client = new VideoSnapshotClient({
     context: "otomad-search",
   });
   console.log(query);
@@ -279,7 +278,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     startTimeLte: roundDate(parseQueryToString(query.startTimeLte)),
     page: roundNumber(parseQueryToInt(query.page)),
     per: Math.min(100, roundNumber(parseQueryToInt(query.per)) || per),
-    isSs,
   };
   console.log({
     cookie: per,
@@ -292,7 +290,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   > => {
     if (shouldExecCall(searchOptions)) {
       const searchQuery = getSearchQuery(searchOptions);
-      if (searchQuery._offset > (isSs ? MAX_SS_OFFSET : MAX_OFFSET)) {
+      if (searchQuery._offset > MAX_SS_OFFSET) {
         searchQuery._offset = 0;
         searchQuery._limit = 0;
       }
@@ -327,7 +325,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const actualMaxPageNum = actualMaxPageNumber(
     searchOptions.per,
     response.meta.totalCount,
-    isSs ? MAX_SS_OFFSET : MAX_OFFSET
+    MAX_SS_OFFSET
   );
 
   if (actualMaxPageNum < searchOptions.page) {
@@ -344,7 +342,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           !!searchOptions.page || searchOptions.page < 0
             ? searchOptions.page
             : 1,
-        isSs: searchOptions.isSs ? true : null,
       },
       viewing,
     },
