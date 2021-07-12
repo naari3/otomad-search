@@ -97,6 +97,24 @@ const calcOffset = (page?: number, per = 100): number => {
   return offset;
 };
 
+function toISOStringWithTimezone(date: Date): string {
+  const pad = function (str: string): string {
+    return ("0" + str).slice(-2);
+  };
+  const year = date.getFullYear().toString();
+  const month = pad((date.getMonth() + 1).toString());
+  const day = pad(date.getDate().toString());
+  const hour = pad(date.getHours().toString());
+  const min = pad(date.getMinutes().toString());
+  const sec = pad(date.getSeconds().toString());
+  const tz = -date.getTimezoneOffset();
+  const sign = tz >= 0 ? "+" : "-";
+  const tzHour = pad((tz / 60).toString());
+  const tzMin = pad((tz % 60).toString());
+
+  return `${year}-${month}-${day}T${hour}:${min}:${sec}${sign}${tzHour}:${tzMin}`;
+}
+
 const getSearchQuery = ({
   q,
   _sort,
@@ -153,13 +171,17 @@ const getSearchQuery = ({
     if (!filters["startTime"]) {
       filters["startTime"] = {};
     }
-    filters["startTime"]["gte"] = startTimeGte;
+    filters["startTime"]["gte"] = toISOStringWithTimezone(
+      new Date(startTimeGte)
+    );
   }
   if (startTimeLte) {
     if (!filters["startTime"]) {
       filters["startTime"] = {};
     }
-    filters["startTime"]["lte"] = startTimeLte;
+    filters["startTime"]["lte"] = toISOStringWithTimezone(
+      new Date(startTimeLte)
+    );
   }
 
   if (lengthMinutesGte) {
