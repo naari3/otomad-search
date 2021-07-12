@@ -42,3 +42,4 @@
 
 - [@\_naari\_](https://twitter.com/_naari_): 企画と開発
 - [@readybug\_](https://twitter.com/readybug_): アイコン
+- [@stysmmaker](https://github.com/stysmmaker) Introduce to i18n, English translation

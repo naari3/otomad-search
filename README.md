@@ -71,3 +71,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 - [@naari3](https://github.com/naari3) develop, maintenance
 - [tw @readybug\_](https://twitter.com/readybug_) logo design
+- [@stysmmaker](https://github.com/stysmmaker) Introduce to i18n, English translation

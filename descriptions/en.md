@@ -42,3 +42,4 @@ Search in the range of the dates specified.
 
 - [@\_naari\_](https://twitter.com/_naari_): Development, maintenance
 - [@readybug\_](https://twitter.com/readybug_): Logo design
+- [@stysmmaker](https://github.com/stysmmaker) Introduce to i18n, English translation
