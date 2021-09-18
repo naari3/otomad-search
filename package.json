@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next-translate && next dev",
+    "dev": "next-translate && NODE_OPTIONS='--inspect' next dev",
     "build": "next-translate && next build",
     "start": "next start",
     "lint": "eslint .",
