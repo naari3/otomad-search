@@ -16,6 +16,7 @@ export const usedFields = [
   "commentCounter",
   "tags",
   "mylistCounter",
+  "likeCounter",
   "lengthSeconds",
   "userId",
 ] as const;

@@ -37,6 +37,12 @@ const VideoData = React.memo(({ video }: Props) => {
             {video.mylistCounter.toLocaleString()}
           </span>
         </li>
+        <li className={styles.count}>
+          {t("likes")}{" "}
+          <span className={styles.value}>
+            {video.likeCounter.toLocaleString()}
+          </span>
+        </li>
         {video.userId ? (
           <li className={`${styles.count} ${styles.user}`}>
             <TrackVisibility

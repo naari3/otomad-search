@@ -335,6 +335,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   })();
 
+  console.log(response.data);
+
   if (response.meta.status !== 200) {
     ctx.res.statusCode = response.meta.status;
     return {

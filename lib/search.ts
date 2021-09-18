@@ -20,6 +20,7 @@ export type Content = {
 
 export type Video = Content & {
   mylistCounter: number;
+  likeCounter: number;
   lengthSeconds: number;
   threadId: number;
   lastCommentTime: string;
@@ -40,6 +41,7 @@ export const VideoFieldKeys = [
   "channelId",
   "tags",
   "mylistCounter",
+  "likeCounter",
   "lengthSeconds",
   "threadId",
   "lastCommentTime",
@@ -54,6 +56,7 @@ export const VideoSortKeys = [
   "commentCounter",
   "channelId",
   "mylistCounter",
+  "likeCounter",
   "lengthSeconds",
   "threadId",
   "lastCommentTime",
