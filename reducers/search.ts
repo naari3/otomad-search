@@ -9,6 +9,8 @@ export type SearchOptions = {
   lengthMinutesLte?: number;
   viewCounterGte?: number;
   viewCounterLte?: number;
+  likeCounterGte?: number;
+  likeCounterLte?: number;
   userId?: number;
   count?: number;
   page?: number;

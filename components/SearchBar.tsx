@@ -26,6 +26,8 @@ const sortAxisOptions = [
   "-commentCounter",
   "+mylistCounter",
   "-mylistCounter",
+  "+likeCounter",
+  "-likeCounter",
   "+lengthSeconds",
   "-lengthSeconds",
   "+lastCommentTime",
@@ -254,6 +256,39 @@ const SearchBar: FC = () => {
                 searchDispatch({
                   type: "update",
                   payload: { viewCounterLte: parseInt(e.target.value) },
+                });
+              }}
+            />
+            <span className={styles.filterWord}>{t("common:max")}</span>
+          </label>
+        </div>
+        <div className={styles.filter}>
+          <span className={styles.filterName}>{t("like-count")}</span>
+          <label>
+            <input
+              className={styles.inputNumber}
+              type="number"
+              min="0"
+              value={options.likeCounterGte || ""}
+              onChange={(e) => {
+                searchDispatch({
+                  type: "update",
+                  payload: { likeCounterGte: parseInt(e.target.value) },
+                });
+              }}
+            />
+            <span className={styles.filterWord}>{t("common:min")}</span>
+          </label>
+          <label>
+            <input
+              className={styles.inputNumber}
+              type="number"
+              min="0"
+              value={options.likeCounterLte || ""}
+              onChange={(e) => {
+                searchDispatch({
+                  type: "update",
+                  payload: { likeCounterLte: parseInt(e.target.value) },
                 });
               }}
             />
