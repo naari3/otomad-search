@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import NextErrorComponent from "next/error";
 
 import {
-  VideoClient,
   VideoSnapshotClient,
   Video,
   QueryParams,
@@ -28,7 +27,7 @@ import { format } from "date-fns";
 import * as Sentry from "@sentry/node";
 import { AxiosError } from "axios";
 
-import { actualMaxPageNumber, MAX_OFFSET, MAX_SS_OFFSET } from "../lib/pager";
+import { actualMaxPageNumber, MAX_SS_OFFSET } from "../lib/pager";
 
 export default function Search({
   videos,
@@ -126,7 +125,7 @@ const getSearchQuery = ({
   lengthMinutesLte,
   startTimeGte,
   startTimeLte,
-  userId,
+  // userId,
   page,
   per,
 }: SearchOptions): QueryParams => {
@@ -197,7 +196,7 @@ const getSearchQuery = ({
     filters["lengthSeconds"]["lte"] = lengthMinutesLte * 60;
   }
 
-  if (userId) filters["userId"] = { 0: userId };
+  // if (userId) filters["userId"] = { 0: userId };
 
   return {
     ...defaultQuery,

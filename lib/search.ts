@@ -182,10 +182,7 @@ class BaseClient<C extends Content> {
       { _context: this.context },
       without_filters,
       {
-        fields: (this.service !== "snapshot/video"
-          ? fields
-          : fields.filter((f) => f !== "userId")
-        ).join(),
+        fields: fields.join(),
       },
       filters ? this.filtersToInner(filters) : {}
     );

@@ -199,9 +199,9 @@
   color: #bbb;
 }
 
-.itemData .count.user .value:hover {
+/* .itemData .count.user .value:hover {
   text-decoration: underline;
-}
+} */
 
 .videoIcon {
   display: block;

@@ -1,11 +1,11 @@
 import React from "react";
-import Link from "next/link";
+// import Link from "next/link";
 import styles from "./Video.module.css";
 import { VideoProps } from "./VideoDetail";
-import { useGlobalState as useSearchGlobalState } from "../contexts/SearchContext";
-import { useGlobalState as useLoadingGlobalState } from "../contexts/LoadingContext";
-import removeEmpty from "../lib/removeEmpty";
-import TrackVisibility from "react-on-screen";
+// import { useGlobalState as useSearchGlobalState } from "../contexts/SearchContext";
+// import { useGlobalState as useLoadingGlobalState } from "../contexts/LoadingContext";
+// import removeEmpty from "../lib/removeEmpty";
+// import TrackVisibility from "react-on-screen";
 
 import useTranslation from "next-translate/useTranslation";
 
@@ -13,8 +13,8 @@ type Props = VideoProps;
 
 const VideoData = React.memo(({ video }: Props) => {
   const { t } = useTranslation("VideoData");
-  const options = useSearchGlobalState();
-  const loading = useLoadingGlobalState();
+  // const options = useSearchGlobalState();
+  // const loading = useLoadingGlobalState();
 
   return (
     <div className={styles.itemData}>
@@ -45,30 +45,33 @@ const VideoData = React.memo(({ video }: Props) => {
         </li>
         {video.userId ? (
           <li className={`${styles.count} ${styles.user}`}>
-            <TrackVisibility
-              throttleInterval={0}
-              offset={250}
-              partialVisibility={true}
-            >
-              {({ isVisible }) => {
-                return isVisible && !loading ? (
-                  <Link
-                    href={{
-                      pathname: "/search",
-                      query: removeEmpty({
-                        ...options,
-                        page: 1,
-                        userId: video.userId,
-                      }),
-                    }}
-                  >
-                    <a className={styles.value}>{video.userId}</a>
-                  </Link>
-                ) : (
-                  <span className={styles.value}>{video.userId}</span>
-                );
-              }}
-            </TrackVisibility>
+            <span className={styles.value}>{video.userId}</span>
+            {/* { userIdは検索対象に含むことが出来ない
+              <TrackVisibility
+                throttleInterval={0}
+                offset={250}
+                partialVisibility={true}
+              >
+                {({ isVisible }) => {
+                  return isVisible && !loading ? (
+                    <Link
+                      href={{
+                        pathname: "/search",
+                        query: removeEmpty({
+                          ...options,
+                          page: 1,
+                          userId: video.userId,
+                        }),
+                      }}
+                    >
+                      <a className={styles.value}>{video.userId}</a>
+                    </Link>
+                  ) : (
+                    <span className={styles.value}>{video.userId}</span>
+                  );
+                }}
+              </TrackVisibility>
+            } */}
           </li>
         ) : (
           ""
