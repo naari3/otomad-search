@@ -10,9 +10,7 @@ import Tag, { NoLinkTag } from "./Tag";
 const TagOnScreen: FC<{ name: string }> = ({ name }) => {
   return (
     <TrackVisibility throttleInterval={0} offset={250} partialVisibility={true}>
-      {({ isVisible }) =>
-        isVisible ? <Tag name={name} /> : <NoLinkTag name={name}></NoLinkTag>
-      }
+      {({ isVisible }) => (isVisible ? <Tag name={name} /> : <NoLinkTag name={name}></NoLinkTag>)}
     </TrackVisibility>
   );
 };

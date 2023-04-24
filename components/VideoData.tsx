@@ -20,28 +20,16 @@ const VideoData = React.memo(({ video }: Props) => {
     <div className={styles.itemData}>
       <ul className={styles.list}>
         <li className={styles.count}>
-          {t("views")}{" "}
-          <span className={styles.value}>
-            {video.viewCounter.toLocaleString()}
-          </span>
+          {t("views")} <span className={styles.value}>{video.viewCounter.toLocaleString()}</span>
         </li>
         <li className={styles.count}>
-          {t("comments")}{" "}
-          <span className={styles.value}>
-            {video.commentCounter.toLocaleString()}
-          </span>
+          {t("comments")} <span className={styles.value}>{video.commentCounter.toLocaleString()}</span>
         </li>
         <li className={styles.count}>
-          {t("mylists")}{" "}
-          <span className={styles.value}>
-            {video.mylistCounter.toLocaleString()}
-          </span>
+          {t("mylists")} <span className={styles.value}>{video.mylistCounter.toLocaleString()}</span>
         </li>
         <li className={styles.count}>
-          {t("likes")}{" "}
-          <span className={styles.value}>
-            {video.likeCounter.toLocaleString()}
-          </span>
+          {t("likes")} <span className={styles.value}>{video.likeCounter.toLocaleString()}</span>
         </li>
         {video.userId ? (
           <li className={`${styles.count} ${styles.user}`}>

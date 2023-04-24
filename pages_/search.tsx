@@ -8,12 +8,7 @@ import { SearchOptions } from "../reducers/search";
 import { useEffect } from "react";
 import NextErrorComponent from "next/error";
 
-import {
-  VideoSnapshotClient,
-  Video,
-  Response,
-  getSearchQuery,
-} from "../lib/search";
+import { VideoSnapshotClient, Video, Response, getSearchQuery } from "../lib/search";
 import VideoList from "../components/VideoList";
 import { usedFields } from "../components/VideoDetail";
 
@@ -92,11 +87,7 @@ const parseQueryToLimitedFloat = (target: string | string[]): number | null => {
 };
 
 const shouldExecCall = (options: SearchOptions): boolean => {
-  if (
-    Number.isFinite(options.mylistCounterGte) &&
-    Number.isFinite(options.mylistCounterLte) &&
-    options.mylistCounterGte > options.mylistCounterLte
-  ) {
+  if (Number.isFinite(options.mylistCounterGte) && Number.isFinite(options.mylistCounterLte) && options.mylistCounterGte > options.mylistCounterLte) {
     return false;
   } else if (
     Number.isFinite(options.lengthMinutesGte) &&
@@ -107,11 +98,7 @@ const shouldExecCall = (options: SearchOptions): boolean => {
   }
   const startTimeGte = Date.parse(options.startTimeGte);
   const startTimeLte = Date.parse(options.startTimeLte);
-  if (
-    !Number.isNaN(startTimeGte) &&
-    !Number.isNaN(startTimeLte) &&
-    startTimeGte > startTimeLte
-  ) {
+  if (!Number.isNaN(startTimeGte) && !Number.isNaN(startTimeLte) && startTimeGte > startTimeLte) {
     return false;
   }
   return true;
@@ -158,12 +145,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     viewCounterLte: roundNumber(parseQueryToInt(query.viewCounterLte)),
     likeCounterGte: roundNumber(parseQueryToInt(query.likeCounterGte)),
     likeCounterLte: roundNumber(parseQueryToInt(query.likeCounterLte)),
-    lengthMinutesGte: roundNumber(
-      parseQueryToLimitedFloat(query.lengthMinutesGte)
-    ),
-    lengthMinutesLte: roundNumber(
-      parseQueryToLimitedFloat(query.lengthMinutesLte)
-    ),
+    lengthMinutesGte: roundNumber(parseQueryToLimitedFloat(query.lengthMinutesGte)),
+    lengthMinutesLte: roundNumber(parseQueryToLimitedFloat(query.lengthMinutesLte)),
     userId: roundNumber(parseQueryToInt(query.userId)),
     startTimeGte: roundDate(parseQueryToString(query.startTimeGte)),
     startTimeLte: roundDate(parseQueryToString(query.startTimeLte)),
@@ -176,9 +159,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     final: Math.min(100, roundNumber(parseQueryToInt(query.per)) || per),
   });
 
-  const response = await (async (): Promise<
-    Response<Pick<Video, typeof usedFields[number]>>
-  > => {
+  const response = await (async (): Promise<Response<Pick<Video, typeof usedFields[number]>>> => {
     if (shouldExecCall(searchOptions)) {
       const searchQuery = getSearchQuery(searchOptions);
       if (searchQuery._offset > MAX_SS_OFFSET) {
@@ -201,11 +182,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const actualMaxPageNum = actualMaxPageNumber(
-    searchOptions.per,
-    response.meta.totalCount,
-    MAX_SS_OFFSET
-  );
+  const actualMaxPageNum = actualMaxPageNumber(searchOptions.per, response.meta.totalCount, MAX_SS_OFFSET);
 
   if (actualMaxPageNum < searchOptions.page) {
     // 本来表示できるページ数を大幅に超過して指定された場合、本来表示できるページ数+1 のページを表示する
@@ -219,10 +196,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       searchOptions: {
         count: response.meta.totalCount,
         ...searchOptions,
-        page:
-          !!searchOptions.page || searchOptions.page < 0
-            ? searchOptions.page
-            : 1,
+        page: !!searchOptions.page || searchOptions.page < 0 ? searchOptions.page : 1,
       },
       viewing,
     },

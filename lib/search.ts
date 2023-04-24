@@ -65,10 +65,7 @@ export const VideoSortKeys = [
 ] as const;
 export type VideoFields = Omit<Video, "tagsExact">;
 type VideoSorts = typeof VideoSortKeys[number];
-type VideoFilters = Omit<
-  Video,
-  "contentId" | "title" | "description" | "thumbnailUrl"
->;
+type VideoFilters = Omit<Video, "contentId" | "title" | "description" | "thumbnailUrl">;
 
 export type Live = Content & {
   communityId: number;
@@ -106,13 +103,7 @@ type LiveSorts = Omit<
 >;
 type LiveFilters = Omit<
   Live,
-  | "contentId"
-  | "title"
-  | "description"
-  | "thumbnailUrl"
-  | "liveScreenshotThumbnailSmall"
-  | "tsScreenshotThumbnailSmall"
-  | "communityIcon"
+  "contentId" | "title" | "description" | "thumbnailUrl" | "liveScreenshotThumbnailSmall" | "tsScreenshotThumbnailSmall" | "communityIcon"
 >;
 
 // 返ってくるであろうレスポンス
@@ -206,11 +197,7 @@ export const getSearchQuery = ({
   page,
   per,
 }: SearchOptions): QueryParams => {
-  if (
-    _sort === null ||
-    _sort === undefined ||
-    !VideoSortKeys.map((a) => `${a}`).includes(_sort.replace(/^[-+]/, ""))
-  ) {
+  if (_sort === null || _sort === undefined || !VideoSortKeys.map((a) => `${a}`).includes(_sort.replace(/^[-+]/, ""))) {
     _sort = "-startTime";
   }
 
@@ -261,17 +248,13 @@ export const getSearchQuery = ({
     if (!filters["startTime"]) {
       filters["startTime"] = {};
     }
-    filters["startTime"]["gte"] = toISOStringWithTimezone(
-      new Date(startTimeGte)
-    );
+    filters["startTime"]["gte"] = toISOStringWithTimezone(new Date(startTimeGte));
   }
   if (startTimeLte) {
     if (!filters["startTime"]) {
       filters["startTime"] = {};
     }
-    filters["startTime"]["lte"] = toISOStringWithTimezone(
-      new Date(startTimeLte)
-    );
+    filters["startTime"]["lte"] = toISOStringWithTimezone(new Date(startTimeLte));
   }
 
   if (lengthMinutesGte) {
@@ -307,13 +290,7 @@ class BaseClient<C extends Content> {
   context: string;
   client: AxiosInstance;
 
-  constructor({
-    service,
-    context,
-  }: {
-    service: "video" | "live" | "snapshot/video";
-    context: string;
-  }) {
+  constructor({ service, context }: { service: "video" | "live" | "snapshot/video"; context: string }) {
     this.service = service;
     this.context = context;
     this.client = axios.create({
@@ -321,10 +298,7 @@ class BaseClient<C extends Content> {
     });
   }
 
-  async search<T extends readonly (keyof C)[]>(
-    query: QueryParams,
-    fields: T
-  ): Promise<Response<Pick<C, T[number]>>> {
+  async search<T extends readonly (keyof C)[]>(query: QueryParams, fields: T): Promise<Response<Pick<C, T[number]>>> {
     return (
       await this.rawSearch(query, fields).catch((e: AxiosError) => {
         Sentry.captureException(e);
@@ -339,10 +313,7 @@ class BaseClient<C extends Content> {
     ).data;
   }
 
-  async rawSearch<T extends readonly (keyof C)[]>(
-    query: QueryParams,
-    fields: T
-  ): Promise<AxiosResponse<Response<Pick<C, T[number]>>>> {
+  async rawSearch<T extends readonly (keyof C)[]>(query: QueryParams, fields: T): Promise<AxiosResponse<Response<Pick<C, T[number]>>>> {
     const { filters: filters, ...without_filters } = query;
     const params: InnerQueryParams = Object.assign(
       { _context: this.context },
@@ -353,22 +324,12 @@ class BaseClient<C extends Content> {
       filters ? this.filtersToInner(filters) : {}
     );
     console.log(params);
-    return this.client.get<Response<Pick<C, T[number]>>>(
-      `/api/v2/${this.service}/contents/search`,
-      { params }
-    );
+    return this.client.get<Response<Pick<C, T[number]>>>(`/api/v2/${this.service}/contents/search`, { params });
   }
 
-  private filtersToInner(filters: {
-    [k: string]: Filter;
-  }): { [k: string]: string | number } {
+  private filtersToInner(filters: { [k: string]: Filter }): { [k: string]: string | number } {
     return Object.fromEntries(
-      Object.entries(filters).flatMap(([key, f]) =>
-        Object.entries(f).map(([kind, value]) => [
-          `filters[${key}][${kind}]`,
-          value,
-        ])
-      )
+      Object.entries(filters).flatMap(([key, f]) => Object.entries(f).map(([kind, value]) => [`filters[${key}][${kind}]`, value]))
     );
   }
 }

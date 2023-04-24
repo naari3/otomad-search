@@ -1,9 +1,7 @@
 import { format } from "date-fns";
 import parseLimitedFloat from "./parseLimitedFloat";
 
-export const parseQueryToString = (
-  target: string | string[]
-): string | null => {
+export const parseQueryToString = (target: string | string[]): string | null => {
   const result = Array.isArray(target) ? target[0] : target;
   return result ? result : null;
 };
@@ -13,9 +11,7 @@ export const parseQueryToInt = (target: string | string[]): number | null => {
   return Number.isNaN(result) ? null : result;
 };
 
-export const parseQueryToLimitedFloat = (
-  target: string | string[]
-): number | null => {
+export const parseQueryToLimitedFloat = (target: string | string[]): number | null => {
   const result = parseLimitedFloat(parseQueryToString(target));
   return Number.isNaN(result) ? null : result;
 };

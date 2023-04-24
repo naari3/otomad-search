@@ -7,13 +7,7 @@ import { getSearchQuery, VideoSnapshotClient } from "../lib/search";
 import { SearchOptions } from "../reducers/search";
 import { usedFields } from "../components/VideoDetail";
 import { actualMaxPageNumber, MAX_SS_OFFSET } from "../lib/pager";
-import {
-  parseQueryToInt,
-  parseQueryToLimitedFloat,
-  parseQueryToString,
-  roundDate,
-  roundNumber,
-} from "../lib/parseQuery";
+import { parseQueryToInt, parseQueryToLimitedFloat, parseQueryToString, roundDate, roundNumber } from "../lib/parseQuery";
 
 const Random: FC = () => {
   return (
@@ -27,6 +21,12 @@ const Random: FC = () => {
 };
 
 export default Random;
+
+const getRandomYear = () => {
+  const min = 2007;
+  const max = new Date().getFullYear();
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { query } = ctx;
@@ -43,39 +43,32 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     viewCounterLte: roundNumber(parseQueryToInt(query.viewCounterLte)),
     likeCounterGte: roundNumber(parseQueryToInt(query.likeCounterGte)),
     likeCounterLte: roundNumber(parseQueryToInt(query.likeCounterLte)),
-    lengthMinutesGte: roundNumber(
-      parseQueryToLimitedFloat(query.lengthMinutesGte)
-    ),
-    lengthMinutesLte: roundNumber(
-      parseQueryToLimitedFloat(query.lengthMinutesLte)
-    ),
-    userId: roundNumber(parseQueryToInt(query.userId)),
+    lengthMinutesGte: roundNumber(parseQueryToLimitedFloat(query.lengthMinutesGte)),
+    lengthMinutesLte: roundNumber(parseQueryToLimitedFloat(query.lengthMinutesLte)),
+    // userId: roundNumber(parseQueryToInt(query.userId)),
     startTimeGte: roundDate(parseQueryToString(query.startTimeGte)),
     startTimeLte: roundDate(parseQueryToString(query.startTimeLte)),
     page: 1,
     per: 100,
   };
 
-  const searchQuery = getSearchQuery(searchOptions);
-  const response = await client.search(searchQuery, ["contentId"]);
+  let response = await client.search(getSearchQuery(searchOptions), ["contentId"]);
+  if (response.meta.totalCount > MAX_SS_OFFSET) {
+    // 結果があまりにも巨大だったらランダムな年を指定して検索
+    const randYear = getRandomYear();
+    const startYear = new Date(randYear, 0, 1).toISOString();
+    const endYear = new Date(randYear, 11, 31).toISOString();
+    searchOptions.startTimeGte = roundDate(startYear);
+    searchOptions.startTimeLte = roundDate(endYear);
 
-  const actualMaxPageNum = actualMaxPageNumber(
-    searchOptions.per,
-    response.meta.totalCount,
-    MAX_SS_OFFSET
-  );
+    response = await client.search(getSearchQuery(searchOptions), ["contentId"]);
+  }
+  const actualMaxPageNum = actualMaxPageNumber(searchOptions.per, response.meta.totalCount, MAX_SS_OFFSET);
 
   const randomPage = Math.floor(Math.random() * actualMaxPageNum) + 1;
 
-  const randomPageResponse = await client.search(
-    getSearchQuery({ ...searchOptions, page: randomPage }),
-    usedFields
-  );
-  const randomVideo =
-    randomPageResponse.data[
-      Math.floor(Math.random() * randomPageResponse.data.length)
-    ];
-  console.log(randomVideo);
+  const randomPageResponse = await client.search(getSearchQuery({ ...searchOptions, page: randomPage }), usedFields);
+  const randomVideo = randomPageResponse.data[Math.floor(Math.random() * randomPageResponse.data.length)];
 
   if (!randomVideo) {
     return {
@@ -85,7 +78,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       },
     };
   }
-  console.log(randomVideo.contentId);
   return {
     redirect: {
       destination: `https://www.nicovideo.jp/watch/${randomVideo.contentId}`,

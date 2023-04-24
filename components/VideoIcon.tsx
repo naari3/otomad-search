@@ -14,11 +14,7 @@ const VideoIcon = React.memo(({ video }: Props) => {
       <VideoWrap video={video} />
       <div className={styles.itemContent}>
         <p className={styles.itemTitle}>
-          <a
-            href={`${urlPrefix}${video.contentId}`}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href={`${urlPrefix}${video.contentId}`} target="_blank" rel="noreferrer">
             {video.title}
           </a>
         </p>

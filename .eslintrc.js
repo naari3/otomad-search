@@ -17,6 +17,7 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/prop-types": "off",
+    "prettier/prettier": ["error", { printWidth: 150 }],
   },
   globals: {
     React: "writable",

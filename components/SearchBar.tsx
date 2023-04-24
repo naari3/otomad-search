@@ -1,18 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
 import Link from "next/link";
-import styles from "./SearchBar.module.css";
+import styles from "./SearchBar.module.scss";
 import removeEmpty from "../lib/removeEmpty";
 import parseLimitedFloat from "../lib/parseLimitedFloat";
 import * as gtag from "../lib/gtag";
 
-import {
-  useDispatch as useSearchDispatch,
-  useGlobalState as useSearchGlobalState,
-} from "../contexts/SearchContext";
-import {
-  useDispatch as useLoadingDispatch,
-  useGlobalState as useLoadingGlobalState,
-} from "../contexts/LoadingContext";
+import { useDispatch as useSearchDispatch, useGlobalState as useSearchGlobalState } from "../contexts/SearchContext";
+import { useDispatch as useLoadingDispatch, useGlobalState as useLoadingGlobalState } from "../contexts/LoadingContext";
 import JussenButton from "./JussenButton";
 
 import useTranslation from "next-translate/useTranslation";
@@ -83,9 +77,9 @@ const SearchBar: FC = () => {
                 query: { ...removeEmpty(options), page: 1 },
               }}
             >
-              <button
-                className={styles.searchButton}
-                disabled={loading}
+              <a
+                className={`${styles.searchButton} ${loading ? styles.searchButton_Disabled : ""}`}
+                // disabled={loading}
                 onClick={() => {
                   gtag.event({
                     action: "search",
@@ -99,7 +93,7 @@ const SearchBar: FC = () => {
                 }}
               >
                 {t("search")}
-              </button>
+              </a>
             </Link>
             <Link
               href={{
@@ -115,9 +109,9 @@ const SearchBar: FC = () => {
                     label: "lucky",
                   });
                 }}
-                className={styles.searchButton}
+                className={`${styles.searchButton} ${loading ? styles.searchButton_Disabled : ""}`}
               >
-                ランダム
+                {t("random")}
               </a>
             </Link>
           </div>
@@ -359,11 +353,7 @@ const SearchBar: FC = () => {
             />
           </label>
           <JussenButton targetYear={new Date().getFullYear()} />
-          {isJussenPast ? (
-            <JussenButton targetYear={new Date().getFullYear() + 1} />
-          ) : (
-            ""
-          )}
+          {isJussenPast ? <JussenButton targetYear={new Date().getFullYear() + 1} /> : ""}
         </div>
       </form>
     </div>

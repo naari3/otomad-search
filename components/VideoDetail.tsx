@@ -33,18 +33,12 @@ const VideoDetail = React.memo(({ video }: VideoProps) => {
       <VideoWrap video={video} float />
       <div className={styles.itemContent}>
         <p className={styles.itemTitle}>
-          <a
-            href={`${urlPrefix}${video.contentId}`}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href={`${urlPrefix}${video.contentId}`} target="_blank" rel="noreferrer">
             {video.title}
           </a>
         </p>
         <div>
-          <p className={styles.itemDescription}>
-            {stripTag(video.description)}
-          </p>
+          <p className={styles.itemDescription}>{stripTag(video.description)}</p>
           <div className={styles.list}>
             <TagList tags={video.tags.split(" ")} />
           </div>

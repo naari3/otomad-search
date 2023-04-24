@@ -39,6 +39,10 @@
   padding: 2px 5px;
   border: 0;
   border-left: #bbbbbb solid 1px;
+  &.searchButton_Disabled {
+    background-color: rgba(239, 239, 239, 0.3);
+    color: rgba(16, 16, 16, 0.3);
+  }
 }
 
 .inputOrder {

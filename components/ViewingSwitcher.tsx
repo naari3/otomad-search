@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "./ViewingSwitcher.module.css";
-import {
-  useDispatch as useViewingDispatch,
-  useGlobalState as useViewingGlobalState,
-} from "../contexts/ViewingContext";
+import { useDispatch as useViewingDispatch, useGlobalState as useViewingGlobalState } from "../contexts/ViewingContext";
 import { useWindowSize } from "../lib/useWindowSize";
 
 const ViewingSwitcher = React.memo(() => {
@@ -23,11 +20,7 @@ const ViewingSwitcher = React.memo(() => {
   return (
     <div className={styles.viewingSwitcher}>
       <ul className={styles.viewingList}>
-        <li
-          className={`${styles.detail} ${
-            viewing === "detail" ? styles.selected : ""
-          }`}
-        >
+        <li className={`${styles.detail} ${viewing === "detail" ? styles.selected : ""}`}>
           <a
             className={viewing === "detail" ? styles.selected : ""}
             onClick={() => {
@@ -40,11 +33,7 @@ const ViewingSwitcher = React.memo(() => {
             <span>①</span>
           </a>
         </li>
-        <li
-          className={`${styles.icon} ${
-            viewing !== "detail" ? styles.selected : ""
-          }`}
-        >
+        <li className={`${styles.icon} ${viewing !== "detail" ? styles.selected : ""}`}>
           <a
             onClick={() => {
               viewingDispatch({

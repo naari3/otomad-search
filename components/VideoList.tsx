@@ -26,18 +26,10 @@ const VideoList = React.memo(({ videos }: Props) => {
           <PerSwitcher />
         </div>
       </div>
-      <ul
-        className={`${styles.videoList} ${
-          viewing === "detail" ? styles.videoDetailList : styles.videoIconList
-        } `}
-      >
+      <ul className={`${styles.videoList} ${viewing === "detail" ? styles.videoDetailList : styles.videoIconList} `}>
         {videos.map((v) => (
           <li className={styles.item} key={v.contentId}>
-            {viewing === "detail" ? (
-              <VideoDetail video={v} />
-            ) : (
-              <VideoIcon video={v} />
-            )}
+            {viewing === "detail" ? <VideoDetail video={v} /> : <VideoIcon video={v} />}
           </li>
         ))}
       </ul>
