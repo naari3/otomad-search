@@ -6,9 +6,7 @@ import useTranslation from "next-translate/useTranslation";
 const JussenButton: FC<{ targetYear: number }> = ({ targetYear }) => {
   const searchDispatch = useSearchDispatch();
   const { t } = useTranslation("JussenButton");
-  const ev: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void = (
-    e
-  ) => {
+  const ev: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void = (e) => {
     e.preventDefault();
 
     const since = `${targetYear - 1}-12-11T00:00`;

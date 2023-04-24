@@ -31,11 +31,7 @@ const Header: FC = () => {
                 })
               }
             >
-              <img
-                src="/otomad-search.svg"
-                alt="otomad-search"
-                className={styles.logo}
-              />
+              <img src="/otomad-search.svg" alt="otomad-search" className={styles.logo} />
               otomad-search
             </a>
           </Link>
@@ -44,22 +40,13 @@ const Header: FC = () => {
       <header>
         <div className={styles.inner}>
           <div className={styles.jussen}>
-            <a
-              className={styles.jussenLink}
-              href="http://oto10.s602.xrea.com/10sen/"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a className={styles.jussenLink} href="http://oto10.s602.xrea.com/10sen/" target="_blank" rel="noreferrer">
               {t("10sen-navi-link")}
             </a>
           </div>
         </div>
       </header>
-      <header
-        className={`${styles.headerSearchBar} ${
-          router.pathname === "/search" ? styles.searchBar : ""
-        }`}
-      >
+      <header className={`${styles.headerSearchBar} ${router.pathname === "/search" ? styles.searchBar : ""}`}>
         <div className={styles.inner}>
           <SearchBar />
         </div>

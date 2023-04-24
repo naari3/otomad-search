@@ -15,10 +15,7 @@ const {
   VERCEL_BITBUCKET_COMMIT_SHA,
 } = process.env;
 
-const COMMIT_SHA =
-  VERCEL_GITHUB_COMMIT_SHA ||
-  VERCEL_GITLAB_COMMIT_SHA ||
-  VERCEL_BITBUCKET_COMMIT_SHA;
+const COMMIT_SHA = VERCEL_GITHUB_COMMIT_SHA || VERCEL_GITLAB_COMMIT_SHA || VERCEL_BITBUCKET_COMMIT_SHA;
 
 process.env.SENTRY_DSN = SENTRY_DSN;
 const basePath = "";
@@ -57,9 +54,7 @@ module.exports = withSourceMaps({
     // it's running on the server so we can correctly initialize Sentry
     config.plugins.push(
       new options.webpack.DefinePlugin({
-        "process.env.NEXT_IS_SERVER": JSON.stringify(
-          options.isServer.toString()
-        ),
+        "process.env.NEXT_IS_SERVER": JSON.stringify(options.isServer.toString()),
       })
     );
 
@@ -68,14 +63,7 @@ module.exports = withSourceMaps({
     // and upload the source maps to sentry.
     // This is an alternative to manually uploading the source maps
     // Note: This is disabled in development mode.
-    if (
-      SENTRY_DSN &&
-      SENTRY_ORG &&
-      SENTRY_PROJECT &&
-      SENTRY_AUTH_TOKEN &&
-      COMMIT_SHA &&
-      NODE_ENV === "production"
-    ) {
+    if (SENTRY_DSN && SENTRY_ORG && SENTRY_PROJECT && SENTRY_AUTH_TOKEN && COMMIT_SHA && NODE_ENV === "production") {
       config.plugins.push(
         new SentryWebpackPlugin({
           include: ".next",

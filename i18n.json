@@ -4,13 +4,6 @@
   "pages": {
     "*": ["common"],
     "/": ["SearchBar", "JussenButton", "Header"],
-    "/search": [
-      "SearchBar",
-      "PerSwitcher",
-      "VideoData",
-      "VideoWrap",
-      "JussenButton",
-      "Header"
-    ]
+    "/search": ["SearchBar", "PerSwitcher", "VideoData", "VideoWrap", "JussenButton", "Header"]
   }
 }

@@ -1,18 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
 import Link from "next/link";
-import styles from "./SearchBar.module.css";
+import styles from "./SearchBar.module.scss";
 import removeEmpty from "../lib/removeEmpty";
 import parseLimitedFloat from "../lib/parseLimitedFloat";
 import * as gtag from "../lib/gtag";
 
-import {
-  useDispatch as useSearchDispatch,
-  useGlobalState as useSearchGlobalState,
-} from "../contexts/SearchContext";
-import {
-  useDispatch as useLoadingDispatch,
-  useGlobalState as useLoadingGlobalState,
-} from "../contexts/LoadingContext";
+import { useDispatch as useSearchDispatch, useGlobalState as useSearchGlobalState } from "../contexts/SearchContext";
+import { useDispatch as useLoadingDispatch, useGlobalState as useLoadingGlobalState } from "../contexts/LoadingContext";
 import JussenButton from "./JussenButton";
 
 import useTranslation from "next-translate/useTranslation";
@@ -63,61 +57,78 @@ const SearchBar: FC = () => {
     <div className={styles.searchBar}>
       <form>
         <div className={styles.filter}>
-          <div>
-            <div className={styles.otomadFixWrap}>
-              <label className={styles.otomadLabel}>音MAD </label>
-              <input
-                type="text"
-                value={options.q || ""}
-                className={styles.inputQueryBar}
-                autoComplete={"off"}
-                onChange={(e) => {
-                  searchDispatch({
+          <div className={styles.otomadFixWrap}>
+            <label className={styles.otomadLabel}>音MAD </label>
+            <input
+              type="text"
+              value={options.q || ""}
+              className={styles.inputQueryBar}
+              autoComplete={"off"}
+              onChange={(e) => {
+                searchDispatch({
+                  type: "update",
+                  payload: { q: e.target.value },
+                });
+              }}
+            />
+            <Link
+              href={{
+                pathname: "/search",
+                query: { ...removeEmpty(options), page: 1 },
+              }}
+            >
+              <a
+                className={`${styles.searchButton} ${loading ? styles.searchButton_Disabled : ""}`}
+                // disabled={loading}
+                onClick={() => {
+                  gtag.event({
+                    action: "search",
+                    category: "Otomads",
+                    label: "happy",
+                  });
+                  loadingDispatch({
                     type: "update",
-                    payload: { q: e.target.value },
+                    payload: true,
                   });
                 }}
-              />
-              <Link
-                href={{
-                  pathname: "/search",
-                  query: { ...removeEmpty(options), page: 1 },
-                }}
               >
-                <button
-                  className={styles.searchButton}
-                  disabled={loading}
-                  onClick={() => {
-                    gtag.event({
-                      action: "search",
-                      category: "Otomads",
-                      label: "happy",
-                    });
-                    loadingDispatch({
-                      type: "update",
-                      payload: true,
-                    });
-                  }}
-                >
-                  {t("search")}
-                </button>
-              </Link>
-            </div>
-            {options.count === null || options.count === undefined ? (
-              ""
-            ) : (
-              <span>
-                {options.count.toLocaleString()} {t("results")}
-              </span>
-            )}
-            {takesALongTime ? (
-              <div>
-                <span>{t("search-firsttime")}</span>
-              </div>
-            ) : (
-              ""
-            )}
+                {t("search")}
+              </a>
+            </Link>
+            <Link
+              href={{
+                pathname: "/random",
+                query: { ...removeEmpty(options) },
+              }}
+            >
+              <a
+                onClick={() => {
+                  gtag.event({
+                    action: "random",
+                    category: "Otomads",
+                    label: "lucky",
+                  });
+                }}
+                className={`${styles.searchButton} ${loading ? styles.searchButton_Disabled : ""}`}
+              >
+                {t("random")}
+              </a>
+            </Link>
           </div>
+          {options.count === null || options.count === undefined ? (
+            ""
+          ) : (
+            <span>
+              {options.count.toLocaleString()} {t("results")}
+            </span>
+          )}
+          {takesALongTime ? (
+            <div>
+              <span>{t("search-firsttime")}</span>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div className={styles.filter}>
           <span className={styles.filterName}>{t("sort")}</span>
@@ -198,7 +209,7 @@ const SearchBar: FC = () => {
             <input
               className={styles.inputNumber}
               type="number"
-              step="0.1"
+              step="0.01"
               min="0"
               value={options.lengthMinutesGte || ""}
               onChange={(e) => {
@@ -216,7 +227,7 @@ const SearchBar: FC = () => {
             <input
               className={styles.inputNumber}
               type="number"
-              step="0.1"
+              step="0.01"
               min="0"
               value={options.lengthMinutesLte || ""}
               onChange={(e) => {
@@ -342,11 +353,7 @@ const SearchBar: FC = () => {
             />
           </label>
           <JussenButton targetYear={new Date().getFullYear()} />
-          {isJussenPast ? (
-            <JussenButton targetYear={new Date().getFullYear() + 1} />
-          ) : (
-            ""
-          )}
+          {isJussenPast ? <JussenButton targetYear={new Date().getFullYear() + 1} /> : ""}
         </div>
       </form>
     </div>

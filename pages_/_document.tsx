@@ -7,11 +7,7 @@ class Document extends NextDocument {
     return (
       <Html lang="ja">
         <Head>
-          <link
-            rel="shortcut icon"
-            href="/otomad-search.svg"
-            key="shortcutIcon"
-          />
+          <link rel="shortcut icon" href="/otomad-search.svg" key="shortcutIcon" />
           <GoogleAnalytics />
         </Head>
 

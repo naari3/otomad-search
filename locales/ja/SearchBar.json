@@ -1,5 +1,6 @@
 {
   "search": "検索",
+  "random": "ランダム",
   "search-firsttime": "初回や時間の空いたあとの検索は時間がかかる場合があります。",
   "results": "件",
   "enable-ss": "スナップショット検索APIを使用する",

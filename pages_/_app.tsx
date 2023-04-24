@@ -5,48 +5,21 @@ import { useRouter } from "next/router";
 import * as gtag from "../lib/gtag";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import {
-  SearchStateContext,
-  SearchDispatchContext,
-} from "../contexts/SearchContext";
-import {
-  initialState as searchInitialState,
-  reducer as searchReducer,
-} from "../reducers/search";
-import {
-  LoadingDispatchContext,
-  LoadingStateContext,
-} from "../contexts/LoadingContext";
-import {
-  initialState as loadingInitialState,
-  reducer as loadingReducer,
-} from "../reducers/loading";
-import {
-  ViewingDispatchContext,
-  ViewingStateContext,
-} from "../contexts/ViewingContext";
-import {
-  initialState as viewingInitialState,
-  reducer as viewingReducer,
-} from "../reducers/viewing";
+import { SearchStateContext, SearchDispatchContext } from "../contexts/SearchContext";
+import { initialState as searchInitialState, reducer as searchReducer } from "../reducers/search";
+import { LoadingDispatchContext, LoadingStateContext } from "../contexts/LoadingContext";
+import { initialState as loadingInitialState, reducer as loadingReducer } from "../reducers/loading";
+import { ViewingDispatchContext, ViewingStateContext } from "../contexts/ViewingContext";
+import { initialState as viewingInitialState, reducer as viewingReducer } from "../reducers/viewing";
 import { DefaultSeo } from "next-seo";
 import { init } from "../lib/sentry";
 
 init();
 
 function MyApp({ Component, pageProps, err }: AppProps & { err: any }) {
-  const [searchState, searchDispatch] = useReducer(
-    searchReducer,
-    searchInitialState
-  );
-  const [loadingState, loadingDispatch] = useReducer(
-    loadingReducer,
-    loadingInitialState
-  );
-  const [viewingState, viewingDispatch] = useReducer(
-    viewingReducer,
-    viewingInitialState
-  );
+  const [searchState, searchDispatch] = useReducer(searchReducer, searchInitialState);
+  const [loadingState, loadingDispatch] = useReducer(loadingReducer, loadingInitialState);
+  const [viewingState, viewingDispatch] = useReducer(viewingReducer, viewingInitialState);
   const router = useRouter();
 
   useEffect(() => {

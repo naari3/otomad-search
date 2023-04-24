@@ -8,17 +8,7 @@ export const pageview = (path: string): void => {
   });
 };
 
-export const event = ({
-  action,
-  category,
-  label,
-  value = "",
-}: {
-  action: string;
-  category: string;
-  label: string;
-  value?: string;
-}): void => {
+export const event = ({ action, category, label, value = "" }: { action: string; category: string; label: string; value?: string }): void => {
   if (!existsGaId) {
     return;
   }

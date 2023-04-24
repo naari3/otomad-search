@@ -9,10 +9,7 @@ type Props = {
 const TagList = React.memo(({ tags }: Props) => {
   const ref = useRef<HTMLUListElement>(null);
 
-  const filteredTags = (tags: string[]): string[] =>
-    tags.filter(
-      (tag) => !["音MAD", "音mad", "音ＭＡＤ", "音ｍａｄ"].includes(tag)
-    );
+  const filteredTags = (tags: string[]): string[] => tags.filter((tag) => !["音MAD", "音mad", "音ＭＡＤ", "音ｍａｄ"].includes(tag));
 
   useEffect(() => {
     if (ref.current) {

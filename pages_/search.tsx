@@ -8,13 +8,7 @@ import { SearchOptions } from "../reducers/search";
 import { useEffect } from "react";
 import NextErrorComponent from "next/error";
 
-import {
-  VideoSnapshotClient,
-  Video,
-  QueryParams,
-  VideoSortKeys,
-  Response,
-} from "../lib/search";
+import { VideoSnapshotClient, Video, Response, getSearchQuery } from "../lib/search";
 import VideoList from "../components/VideoList";
 import { usedFields } from "../components/VideoDetail";
 
@@ -24,8 +18,6 @@ import parseLimitedFloat from "../lib/parseLimitedFloat";
 import { parseCookies } from "nookies";
 
 import { format } from "date-fns";
-import * as Sentry from "@sentry/node";
-import { AxiosError } from "axios";
 
 import { actualMaxPageNumber, MAX_SS_OFFSET } from "../lib/pager";
 
@@ -79,150 +71,6 @@ export default function Search({
 
 // これより以下すべてserverPropsを生成するためのコード
 // 分けても良いかもしれん
-const LIMIT = 100;
-const defaultQuery: QueryParams = {
-  _sort: "startTime",
-  q: "音MAD",
-  targets: "tagsExact",
-  _limit: LIMIT,
-};
-
-const calcOffset = (page?: number, per = 100): number => {
-  if (!page || page < 0) {
-    page = 1;
-  }
-  const offset = (page - 1) * per;
-
-  return offset;
-};
-
-function toISOStringWithTimezone(date: Date): string {
-  const pad = function (str: string): string {
-    return ("0" + str).slice(-2);
-  };
-  const year = date.getFullYear().toString();
-  const month = pad((date.getMonth() + 1).toString());
-  const day = pad(date.getDate().toString());
-  const hour = pad(date.getHours().toString());
-  const min = pad(date.getMinutes().toString());
-  const sec = pad(date.getSeconds().toString());
-  const tz = -date.getTimezoneOffset();
-  const sign = tz >= 0 ? "+" : "-";
-  const tzHour = pad((tz / 60).toString());
-  const tzMin = pad((tz % 60).toString());
-
-  return `${year}-${month}-${day}T${hour}:${min}:${sec}${sign}${tzHour}:${tzMin}`;
-}
-
-const getSearchQuery = ({
-  q,
-  _sort,
-  mylistCounterGte,
-  mylistCounterLte,
-  viewCounterGte,
-  viewCounterLte,
-  likeCounterGte,
-  likeCounterLte,
-  lengthMinutesGte,
-  lengthMinutesLte,
-  startTimeGte,
-  startTimeLte,
-  // userId,
-  page,
-  per,
-}: SearchOptions): QueryParams => {
-  if (
-    _sort === null ||
-    !VideoSortKeys.map((a) => `${a}`).includes(_sort.replace(/^[-+]/, ""))
-  ) {
-    _sort = "-startTime";
-  }
-
-  const _offset = calcOffset(page, per);
-
-  const filters = {};
-
-  if (mylistCounterGte) {
-    if (!filters["mylistCounter"]) {
-      filters["mylistCounter"] = {};
-    }
-    filters["mylistCounter"]["gte"] = mylistCounterGte;
-  }
-  if (mylistCounterLte !== null) {
-    if (!filters["mylistCounter"]) {
-      filters["mylistCounter"] = {};
-    }
-    filters["mylistCounter"]["lte"] = mylistCounterLte;
-  }
-
-  if (viewCounterGte) {
-    if (!filters["viewCounter"]) {
-      filters["viewCounter"] = {};
-    }
-    filters["viewCounter"]["gte"] = viewCounterGte;
-  }
-  if (viewCounterLte !== null) {
-    if (!filters["viewCounter"]) {
-      filters["viewCounter"] = {};
-    }
-    filters["viewCounter"]["lte"] = viewCounterLte;
-  }
-
-  if (likeCounterGte) {
-    if (!filters["likeCounter"]) {
-      filters["likeCounter"] = {};
-    }
-    filters["likeCounter"]["gte"] = likeCounterGte;
-  }
-  if (likeCounterLte !== null) {
-    if (!filters["likeCounter"]) {
-      filters["likeCounter"] = {};
-    }
-    filters["likeCounter"]["lte"] = likeCounterLte;
-  }
-
-  if (startTimeGte) {
-    if (!filters["startTime"]) {
-      filters["startTime"] = {};
-    }
-    filters["startTime"]["gte"] = toISOStringWithTimezone(
-      new Date(startTimeGte)
-    );
-  }
-  if (startTimeLte) {
-    if (!filters["startTime"]) {
-      filters["startTime"] = {};
-    }
-    filters["startTime"]["lte"] = toISOStringWithTimezone(
-      new Date(startTimeLte)
-    );
-  }
-
-  if (lengthMinutesGte) {
-    if (!filters["lengthSeconds"]) {
-      filters["lengthSeconds"] = {};
-    }
-    filters["lengthSeconds"]["gte"] = lengthMinutesGte * 60;
-  }
-  if (lengthMinutesLte) {
-    if (!filters["lengthSeconds"]) {
-      filters["lengthSeconds"] = {};
-    }
-    filters["lengthSeconds"]["lte"] = lengthMinutesLte * 60;
-  }
-
-  // if (userId) filters["userId"] = { 0: userId };
-
-  return {
-    ...defaultQuery,
-    _sort,
-    _offset,
-    _limit: per,
-    filters,
-    q: `${defaultQuery.q} ${q}`.trim(),
-  };
-};
-
 const parseQueryToString = (target: string | string[]): string | null => {
   const result = Array.isArray(target) ? target[0] : target;
   return result ? result : null;
@@ -239,11 +87,7 @@ const parseQueryToLimitedFloat = (target: string | string[]): number | null => {
 };
 
 const shouldExecCall = (options: SearchOptions): boolean => {
-  if (
-    Number.isFinite(options.mylistCounterGte) &&
-    Number.isFinite(options.mylistCounterLte) &&
-    options.mylistCounterGte > options.mylistCounterLte
-  ) {
+  if (Number.isFinite(options.mylistCounterGte) && Number.isFinite(options.mylistCounterLte) && options.mylistCounterGte > options.mylistCounterLte) {
     return false;
   } else if (
     Number.isFinite(options.lengthMinutesGte) &&
@@ -254,11 +98,7 @@ const shouldExecCall = (options: SearchOptions): boolean => {
   }
   const startTimeGte = Date.parse(options.startTimeGte);
   const startTimeLte = Date.parse(options.startTimeLte);
-  if (
-    !Number.isNaN(startTimeGte) &&
-    !Number.isNaN(startTimeLte) &&
-    startTimeGte > startTimeLte
-  ) {
+  if (!Number.isNaN(startTimeGte) && !Number.isNaN(startTimeLte) && startTimeGte > startTimeLte) {
     return false;
   }
   return true;
@@ -305,12 +145,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     viewCounterLte: roundNumber(parseQueryToInt(query.viewCounterLte)),
     likeCounterGte: roundNumber(parseQueryToInt(query.likeCounterGte)),
     likeCounterLte: roundNumber(parseQueryToInt(query.likeCounterLte)),
-    lengthMinutesGte: roundNumber(
-      parseQueryToLimitedFloat(query.lengthMinutesGte)
-    ),
-    lengthMinutesLte: roundNumber(
-      parseQueryToLimitedFloat(query.lengthMinutesLte)
-    ),
+    lengthMinutesGte: roundNumber(parseQueryToLimitedFloat(query.lengthMinutesGte)),
+    lengthMinutesLte: roundNumber(parseQueryToLimitedFloat(query.lengthMinutesLte)),
     userId: roundNumber(parseQueryToInt(query.userId)),
     startTimeGte: roundDate(parseQueryToString(query.startTimeGte)),
     startTimeLte: roundDate(parseQueryToString(query.startTimeLte)),
@@ -323,28 +159,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     final: Math.min(100, roundNumber(parseQueryToInt(query.per)) || per),
   });
 
-  const response = await (async (): Promise<
-    Response<Pick<Video, typeof usedFields[number]>>
-  > => {
+  const response = await (async (): Promise<Response<Pick<Video, typeof usedFields[number]>>> => {
     if (shouldExecCall(searchOptions)) {
       const searchQuery = getSearchQuery(searchOptions);
       if (searchQuery._offset > MAX_SS_OFFSET) {
         searchQuery._offset = 0;
         searchQuery._limit = 0;
       }
-      const response = (
-        await client.search(searchQuery, usedFields).catch((e: AxiosError) => {
-          Sentry.captureException(e);
-
-          return {
-            data: {
-              meta: { status: e.response.status, totalCount: 0, id: "" },
-              data: [],
-            },
-          };
-        })
-      ).data;
-      return response;
+      return await client.search(searchQuery, usedFields);
     } else {
       console.log("Should not call with this parameters");
       return { meta: { status: 200, totalCount: 0, id: "" }, data: [] };
@@ -360,13 +182,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const actualMaxPageNum = actualMaxPageNumber(
-    searchOptions.per,
-    response.meta.totalCount,
-    MAX_SS_OFFSET
-  );
+  const actualMaxPageNum = actualMaxPageNumber(searchOptions.per, response.meta.totalCount, MAX_SS_OFFSET);
 
   if (actualMaxPageNum < searchOptions.page) {
+    // 本来表示できるページ数を大幅に超過して指定された場合、本来表示できるページ数+1 のページを表示する
+    // これにより、最終ページへと簡単に戻ることができる
     searchOptions.page = actualMaxPageNum + 1;
   }
 
@@ -376,10 +196,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       searchOptions: {
         count: response.meta.totalCount,
         ...searchOptions,
-        page:
-          !!searchOptions.page || searchOptions.page < 0
-            ? searchOptions.page
-            : 1,
+        page: !!searchOptions.page || searchOptions.page < 0 ? searchOptions.page : 1,
       },
       viewing,
     },
