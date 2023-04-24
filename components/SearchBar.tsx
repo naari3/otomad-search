@@ -63,61 +63,78 @@ const SearchBar: FC = () => {
     <div className={styles.searchBar}>
       <form>
         <div className={styles.filter}>
-          <div>
-            <div className={styles.otomadFixWrap}>
-              <label className={styles.otomadLabel}>音MAD </label>
-              <input
-                type="text"
-                value={options.q || ""}
-                className={styles.inputQueryBar}
-                autoComplete={"off"}
-                onChange={(e) => {
-                  searchDispatch({
+          <div className={styles.otomadFixWrap}>
+            <label className={styles.otomadLabel}>音MAD </label>
+            <input
+              type="text"
+              value={options.q || ""}
+              className={styles.inputQueryBar}
+              autoComplete={"off"}
+              onChange={(e) => {
+                searchDispatch({
+                  type: "update",
+                  payload: { q: e.target.value },
+                });
+              }}
+            />
+            <Link
+              href={{
+                pathname: "/search",
+                query: { ...removeEmpty(options), page: 1 },
+              }}
+            >
+              <button
+                className={styles.searchButton}
+                disabled={loading}
+                onClick={() => {
+                  gtag.event({
+                    action: "search",
+                    category: "Otomads",
+                    label: "happy",
+                  });
+                  loadingDispatch({
                     type: "update",
-                    payload: { q: e.target.value },
+                    payload: true,
                   });
                 }}
-              />
-              <Link
-                href={{
-                  pathname: "/search",
-                  query: { ...removeEmpty(options), page: 1 },
-                }}
               >
-                <button
-                  className={styles.searchButton}
-                  disabled={loading}
-                  onClick={() => {
-                    gtag.event({
-                      action: "search",
-                      category: "Otomads",
-                      label: "happy",
-                    });
-                    loadingDispatch({
-                      type: "update",
-                      payload: true,
-                    });
-                  }}
-                >
-                  {t("search")}
-                </button>
-              </Link>
-            </div>
-            {options.count === null || options.count === undefined ? (
-              ""
-            ) : (
-              <span>
-                {options.count.toLocaleString()} {t("results")}
-              </span>
-            )}
-            {takesALongTime ? (
-              <div>
-                <span>{t("search-firsttime")}</span>
-              </div>
-            ) : (
-              ""
-            )}
+                {t("search")}
+              </button>
+            </Link>
+            <Link
+              href={{
+                pathname: "/random",
+                query: { ...removeEmpty(options) },
+              }}
+            >
+              <a
+                onClick={() => {
+                  gtag.event({
+                    action: "random",
+                    category: "Otomads",
+                    label: "lucky",
+                  });
+                }}
+                className={styles.searchButton}
+              >
+                ランダム
+              </a>
+            </Link>
           </div>
+          {options.count === null || options.count === undefined ? (
+            ""
+          ) : (
+            <span>
+              {options.count.toLocaleString()} {t("results")}
+            </span>
+          )}
+          {takesALongTime ? (
+            <div>
+              <span>{t("search-firsttime")}</span>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div className={styles.filter}>
           <span className={styles.filterName}>{t("sort")}</span>
@@ -198,7 +215,7 @@ const SearchBar: FC = () => {
             <input
               className={styles.inputNumber}
               type="number"
-              step="0.1"
+              step="0.01"
               min="0"
               value={options.lengthMinutesGte || ""}
               onChange={(e) => {
@@ -216,7 +233,7 @@ const SearchBar: FC = () => {
             <input
               className={styles.inputNumber}
               type="number"
-              step="0.1"
+              step="0.01"
               min="0"
               value={options.lengthMinutesLte || ""}
               onChange={(e) => {
