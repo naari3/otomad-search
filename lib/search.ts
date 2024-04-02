@@ -1,6 +1,6 @@
 /* eslint @typescript-eslint/no-unused-vars: 0 */
 // https://site.nicovideo.jp/search-api-docs/search.html
-const BASE_URL = "https://api.search.nicovideo.jp/";
+const BASE_URL = "https://snapshot.search.nicovideo.jp/";
 
 import * as Sentry from "@sentry/node";
 
