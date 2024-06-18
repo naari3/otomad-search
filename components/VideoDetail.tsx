@@ -25,7 +25,7 @@ export type VideoProps = {
   video: Pick<Video, typeof usedFields[number]>;
 };
 
-const urlPrefix = "https://www.nicovideo.jp/watch/";
+const urlPrefix = "https://www.nicovideo.jp/watch_tmp/";
 
 const VideoDetail = React.memo(({ video }: VideoProps) => {
   return (
