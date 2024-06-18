@@ -11,7 +11,7 @@ type Props = {
   float?: boolean;
 } & VideoProps;
 
-const urlPrefix = "https://www.nicovideo.jp/watch/";
+const urlPrefix = "https://www.nicovideo.jp/watch_tmp/";
 
 const VideoWrap = React.memo(({ video, float }: Props) => {
   const { t } = useTranslation("VideoWrap");

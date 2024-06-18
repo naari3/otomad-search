@@ -6,7 +6,7 @@ import { VideoProps } from "./VideoDetail";
 
 type Props = VideoProps;
 
-const urlPrefix = "https://www.nicovideo.jp/watch/";
+const urlPrefix = "https://www.nicovideo.jp/watch_tmp/";
 
 const VideoIcon = React.memo(({ video }: Props) => {
   return (
